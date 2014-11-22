@@ -15,6 +15,9 @@ var Issue = require("./issue").Issue(Sequelize,sequelize);
 Member.hasMany(Post, {foreignKey: 'member_id'})
 Post.belongsTo(Member, {foreignKey: 'member_id'})
 
+Member.hasMany(Issue, {foreignKey: 'member_id'})
+Issue.belongsTo(Member, {foreignKey: 'member_id'})
+
 Post.hasMany(Comment, {foreignKey: 'post_id'});
 Comment.belongsTo(Post, {foreignKey:'post_id'});
 
