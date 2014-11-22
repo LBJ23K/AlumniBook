@@ -33,9 +33,6 @@ Post.belongsTo(Member, {foreignKey: 'member_id'})
 Member.hasMany(Issue, {foreignKey: 'member_id'})
 Issue.belongsTo(Member, {foreignKey: 'member_id'})
 
-Member.hasMany(Issue, {foreignKey: 'member_id'})
-Issue.belongsTo(Member, {foreignKey: 'member_id'})
-
 Issue.hasMany(Comment, {foreignKey: 'issue_id'});
 Comment.belongsTo(Issue, {foreignKey:'issue_id'});
 
