@@ -11,6 +11,14 @@ var express = require('express'),
 
 var session = require('express-session');
 var local = require('./config/local');
+var i18n = require('i18n');
+var i18nController = require('./routes/i18nController');
+
+i18n.configure({
+  locales:['en', 'zh-TW'],
+  defaultLocale: 'zh-TW',
+  directory: __dirname + '/config/locales'
+});
 
 var app = module.exports = express();
 
@@ -35,6 +43,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(i18n.init);
 app.use(app.router);
 
 // development only
@@ -58,7 +67,8 @@ app.get('/partial/:name', routes.partial);
 
 // app.get('/auth/facebook', api.facebookAuth);
 
-
+app.get('/api/locales', i18nController.locales);
+app.post('/api/setLocale', i18nController.setLocale);
 
 app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);

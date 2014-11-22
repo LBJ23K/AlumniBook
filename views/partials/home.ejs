@@ -5,14 +5,14 @@
 		ng-mouseleave="hover = false" >
 		<span>{{post.title}}</span></a>
 	</div> -->
-	<button class="btn btn-success pull-right" ng-click="newPost()">發表文章</button>
+	<button class="btn btn-success pull-right" ng-click="newPost()"><%= __('Post_issue') %></button>
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th style="min-width:150px">留言數</th>
-				<th style="min-width:150px">主題</th>
-				<th style="min-width:150px">作者</th>
-				<th style="min-width:150px">發文時間</th>
+				<th style="min-width:150px"><%= __('Comments_count') %></th>
+				<th style="min-width:150px"><%= __('Issue_title') %></th>
+				<th style="min-width:150px"><%= __('Author') %></th>
+				<th style="min-width:150px"><%= __('Issue_time') %></th>
 			</tr>
 		</thead>
 		<tbody>

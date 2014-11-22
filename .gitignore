@@ -1,3 +1,5 @@
 node_modules/*
 config/local.js
 .DS_Store
+
+.idea
