@@ -22,7 +22,7 @@ exports.getUser = function(req, res) {
         },
         include: [Education, Contact, Experience]
     }).success(function(member) {
-        console.log(member);
+    	res.send(member);
     })
 }
 
@@ -39,7 +39,6 @@ exports.modifyUser = function(req, res) {
                         member_id: id
                     }
                 }).success(function(education) {
-                    // console.log(education)
                     education.updateAttributes(educationdata).success(function(result) {
                         callback(null, result)
                     })

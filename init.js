@@ -14,6 +14,7 @@ var Experience = require('./models').Experience;
 var Contact = require('./models').Contact;
 var Like = require('./models').Like;
 var Issue = require('./models').Issue;
+var Post = require('./models').Post;
 
 Member.sync({force:true});
 Post.sync({force:true});
