@@ -1,10 +1,10 @@
 <div class="container">
     <form action="">
-    <h4>標題</h4><input class="form-control" type="text" ng-model="title">
+    <h4><%= __('Title') %></h4><input class="form-control" type="text" ng-model="title">
     <br>
-    <h4>內容</h4><textarea class="form-control" type="text"  ng-model="content" rows="10"></textarea>
+    <h4><%= __('Content') %></h4><textarea class="form-control" type="text"  ng-model="content" rows="10"></textarea>
     <br>
-    <button class="btn btn-success pull-right" ng-click="submitPost()">發表</button>
+    <button class="btn btn-success pull-right" ng-click="submitPost()"><%= __('Submit') %></button>
     </form>
 
 </div>
