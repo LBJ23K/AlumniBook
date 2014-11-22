@@ -11,6 +11,7 @@ var Member = require("./member").Member(Sequelize,sequelize);
 var Post = require("./post").Post(Sequelize,sequelize);
 var Comment = require("./comment").Comment(Sequelize,sequelize);
 var Issue = require("./issue").Issue(Sequelize,sequelize);
+var Like = require("./like").Like(Sequelize,sequelize);
 
 Member.hasMany(Post, {foreignKey: 'member_id'})
 Post.belongsTo(Member, {foreignKey: 'member_id'})
@@ -24,7 +25,15 @@ Comment.belongsTo(Post, {foreignKey:'post_id'});
 Member.hasMany(Comment, {foreignKey:'member_id'});
 Comment.belongsTo(Member, {foreignKey:'member_id'});
 
+
+Post.hasMany(Like, {foreignKey: 'post_id'});
+Like.belongsTo(Post, {foreignKey:'post_id'});
+
+Member.hasMany(Like, {foreignKey:'member_id'});
+Like.belongsTo(Member, {foreignKey:'member_id'});
+
 exports.Member = Member;
 exports.Post = Post;
 exports.Comment = Comment;
 exports.Issue = Issue;
+exports.Like = Like;

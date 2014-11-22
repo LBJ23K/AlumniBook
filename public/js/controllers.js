@@ -57,8 +57,28 @@ angular.module('myApp.controllers', ['ngRoute']).
     $http({method:"GET", url:'/api/post/'+$state.params.id}).success(function(result){
       $scope.post = result.post;
       $scope.comments = result.comments;
+      $scope.likeThis = result.likeThis;
+      $scope.like = result.like;
       // console.log(post);
     })
+    $scope.likePost = function(){
+      $http({method:"GET", url:'/api/like/'+$state.params.id}).success(function(result){
+        console.log(result);
+        if(result.msg == "success"){
+          $scope.likeThis = !$scope.likeThis;
+          $scope.like+=1;
+        }
+      })
+    }
+    $scope.dislikePost = function(){
+      $http({method:"GET", url:'/api/dislike/'+$state.params.id}).success(function(result){
+        console.log(result);
+        if(result.msg == "success"){
+          $scope.likeThis = !$scope.likeThis;
+          $scope.like-=1;
+        }
+      })
+    }
     $scope.submitComment = function(){
       var data = {
         post_id : $state.params.id,

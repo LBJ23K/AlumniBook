@@ -10,7 +10,9 @@ var sequelize = new Sequelize(
 var Member = require('./models').Member;
 var Post = require('./models').Post;
 var Comment = require('./models').Comment;
+var Like = require('./models').Like;
 
 Member.sync({force:true});
 Post.sync({force:true});
 Comment.sync({force:true});
+Like.sync({force:true});
