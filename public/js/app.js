@@ -44,6 +44,11 @@ angular.module('myApp', [
       controller: 'Topic'
     }).state('otherwise',{
       url: "/"
+    }).
+    state('usersetting', {
+      url:'/usersetting',
+      templateUrl: 'partial/usersetting',
+      controller: 'Usersetting'
     })
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);

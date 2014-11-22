@@ -7,7 +7,9 @@ var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
   http = require('http'),
-  path = require('path');
+  path = require('path'),
+  user_api = require('./routes/user_api');
+  path = require('path'),
   issue = require('./routes/issue');
 
 var session = require('express-session');
@@ -67,6 +69,10 @@ app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
 // app.get('/auth/facebook', api.facebookAuth);
+
+
+app.get('/api/user/:id',user_api.getUser);
+app.post('/api/user/modify',user_api.modifyUser);
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);

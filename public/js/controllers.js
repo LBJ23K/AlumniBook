@@ -152,4 +152,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.isLogin = false;
     // $rootScope.user = {};
     window.location.reload();
+  }).
+  controller('Usersetting', function($scope, $location, $state){
+    console.log('ok')
   });
