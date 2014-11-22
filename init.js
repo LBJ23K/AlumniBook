@@ -8,11 +8,12 @@ var sequelize = new Sequelize(
 	);
 
 var Member = require('./models').Member;
-var Post = require('./models').Post;
 var Comment = require('./models').Comment;
 var Education = require('./models').Education;
 var Experience = require('./models').Experience;
 var Contact = require('./models').Contact;
+var Like = require('./models').Like;
+var Issue = require('./models').Issue;
 
 Member.sync({force:true});
 Post.sync({force:true});
@@ -20,3 +21,8 @@ Comment.sync({force:true});
 Education.sync({force:true});
 Experience.sync({force:true});
 Contact.sync({force:true});
+
+Member.sync({force:true});
+Comment.sync({force:true});
+Like.sync({force:true});
+Issue.sync({force:true});

@@ -17,7 +17,10 @@
 					<p ng-bind="post.content"></p>
 				    
 				</div>
+
 		   	</div>
+		   	<button ng-show="likeThis"class="btn btn-default pull-right" ng-click="dislikePost()">不喜歡<span ng-bind="like"></span></button>
+		   	<button ng-hide="likeThis" class="btn btn-default pull-right" ng-click="likePost()">喜歡<span ng-bind="like"></span></button>
 	   	</div>
 	</div>	
 	<div class="row">
