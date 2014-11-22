@@ -14,9 +14,9 @@ var sequelize = new Sequelize(
 		local.model.mysql.password,
 		local.model.mysql.options
 	);
-var passport = require('passport')
-var FacebookStrategy = require('passport-facebook').Strategy;
-var facebookAuth = require("../config/facebook_auth");
+// var passport = require('passport')
+// var FacebookStrategy = require('passport-facebook').Strategy;
+// var facebookAuth = require("../config/facebook_auth");
 
 exports.name = function (req, res) {
   res.json({
@@ -122,19 +122,19 @@ exports.commentOn = function(req, res){
 
 }
 
-exports.facebookAuth = function(req,res){
-	passport.use(new FacebookStrategy({
-    clientID: facebookAuth.appId,
-    clientSecret: facebookAuth.appSecret,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-  	res.send('ok');
-    // User.findOrCreate(..., function(err, user) {
-    //   if (err) { return done(err); }
-    //   done(null, user);
-    // });
-  }
-));
-}
+// exports.facebookAuth = function(req,res){
+// 	passport.use(new FacebookStrategy({
+//     clientID: facebookAuth.appId,
+//     clientSecret: facebookAuth.appSecret,
+//     callbackURL: "http://www.example.com/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//   	res.send('ok');
+//     // User.findOrCreate(..., function(err, user) {
+//     //   if (err) { return done(err); }
+//     //   done(null, user);
+//     // });
+//   }
+// ));
+// }
 

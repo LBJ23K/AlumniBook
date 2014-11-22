@@ -56,7 +56,7 @@ if (app.get('env') === 'production') {
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
-app.get('/auth/facebook', api.facebookAuth);
+// app.get('/auth/facebook', api.facebookAuth);
 
 
 
