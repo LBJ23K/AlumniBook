@@ -8,7 +8,8 @@ var express = require('express'),
   api = require('./routes/api'),
   http = require('http'),
   path = require('path');
-var session = require('express-session')
+
+var session = require('express-session');
 var local = require('./config/local');
 
 var app = module.exports = express();
@@ -54,6 +55,10 @@ if (app.get('env') === 'production') {
 // serve index
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
+
+app.get('/auth/facebook', api.facebookAuth);
+
+
 
 app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
