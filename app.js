@@ -69,6 +69,9 @@ app.post('/api/submitPost', api.submitPost);
 app.post('/api/comment', api.commentOn);
 app.post('/api/signup', api.createMember);
 
+app.get('/api/like/:id', api.likePost);
+app.get('/api/dislike/:id', api.dislikePost);
+
 app.get('/logout', function(req, res){
   req.session.destroy(function() {
     res.redirect("/");

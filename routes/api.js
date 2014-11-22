@@ -4,6 +4,7 @@
 var Member = require('../models').Member;
 var Post = require('../models').Post;
 var Comment = require('../models').Comment;
+var Like = require('../models').Like;
 var _ = require('underscore');
 var async = require('async');
 var local = require("../config/local");
@@ -23,7 +24,22 @@ exports.name = function (req, res) {
   	name: 'Bob'
   });
 };
-
+exports.likePost = function(req, res){
+	Like.create({post_id:req.params.id, member_id:req.session.user.member_id})
+	.success(function(like){
+		res.json({msg:"success"});	
+	})
+	
+}
+exports.dislikePost = function(req, res){
+	Like.findAll({where:{post_id:req.params.id, member_id:req.session.user.member_id}})
+	.success(function(like){
+		console.log(like[0])
+		like[0].destroy();
+		res.json({msg:"success"})
+	});
+		
+}
 exports.createMember = function (req, res){
 	console.log(req.body);
 	Member.create(req.body).success(function(member){
@@ -81,18 +97,41 @@ exports.showPost = function(req, res){
 	Post.find({ where: {post_id:req.params.id}, include: [Member]}).success(function(post){
 		if(post.Member != null)
 			post.Member.password = "";
-		Comment.findAll({where:{post_id:req.params.id}, include:[Member]}).success(function(comments){
-			comments = _.each(comments, function(comment){
-			if(comment.Member != null	)
-				comment.Member.password = "";
-			});
-			res.json({post:post, comments:comments});
-		})
+		async.parallel([
+			function(callback){
+				Like.findAll({where:{post_id:req.params.id, member_id:req.session.user.member_id}}).success(function(likes){
+					console.log(likes)
+					if(likes.length != 0)
+						callback(null, 1)
+					else
+						callback(null, 0)
+				})
+			},
+			function(callback){
+				Like.findAll({where:{post_id:req.params.id}}).success(function(likes){
+					console.log(likes)
+					if(likes.length != 0)
+						callback(null, likes.length)
+					else
+						callback(null, 0)
+				})
+			},
+			function(callback){
+				Comment.findAll({where:{post_id:req.params.id}, include:[Member]}).success(function(comments){
+					comments = _.each(comments, function(comment){
+					if(comment.Member != null	)
+						comment.Member.password = "";
+					});
+					console.log(comments)
+					callback(null, comments)
+					
+				})
+			}],function(err, result){
+				// console.log(result)
+				res.json({post:post, likeThis:result[0], like:result[1],comments:result[2]});
+			})
+		
 	});
-
-
-
-	
 }
 exports.submitPost = function(req, res){
 
