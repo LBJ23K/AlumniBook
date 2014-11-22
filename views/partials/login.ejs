@@ -2,11 +2,11 @@
 	<div class="col-md-3"></div>
     <div class="col-md-5">
     <form action="">
-        <span>帳號<input class="form-control" type="text" ng-model="account"></span>
+        <span><%= __('Username') %><input class="form-control" type="text" ng-model="account"></span>
 
-        <span>密碼<input class="form-control" type="password" ng-model="password"></span>
+        <span><%= __('Password') %><input class="form-control" type="password" ng-model="password"></span>
 		<br>
-        <button class="btn btn-success pull-right" ng-click="Login()">登入</button>
+        <button class="btn btn-success pull-right" ng-click="Login()"><%= __('Login') %></button>
     </form>
     </div>
 </div>
