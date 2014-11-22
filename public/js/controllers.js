@@ -17,7 +17,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Home', function ($scope, $location, $http) {
     // write Ctrl here
-    $http({method:"GET", url:'/api/posts'}).success(function(posts){
+    $http({method:"GET", url:'/issue/list'}).success(function(posts){
       $scope.posts = _.sortBy(posts, function(post){
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
@@ -43,9 +43,9 @@ angular.module('myApp.controllers', ['ngRoute']).
         title: $scope.title, 
         content: $scope.content
       }
-      $http({method:"POST", url:"/api/submitPost", data:data}).success(function(post){
+      $http({method:"POST", url:"/issue/create", data:data}).success(function(post){
         console.log(post);
-        $location.path('/topic/'+post.post_id);
+        $location.path('/topic/'+post.issue_id);
       });
     }
 
@@ -54,12 +54,12 @@ angular.module('myApp.controllers', ['ngRoute']).
     // write Ctrl here
     $scope.myComment = "";
     console.log($state.params.id)
-    $http({method:"GET", url:'/api/post/'+$state.params.id}).success(function(result){
+    $http({method:"GET", url:'/issue/listById?issue_id='+$state.params.id}).success(function(result){
       $scope.post = result.post;
       $scope.comments = result.comments;
       $scope.likeThis = result.likeThis;
       $scope.like = result.like;
-      // console.log(post);
+      console.log(result);
     })
     $scope.likePost = function(){
       $http({method:"GET", url:'/api/like/'+$state.params.id}).success(function(result){

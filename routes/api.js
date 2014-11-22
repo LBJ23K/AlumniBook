@@ -25,14 +25,14 @@ exports.name = function (req, res) {
   });
 };
 exports.likePost = function(req, res){
-	Like.create({post_id:req.params.id, member_id:req.session.user.member_id})
+	Like.create({issue_id:req.params.id, member_id:req.session.user.member_id})
 	.success(function(like){
 		res.json({msg:"success"});	
 	})
 	
 }
 exports.dislikePost = function(req, res){
-	Like.findAll({where:{post_id:req.params.id, member_id:req.session.user.member_id}})
+	Like.findAll({where:{issue_id:req.params.id, member_id:req.session.user.member_id}})
 	.success(function(like){
 		console.log(like[0])
 		like[0].destroy();
