@@ -8,6 +8,7 @@ var express = require('express'),
   api = require('./routes/api'),
   http = require('http'),
   path = require('path');
+  issue = require('./routes/issue');
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -68,6 +69,12 @@ app.post('/api/login', api.login);
 app.post('/api/submitPost', api.submitPost);
 app.post('/api/comment', api.commentOn);
 app.post('/api/signup', api.createMember);
+
+app.post('/issue/create', issue.create);
+app.get('/issue/list', issue.list);
+app.get('/issue/listById', issue.listById);
+app.post('/issue/update', issue.update);
+app.get('/issue/destroy', issue.destroy);
 
 app.get('/logout', function(req, res){
   req.session.destroy(function() {

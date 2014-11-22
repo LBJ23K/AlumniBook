@@ -5,8 +5,6 @@ exports.Issue = function(Sequelize, sequelize){
     author: { type: Sequelize.INTEGER},
     title: { type: Sequelize.TEXT },
     content: { type: Sequelize.TEXT },
-    createdAt: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
-    updatedAt: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
     parent_issue: { type: Sequelize.INTEGER },
 
   },{
