@@ -7,7 +7,8 @@ var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
   http = require('http'),
-  path = require('path');
+  path = require('path'),
+  user_api = require('./routes/user_api');
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -59,7 +60,8 @@ app.get('/partial/:name', routes.partial);
 // app.get('/auth/facebook', api.facebookAuth);
 
 
-
+app.get('/api/user/:id',user_api.getUser);
+app.post('/api/user/modify',user_api.modifyUser);
 app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 

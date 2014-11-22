@@ -11,6 +11,19 @@ var Member = require("./member").Member(Sequelize,sequelize);
 var Post = require("./post").Post(Sequelize,sequelize);
 var Comment = require("./comment").Comment(Sequelize,sequelize);
 
+var User = require("./user").User(Sequelize,sequelize);
+var Education = require("./education").Education(Sequelize,sequelize);
+var Contact = require("./contact").Contact(Sequelize,sequelize);
+var Experience = require("./experience").Experience(Sequelize,sequelize);
+
+Member.hasOne(Education, {foreignKey: 'member_id'})
+Member.hasOne(Contact, {foreignKey: 'member_id'})
+Member.hasOne(Experience, {foreignKey: 'member_id'})
+
+Education.belongsTo(Member, {foreignKey: 'member_id'})
+Contact.belongsTo(Member, {foreignKey: 'member_id'})
+Experience.belongsTo(Member, {foreignKey: 'member_id'})
+
 Member.hasMany(Post, {foreignKey: 'member_id'})
 Post.belongsTo(Member, {foreignKey: 'member_id'})
 
@@ -23,3 +36,7 @@ Comment.belongsTo(Member, {foreignKey:'member_id'});
 exports.Member = Member;
 exports.Post = Post;
 exports.Comment = Comment;
+exports.User = User;
+exports.Education = Education;
+exports.Contact = Contact;
+exports.Experience = Experience;

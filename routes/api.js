@@ -4,6 +4,9 @@
 var Member = require('../models').Member;
 var Post = require('../models').Post;
 var Comment = require('../models').Comment;
+var Education = require('../models').Education;
+var Experience = require('../models').Experience;
+var Contact = require('../models').Contact;
 var _ = require('underscore');
 var async = require('async');
 var local = require("../config/local");
@@ -25,9 +28,11 @@ exports.name = function (req, res) {
 };
 
 exports.createMember = function (req, res){
-	console.log(req.body);
+	// console.log(req.body);
 	Member.create(req.body).success(function(member){
-		// console.log(member.name);
+		Education.create({member_id:member.dataValues.member_id})
+		Experience.create({member_id:member.dataValues.member_id})
+		Contact.create({member_id:member.dataValues.member_id})
 		res.json({msg:"success"});
 	})
 	.error(function(err){
@@ -45,7 +50,7 @@ exports.login = function (req, res){
 		// console.log(member.dataValues)
 		if(req.body.password == member.dataValues.password){
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-			console.log(user)
+			// console.log(user)
 			req.session.user = user;
 			req.session.isLogin = true;
 			res.json({msg:"success"});
