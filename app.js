@@ -11,6 +11,7 @@ var express = require('express'),
   user_api = require('./routes/user_api');
   path = require('path'),
   issue = require('./routes/issue');
+  comment = require('./routes/comment')
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -92,6 +93,9 @@ app.get('/issue/list', issue.list);
 app.get('/issue/listById', issue.listById);
 app.post('/issue/update', issue.update);
 app.get('/issue/destroy', issue.destroy);
+
+app.post('/comment/update', comment.update);
+app.get('/comment/destroy', comment.destroy);
 
 app.get('/api/like/:id', api.likePost);
 app.get('/api/dislike/:id', api.dislikePost);
