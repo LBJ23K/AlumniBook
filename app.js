@@ -71,7 +71,7 @@ app.get('/partial/:name', routes.partial);
 // app.get('/auth/facebook', api.facebookAuth);
 
 
-app.get('/api/user/:id',user_api.getUser);
+app.get('/api/user',user_api.getUser);
 app.post('/api/user/modify',user_api.modifyUser);
 
 app.get('/api/locales', i18nController.locales);

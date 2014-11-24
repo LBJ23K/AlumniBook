@@ -15,22 +15,26 @@ var sequelize = new Sequelize(
 );
 
 exports.getUser = function(req, res) {
-    var id = req.params.id;
+    var id = req.session.user.member_id;
     Member.find({
         where: {
             member_id: id
         },
         include: [Education, Contact, Experience]
     }).success(function(member) {
-    	res.send(member);
+    	res.json(member);
     })
 }
 
 exports.modifyUser = function(req, res) {
-    var id = req.body.id;
-    var educationdata = JSON.parse(req.body.education);
-    var contactdata = JSON.parse(req.body.contact);
-    var experiencedata = JSON.parse(req.body.experience);
+    var id = req.session.user.member_id;
+    // var educationdata = JSON.parse(req.body.education);
+    // var contactdata = JSON.parse(req.body.contact);
+    // var experiencedata = JSON.parse(req.body.experience);
+    var educationdata = req.body.Education;
+    var contactdata = req.body.Contact;
+    var experiencedata = req.body.Experience;
+    console.log(educationdata)
 
     async.series([
             function(callback) {
@@ -67,6 +71,6 @@ exports.modifyUser = function(req, res) {
                 })
             }],
         function(err, results) {
-            res.send(results)
+            res.json(results)
         });
 }

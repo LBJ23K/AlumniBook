@@ -153,6 +153,38 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.user = {};
     window.location.reload();
   }).
-  controller('Usersetting', function($scope, $location, $state){
-    console.log('ok')
+  controller('Usersetting', function($scope, $location, $state,$http){
+    $scope.edit = false;
+    $scope.init = function(){
+      $http({
+        method:"GET",
+        url:"/api/user"
+      })
+      .success(function(data){
+        console.log(data);
+        $scope.user = data;
+        $scope.editdata = angular.copy(data);
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
+    $scope.modifysubmit = function(){
+      var modify = angular.copy($scope.editdata);
+      modify.Education = JSON.stringify(modify.Education);
+      modify.Experience = JSON.stringify(modify.Experience);
+      modify.Contact = JSON.stringify(modify.Contact);
+      console.log(modify);
+      $http({
+        method:"POST",
+        url:"/api/user/modify",
+        data:$scope.editdata
+      })
+      .success(function(data){
+        window.location.reload();
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
   });
