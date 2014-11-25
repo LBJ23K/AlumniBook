@@ -14,7 +14,7 @@ var express = require('express'),
   comment = require('./routes/comment')
 
 var session = require('express-session');
-var local = require('./config/local');
+var local = require('./config/locales');
 var i18n = require('i18n');
 var i18nController = require('./routes/i18nController');
 
