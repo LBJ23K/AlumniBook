@@ -8,10 +8,10 @@ var express = require('express'),
   api = require('./routes/api'),
   http = require('http'),
   path = require('path'),
-  user_api = require('./routes/user_api');
+  user_api = require('./routes/user_api'),
   path = require('path'),
-  issue = require('./routes/issue');
-  comment = require('./routes/comment')
+  issue = require('./routes/issue'),
+  comment = require('./routes/comment');
 
 var session = require('express-session');
 var local = require('./config/local');
