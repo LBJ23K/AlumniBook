@@ -56,13 +56,17 @@ exports.listById = function(req, res){
       post.Member.password = "";
     async.parallel([
       function(callback){
-        Like.findAll({where:{issue_id:req.param('issue_id'), member_id:req.session.user.member_id}}).success(function(likes){
-          console.log(likes)
-          if(likes.length != 0)
-            callback(null, 1)
-          else
-            callback(null, 0)
-        })
+        if(req.session.user){
+          Like.findAll({where:{issue_id:req.param('issue_id'), member_id:req.session.user.member_id}}).success(function(likes){
+            console.log(likes)
+            if(likes.length != 0)
+              callback(null, 1)
+            else
+              callback(null, 0)
+          })
+        }else{
+          callback(null, 0)
+        }
       },
       function(callback){
         Like.findAll({where:{issue_id:req.param('issue_id')}}).success(function(likes){
@@ -85,7 +89,13 @@ exports.listById = function(req, res){
         })
       }],function(err, result){
         // console.log(result)
-        res.json({post:post, likeThis:result[0], like:result[1],comments:result[2]});
+        var isAuthor
+        if(req.session.user)
+          isAuthor = (req.session.user.member_id==post.member_id);
+        else
+          isAuthor = 0;
+
+        res.json({post:post, likeThis:result[0], like:result[1],comments:result[2], isAuthor:isAuthor});
       })
     
   });

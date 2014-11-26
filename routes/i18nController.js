@@ -14,6 +14,8 @@ exports.locales = function(req, res) {
 
 exports.setLocale = function(req, res) {
   var newLocale = req.body.locale;
+  console.log(newLocale)
   req.setLocale(newLocale);
-  res.redirect('/');
+  res.json({msg:req.getLocale()})
+  // res.redirect('/');
 };

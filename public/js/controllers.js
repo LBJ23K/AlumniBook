@@ -3,9 +3,9 @@
 /* Controllers */
 
 angular.module('myApp.controllers', ['ngRoute']).
-  controller('AppCtrl', function ($rootScope, $window, $scope, $http) {
+  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
     $rootScope.isLogin = $window.isLogin;
-    
+    // $rootScope.lang = "ZH-TW";
     $rootScope.user = {
       name: $window.userName,
       gender: $window.gender,
@@ -14,6 +14,15 @@ angular.module('myApp.controllers', ['ngRoute']).
       grade: $window.userGrade,
       photo: $window.userPhoto
     }
+
+    $rootScope.$watch('lang',function(newValue, oldValue){   
+      $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
+        console.log(result);
+        // $location.path('/')
+        $state.transitionTo('index', null, {'reload':true});
+      });
+    })
+ 
   }).
   controller('Home', function ($scope, $location, $http) {
     // write Ctrl here
@@ -59,8 +68,15 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.comments = result.comments;
       $scope.likeThis = result.likeThis;
       $scope.like = result.like;
+      $scope.isAuthor = result.isAuthor;
       console.log(result);
     })
+    $scope.deleteIssue = function(){
+      $http({method:"GET", url:'/issue/destroy?issue_id='+$state.params.id}).success(function(result){
+        console.log(result);
+        $location.path('/')
+      })
+    }
     $scope.likePost = function(){
       $http({method:"GET", url:'/api/like/'+$state.params.id}).success(function(result){
         console.log(result);
