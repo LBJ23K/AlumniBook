@@ -1,4 +1,5 @@
 <div class="container" >
+
 	<div class="row">
 		<div class="col-md-2" style="margin-top:20px">
 			<img ng-hide="post.Member.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
@@ -6,13 +7,15 @@
 		</div>
 		<div class="col-md-10">
 		   	<div class="panel panel-primary">
+
 				<div class="panel-heading">
 					<h4>主題：<span ng-bind="post.title"></span><span class="pull-right"ng-bind="time(post.createdAt)"></span></h4>
 					<h5 style="margin-left:10px">發文者：<span ng-bind="post.Member.name"></span></h5>	
 					<h5 style="margin-left:10px">身份：<span ng-bind="post.Member.school"></span><span ng-bind="post.Member.department"></span><span ng-bind="post.Member.grade"></span></h5>	
-					
+					<button ng-show="isAuthor" class="btn btn-danger pull-right" ng-click="deleteIssue()">刪除文章</button>	
 					
 				</div>
+
 				<div class="panel-body" style="min-height:300px">
 					<p ng-bind="post.content"></p>
 				    

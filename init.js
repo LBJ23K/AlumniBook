@@ -16,9 +16,9 @@ var Like = require('./models').Like;
 var Issue = require('./models').Issue;
 var Post = require('./models').Post;
 
-Member.sync({force:true});
-Post.sync({force:true});
-Comment.sync({force:true});
+// Member.sync({force:true});
+// Post.sync({force:true});
+// Comment.sync({force:true});
 Education.sync({force:true});
 Experience.sync({force:true});
 Contact.sync({force:true});
