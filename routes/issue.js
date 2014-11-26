@@ -51,7 +51,7 @@ exports.listById = function(req, res){
   //       res.json(error);
   //     })
   Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member]}).success(function(post){
-    console.log(post)
+    // console.log(post)
     if(post.Member != null)
       post.Member.password = "";
     async.parallel([
@@ -70,7 +70,7 @@ exports.listById = function(req, res){
       },
       function(callback){
         Like.findAll({where:{issue_id:req.param('issue_id')}}).success(function(likes){
-          console.log(likes)
+          // console.log(likes)
           if(likes.length != 0)
             callback(null, likes.length)
           else
@@ -84,7 +84,7 @@ exports.listById = function(req, res){
             comment.Member.password = "";
           });
           console.log(comments)
-          callback(null, [])
+          callback(null, comments)
           
         })
       }],function(err, result){

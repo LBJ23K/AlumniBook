@@ -155,7 +155,7 @@ exports.submitPost = function(req, res){
 }
 exports.commentOn = function(req, res){
 	var comment = {
-		post_id:req.body.post_id,
+		issue_id:req.body.post_id,
 		member_id:req.session.user.member_id,
 		content:req.body.content
 	}
