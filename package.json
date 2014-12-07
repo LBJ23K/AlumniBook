@@ -17,6 +17,7 @@
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
     "sequelize": "^2.0.0-rc1",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "MD5": "1.2.1"
   }
 }

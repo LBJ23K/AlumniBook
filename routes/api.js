@@ -3,7 +3,9 @@
  */
 var Member = require('../models').Member;
 var Post = require('../models').Post;
+var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
+var md5 = require('MD5');
 var Education = require('../models').Education;
 var Experience = require('../models').Experience;
 var Contact = require('../models').Contact;
@@ -27,6 +29,7 @@ exports.name = function (req, res) {
   	name: 'Bob'
   });
 };
+
 exports.likePost = function(req, res){
 	Like.create({issue_id:req.params.id, member_id:req.session.user.member_id})
 	.success(function(like){
@@ -45,6 +48,7 @@ exports.dislikePost = function(req, res){
 }
 exports.createMember = function (req, res){
 	// console.log(req.body);
+	req.body.password = md5(req.body.password);
 	Member.create(req.body).success(function(member){
 		Education.create({member_id:member.dataValues.member_id})
 		Experience.create({member_id:member.dataValues.member_id})
@@ -64,7 +68,7 @@ exports.login = function (req, res){
 	}
 	Member.find(query).success(function(member){
 		// console.log(member.dataValues)
-		if(req.body.password == member.dataValues.password){
+		if(md5(req.body.password) == member.dataValues.password){
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
 			// console.log(user)
 			req.session.user = user;
