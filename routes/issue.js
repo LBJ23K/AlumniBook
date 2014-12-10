@@ -30,6 +30,16 @@ exports.list = function(req, res){
     // here comes your find command.
       models.Issue
       .findAll({include: [ models.Member, Comment ],order: [['createdAt', 'DESC']]}).success(function(result){
+        console.log(result.dataValues);
+        _.each(result, function(oneResult){
+          var temp = _.omit(oneResult.Member.dataValues, 'password');
+           oneResult.Member.dataValues = temp;
+           temp = _.omit(oneResult.Member.dataValues, 'member_id');
+           oneResult.Member.dataValues = temp;
+           temp = _.omit(oneResult.Member.dataValues, 'account');
+           oneResult.Member.dataValues = temp;
+           //console.log(oneResult.dataValues + '\n\n');
+        });
         console.log('retrieve success');
         res.json(result);
       })
