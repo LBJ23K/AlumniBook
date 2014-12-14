@@ -1,10 +1,21 @@
-<div class="container">
-    <form action="">
-    <h4><%= __('Title') %></h4><input class="form-control" type="text" ng-model="title">
-    <br>
-    <h4><%= __('Content') %></h4><textarea class="form-control" type="text"  ng-model="content" rows="10"></textarea>
-    <br>
-    <button class="btn btn-success pull-right" ng-click="submitPost()"><%= __('Submit') %></button>
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
+
+    <form action="" class="ui form">
+    <div class="field">
+    	<label><%= __('Title') %></label>
+    	<input type="text" ng-model="title">
+    </div>
+    
+    <div class="field">
+    	<label><%= __('Content') %></label>
+    	<textarea type="text" ng-model="content" rows="10"></textarea>
+    </div>
+    
+    <button class="ui button" ng-click="submitPost()"><%= __('Submit') %></button>
     </form>
 
+    </div>
+  </div>
 </div>
