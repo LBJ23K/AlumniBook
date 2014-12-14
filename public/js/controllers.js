@@ -119,7 +119,11 @@ angular.module('myApp.controllers', ['ngRoute']).
         password:$scope.password
       }
       $http({method:"POST", url:"/api/login", data:data}).success(function(post){
-          console.log("success");
+          console.log(post);
+          if(post.msg!="success"){ 
+            alert(post.msg);
+          }
+          // console.log("success");
           window.location.reload();
           $location.path('/')
         });
@@ -157,7 +161,7 @@ angular.module('myApp.controllers', ['ngRoute']).
         password:$scope.password
         }
         $http({method:"POST", url:"/api/login", data:data}).success(function(post){
-            console.log("success");
+            console.log(post);
             window.location.reload();
             $location.path('/')
         });

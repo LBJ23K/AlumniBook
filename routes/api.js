@@ -61,14 +61,19 @@ exports.createMember = function (req, res){
 }
 
 exports.login = function (req, res){
+	// var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
 	var query = {
 		where:{
 			account: req.body.account
 		}
 	}
 	Member.find(query).success(function(member){
-		// console.log(member.dataValues)
-		if(md5(req.body.password) == member.dataValues.password){
+		console.log(JSON.stringify(member));
+		if(member == null){
+			// res.end("fail");
+			res.json({msg:"No user!"});
+		}
+		else if(md5(req.body.password) == member.dataValues.password){
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
 			// console.log(user)
 			req.session.user = user;
@@ -76,7 +81,7 @@ exports.login = function (req, res){
 			res.json({msg:"success"});
 		}
 		else{
-			res.json({msg:"fail"});
+			res.json({msg:"Wrong password"});
 		}
 		
 	});
