@@ -5,8 +5,17 @@
 angular.module('myApp.controllers', ['ngRoute']).
   controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
     $rootScope.isLogin = $window.isLogin;
-    // $rootScope.lang = "ZH-TW";
-    console.log('$rootScope.isLogin')
+    if (typeof(Storage) != "undefined") {
+      var lang = localStorage.getItem("lang");
+      console.log(lang);
+      if( lang!=null) $rootScope.lang = lang;
+      else{
+        $rootScope.lang = "zh-TW";
+      } 
+    } 
+    else {
+      alert("Sorry, your browser does not support Web Storage...");
+    }
     $rootScope.user = {
       name: $window.userName,
       gender: $window.gender,
@@ -16,12 +25,18 @@ angular.module('myApp.controllers', ['ngRoute']).
       photo: $window.userPhoto
     }
 
+    console.log($rootScope.lang)
     $rootScope.$watch('lang',function(newValue, oldValue){   
-      $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
-        console.log(result);
-        // $location.path('/')
-        $state.transitionTo('index', null, {'reload':true});
+
+      if(newValue!=oldValue){
+        localStorage.setItem("lang", newValue);
+        $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
+          // $state.transitionTo('index', null, {'reload':true});
+          location.reload();
       });
+
+      }
+      
     })
  
   }).
