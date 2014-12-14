@@ -11,13 +11,18 @@ exports.destroy = function(req, res){
       Comment
       .find({where: {comment_id: req.param('comment_id')}}).success(function(result){
         console.log('retrieve success');
-        result.destroy().success(function() {
-            res.json({success: 'yes'});
-          }).error(function(error) {
-        // Ooops, do some error-handling
-        console.log(error);
-        res.json({success: 'no'});
-      })
+        if (req.session.user.member_id == result.member_id){
+            result.destroy().success(function() {
+                res.json({success: 'yes'});
+              }).error(function(error) {
+            // Ooops, do some error-handling
+            console.log(error);
+            res.json({success: 'no'});
+          })
+        }else{
+          res.status(401).json({error:true,msg:"You are not the creator."});
+        }
+        
       }).error(function(error) {
         // Ooops, do some error-handling
         console.log(error);
@@ -32,13 +37,18 @@ exports.update = function(req, res){
       Comment
       .find({where: {comment_id: req.body.comment_id}}).success(function(result){
         console.log('retrieve success');
-        result.updateAttributes({content:req.body.content}).success(function(updatedResult) {
-            res.json(updatedResult);
-          }).error(function(error) {
-        // Ooops, do some error-handling
-        console.log(error);
-        res.json(error);
-      })
+        if (req.session.user.member_id == result.member_id){
+            result.updateAttributes({content:req.body.content}).success(function(updatedResult) {
+                res.json(updatedResult);
+              }).error(function(error) {
+            // Ooops, do some error-handling
+            console.log(error);
+            res.json(error);
+          })
+            }else{
+              res.status(401).json({error:true,msg:"You are not the creator."});
+            }
+        
       }).error(function(error) {
         // Ooops, do some error-handling
         console.log(error);
