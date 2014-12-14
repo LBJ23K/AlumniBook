@@ -5,9 +5,12 @@ var Member = require('../models').Member;
 var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
 var Like = require('../models').Like;
+var sanitizer = require('sanitizer');
 
 exports.create = function(req, res){
   console.log(req.body);
+  // var title = sanitizer.sanitize(req.body.title);
+  // var content = sanitizer.sanitize(req.body.content);
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
