@@ -12,9 +12,7 @@ var Post = require("./post").Post(Sequelize,sequelize);
 var Comment = require("./comment").Comment(Sequelize,sequelize);
 var Issue = require("./issue").Issue(Sequelize,sequelize);
 var Like = require("./like").Like(Sequelize,sequelize);
-
 // var Alumni = require("./alumni").Alumni(Sequelize,sequelize);
-
 var User = require("./user").User(Sequelize,sequelize);
 var Education = require("./education").Education(Sequelize,sequelize);
 var Contact = require("./contact").Contact(Sequelize,sequelize);
@@ -22,6 +20,9 @@ var Experience = require("./experience").Experience(Sequelize,sequelize);
 
 Member.hasOne(Education, {foreignKey: 'member_id'})
 Education.belongsTo(Member, {foreignKey: 'member_id'})
+
+// Alumni.hasOne(Member, {foreignKey: 'alumni_id'})
+// Member.belongsTo(Alumni, {foreignKey: 'alumni_id'})
 
 Member.hasOne(Contact, {foreignKey: 'member_id'})
 Contact.belongsTo(Member, {foreignKey: 'member_id'})
