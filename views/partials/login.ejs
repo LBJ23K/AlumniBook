@@ -1,12 +1,17 @@
-<div class="container">
-	<div class="col-md-3"></div>
-    <div class="col-md-5">
-    <form action="">
-        <span><%= __('Username') %><input class="form-control" type="text" ng-model="account"></span>
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
 
-        <span><%= __('Password') %><input class="form-control" type="password" ng-model="password"></span>
-		<br>
-        <button class="btn btn-success pull-right" ng-click="Login()"><%= __('Login') %></button>
+    <form action="" class="ui form">
+    	<div class="field">
+        <label><%= __('Username') %></label><input type="text" ng-model="account">
+      </div>
+      <div class="field">
+        <label><%= __('Password') %></label><input type="password" ng-model="password">
+      </div>
+      <button class="ui button " ng-click="Login()"><%= __('Login') %></button>
     </form>
+
     </div>
+  </div>
 </div>
