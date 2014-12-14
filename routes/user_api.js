@@ -34,7 +34,6 @@ exports.modifyUser = function(req, res) {
     var educationdata = req.body.Education;
     var contactdata = req.body.Contact;
     var experiencedata = req.body.Experience;
-    console.log(educationdata)
 
     async.series([
             function(callback) {

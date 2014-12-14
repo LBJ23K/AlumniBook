@@ -6,6 +6,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
     $rootScope.isLogin = $window.isLogin;
     // $rootScope.lang = "ZH-TW";
+    console.log('$rootScope.isLogin')
     $rootScope.user = {
       name: $window.userName,
       gender: $window.gender,
