@@ -13,6 +13,8 @@ var Comment = require("./comment").Comment(Sequelize,sequelize);
 var Issue = require("./issue").Issue(Sequelize,sequelize);
 var Like = require("./like").Like(Sequelize,sequelize);
 
+// var Alumni = require("./alumni").Alumni(Sequelize,sequelize);
+
 var User = require("./user").User(Sequelize,sequelize);
 var Education = require("./education").Education(Sequelize,sequelize);
 var Contact = require("./contact").Contact(Sequelize,sequelize);
