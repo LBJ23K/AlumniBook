@@ -72,8 +72,8 @@ app.get('/partial/:name', routes.partial);
 // app.get('/auth/facebook', api.facebookAuth);
 
 
-app.get('/api/user',user_api.getUser);
-app.post('/api/user/modify',user_api.modifyUser);
+app.get('/api/user', api.checkLogin,user_api.getUser);
+app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
@@ -83,22 +83,22 @@ app.get('/api/post/:id', api.showPost);
 
 app.post('/api/login', api.login);
 // app.post('/api/createMember', api.createMember);
-app.post('/api/submitPost', api.submitPost);
-app.post('/api/comment', api.commentOn);
+app.post('/api/submitPost', api.checkLogin, api.submitPost);
+app.post('/api/comment', api.checkLogin, api.commentOn);
 app.post('/api/signup', api.createMember);
 
 
-app.post('/issue/create', issue.create);
+app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);
 app.get('/issue/listById', issue.listById);
-app.post('/issue/update', issue.update);
-app.get('/issue/destroy', issue.destroy);
+app.post('/issue/update', api.checkLogin, issue.update);
+app.get('/issue/destroy', api.checkLogin, issue.destroy);
 
-app.post('/comment/update', comment.update);
-app.get('/comment/destroy', comment.destroy);
+app.post('/comment/update', api.checkLogin, comment.update);
+app.get('/comment/destroy', api.checkLogin, comment.destroy);
 
-app.get('/api/like/:id', api.likePost);
-app.get('/api/dislike/:id', api.dislikePost);
+app.get('/api/like/:id', api.checkLogin, api.likePost);
+app.get('/api/dislike/:id', api.checkLogin, api.dislikePost);
 
 
 app.get('/logout', function(req, res){
