@@ -25,7 +25,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     })
  
   }).
-  controller('Home', function ($scope, $location, $http) {
+  controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
     $http({method:"GET", url:'/issue/list'}).success(function(posts){
       $scope.posts = _.sortBy(posts, function(post){
@@ -37,13 +37,27 @@ angular.module('myApp.controllers', ['ngRoute']).
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
     }
     $scope.newPost = function(){
-      $location.path('/post')
+      if(!$rootScope.isLogin){
+        alertify.alert("Please login.", function (e) {
+            if (e) {
+                // user clicked "ok"
+                $location.path('/login');
+                $scope.$apply();
+                
+            }
+        });
+        
+      }else{
+        $location.path('/post')
+      }
+      
     }
     $scope.select = function(id){
       $location.path('/topic/'+id);
     }
   }).
   controller('Post', function ($scope, $http, $location) {
+
     $scope.title = "";
     $scope.content = "";
     // console.log(userSchool);

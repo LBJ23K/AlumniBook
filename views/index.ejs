@@ -9,6 +9,10 @@
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="css/semantic.min.css">  
         <link rel="stylesheet" href="css/app.css"/>
+        <!-- include the core styles -->
+        <link rel="stylesheet" href="../js/alertify.js-0.3.11/themes/alertify.core.css" />
+        <!-- include a theme, can be included into the core instead of 2 separate files -->
+        <link rel="stylesheet" href="../js/alertify.js-0.3.11/themes/alertify.default.css" />
         <script>
         var isLogin = <%- isLogin ? 'true' : 'false'%>;
 
@@ -71,6 +75,6 @@
     <script src="../js/controllers.js"></script>
     <script src="../js/filters.js"></script>
     <script src="../js/directives.js"></script>
-    
+    <script src="../js/alertify.js-0.3.11/lib/alertify.min.js"></script>
     </body>
 </html>

@@ -175,6 +175,18 @@ exports.commentOn = function(req, res){
 
 }
 
+exports.checkLogin = function(req, res, next){
+	var isLogin = false;
+	if( _.has(req.session, 'isLogin') ){
+		isLogin = req.session.isLogin;
+	}
+	if(isLogin){
+		next();
+	}else{
+		res.status(401).json({error:true,msg:"請登入"});
+	}
+}
+
 // exports.facebookAuth = function(req,res){
 // 	passport.use(new FacebookStrategy({
 //     clientID: facebookAuth.appId,
