@@ -28,3 +28,11 @@
   content: "";
   padding: 0;
 }
+
+.ui.header .member-info {
+  margin-top: 20px;
+}
+
+.ui.header .member-info .sub.header {
+  font-size: 0.5em;
+}
