@@ -1,7 +1,6 @@
 <div class="ui page grid">
   <div class="column">
     <div class="ui teal segment">
-      <div class="ui top attached label"></div>
       
     <!-- <div class="list-group">
 		<a href="/post" class="list-group-item" ng-repeat="post in posts" ng-class="{active:hover}"
@@ -9,25 +8,10 @@
 		ng-mouseleave="hover = false" >
 		<span>{{post.title}}</span></a>
 	</div> -->
-	<button class="ui button right" ng-click="newPost()"><%= __('Post_issue') %></button>
-<!-- 	<table class="ui table">
-		<thead>
-			<tr>
-				<th><%= __('Comments_count') %></th>
-				<th><%= __('Issue_title') %></th>
-				<th><%= __('Author') %></th>
-				<th><%= __('Issue_time') %></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat = "post in posts" ng-click="select(post.issue_id)">
-				<td id="comment" ng-bind="post.Comments.length"></td>
-				<td id="title" ng-bind="post.title"></td>
-				<td id="author" ng-bind="post.Member.name"></td>
-				<td id="createdAt" ng-bind="time(post.createdAt)"></td>
-			</tr>
-		</tbody>
-	</table> -->
+	<div class="ui basic right aligned segment">
+		<button class="ui teal labeled icon button" ng-click="newPost()"><i class="icon edit"></i><%= __('Post_issue') %></button>
+	</div>
+	<div class="ui divider"></div>
 
 	<div class="ui relaxed divided items">
 	  <div class="item" ng-repeat = "post in posts" ng-click="select(post.issue_id)">
@@ -52,8 +36,3 @@
     </div>
   </div>
 </div>
-<script>
-	$('.table > tr').click(function() {
-    console.log("hi");
-});
-</script>

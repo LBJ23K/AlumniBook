@@ -29,6 +29,10 @@
   padding: 0;
 }
 
+.ui.comments {
+  max-width: 100%;
+}
+
 .ui.header .member-info {
   margin-top: 20px;
 }
