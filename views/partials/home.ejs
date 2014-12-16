@@ -9,7 +9,7 @@
 			<div class="ui relaxed divided items post-item">
 			  <div class="item" ng-repeat = "post in posts" ng-click="select(post.issue_id)">
 					<div class="ui small image">
-					  <img src="img/category-01.png">
+					  <img src="img/category-0{{$index%6+1}}.png">
 					</div>
 					<div class="content">
 					  <p class="header" id="title" ng-bind="post.title"></p>
@@ -20,7 +20,7 @@
 					  <div class="extra">
 					    <img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
 							<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
-					    <span id="author" ng-bind="post.Member.name"></span>｜<span id="createdAt" ng-bind="time(post.createdAt)"></span>｜<span id="comment" ng-bind="post.Comments.length"></span> comments
+					    <span id="author" ng-bind="post.Member.name"></span>｜<span id="createdAt" ng-bind="time(post.createdAt)"></span>｜<i class="comment icon"></i><span id="comment" ng-bind="post.Comments.length"></span>
 					  </div>
 					</div>
 				</div>
