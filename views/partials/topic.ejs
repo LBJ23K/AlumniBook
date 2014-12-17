@@ -1,61 +1,104 @@
-<div class="container" >
-
-	<div class="row">
-		<div class="col-md-2" style="margin-top:20px">
-			<img ng-hide="post.Member.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
-			<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="img-responsive" alt="Responsive image">
+<div class="ui page grid">
+	<div class="two wide column">
+		<div class="ui icon header">
+		  <div class="col-md-2" style="margin-top:20px">
+				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+			</div>
+		  <div class="content member-info">
+		    <span ng-bind="post.Member.name"></span>
+		    <div class="sub header">
+		    	<span ng-bind="post.Member.school"></span>
+		    </div>
+		    <div class="sub header">
+		    	<span ng-bind="post.Member.department"></span>
+		    </div>
+		    <div class="sub header">
+		    	<span ng-bind="post.Member.grade"></span>
+		    </div>
+		    <div class="ui divider"></div>
+		    <div class="sub header">
+		    	<span class="ui right aligned" ng-bind="time(post.createdAt)"></span>
+		    </div>
+		  </div>
 		</div>
-		<div class="col-md-10">
-		   	<div class="panel panel-primary">
+	</div>
+  <div class="fourteen wide column">
+    <div class="ui teal segment">
 
-				<div class="panel-heading">
-					<h4>主題：<span ng-bind="post.title"></span><span class="pull-right"ng-bind="time(post.createdAt)"></span></h4>
-					<h5 style="margin-left:10px">發文者：<span ng-bind="post.Member.name"></span></h5>	
-					<h5 style="margin-left:10px">身份：<span ng-bind="post.Member.school"></span><span ng-bind="post.Member.department"></span><span ng-bind="post.Member.grade"></span></h5>	
-					<button ng-show="isAuthor" class="btn btn-danger pull-right" ng-click="deleteIssue()">刪除文章</button>	
-					
-				</div>
+			<div class="ui basic segment">
+				<h3 class="ui dividing header" ng-bind="post.title"></h3>
+    		<pre class="segment" ng-bind="post.content"></pre>
+				
+				<div class="ui basic right aligned segment">
+	    		<button ng-show="likeThis"class="ui teal labeled icon button" ng-click="dislikePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
+			   	<button ng-hide="likeThis" class="ui labeled icon button" ng-click="likePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
 
-				<div class="panel-body" style="min-height:300px">
-					<p ng-bind="post.content"></p>
-				    
-				</div>
-
+			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>	
 		   	</div>
-		   	<button ng-show="likeThis"class="btn btn-default pull-right" ng-click="dislikePost()">不喜歡<span ng-bind="like"></span></button>
-		   	<button ng-hide="likeThis" class="btn btn-default pull-right" ng-click="likePost()">喜歡<span ng-bind="like"></span></button>
-	   	</div>
-	</div>	
-	<div class="row">
-		<div ng-repeat="comment in comments">
-			
-			<div class="col-md-2" style="margin-top:40px">
-				<img ng-hide="comment.Member.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
-				<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
+    	</div>
+
+			<div class="ui grid">
+	  		<div class="right floated ui fourteen wide column comments">
+				  <h4 class="ui dividing header">Comments</h4>
+
+				  <div class="comment" ng-repeat="comment in comments">
+				    <a class="avatar">
+				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+							<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
+				    </a>
+				    <div class="content">
+				      <a class="author" ng-bind="comment.Member.name"></a>
+				      <div class="metadata">
+				        <span class="date" ng-bind="time(comment.createdAt)"></span>
+				      </div>
+				      <pre class="text" ng-bind="comment.content"></pre>
+				    </div>
+				  </div>
+
+				  <form class="ui reply form">
+				    <div class="field">
+				      <textarea name="" id="" rows="10" ng-model="myComment"></textarea>
+				    </div>
+						<span ng-hide="$root.isLogin">請先<a href="/login" class="ui button">登入</a>再進行留言</span>
+						<button ng-show="$root.isLogin" class="ui teal labeled submit icon button" ng-click="submitComment()"><i class="icon edit"></i>送出</button>
+				  </form>
+				</div>
+
+			</div>
+
+<!-- 			<div class="row">
+				<div ng-repeat="comment in comments">
+					
+					<div class="col-md-2" style="margin-top:40px">
+						<img ng-hide="comment.Member.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
+						<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
+					</div>
+					<div class="col-md-10">
+					   	<div class="panel panel-success">
+							<div class="panel-heading"><span ng-bind="comment.Member.name"></span> commented on <span ng-bind="time(comment.createdAt)"></span></div>
+							<div class="panel-body" style="min-height:200px" ng-bind="comment.content">
+					   		</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+<!-- 
+			<div class="col-md-2" style="margin-top:10px">
+				<img ng-hide="$root.user.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
+				<img ng-show="$root.user.photo" ng-src="{{$root.user.photo}}" class="img-responsive" alt="Responsive image">
 			</div>
 			<div class="col-md-10">
-			   	<div class="panel panel-success">
-					<div class="panel-heading"><span ng-bind="comment.Member.name"></span> commented on <span ng-bind="time(comment.createdAt)"></span></div>
-					<div class="panel-body" style="min-height:200px" ng-bind="comment.content">
-			   		</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-2" style="margin-top:10px">
-		<img ng-hide="$root.user.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
-		<img ng-show="$root.user.photo" ng-src="{{$root.user.photo}}" class="img-responsive" alt="Responsive image">
-	</div>
-	<div class="col-md-10">
-		<h4>我要留言</h4>
-		<form action="">
-			<textarea class="form-control" name="" id="" rows="10" ng-model="myComment"></textarea><br>
-			<h4 ng-hide="$root.isLogin" class="pull-right">請先<a href="/login"><button class="btn btn-danger">登入</button></a>再進行留言</h4>
-			<button ng-show="$root.isLogin"class="btn btn-success pull-right" ng-click="submitComment()">送出</button>
-		</form>
-		<div style="height:100px"></div>
-	</div>
+				<h4>我要留言</h4>
+				<form action="">
+					<textarea class="form-control" name="" id="" rows="10" ng-model="myComment"></textarea><br>
+					<h4 ng-hide="$root.isLogin" class="pull-right">請先<a href="/login"><button class="btn btn-danger">登入</button></a>再進行留言</h4>
+					<button ng-show="$root.isLogin"class="btn btn-success pull-right" ng-click="submitComment()">送出</button>
+				</form>
+				<div style="height:100px"></div>
+			</div> -->
 		
-
+    </div>
+  </div>
 </div>

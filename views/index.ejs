@@ -31,22 +31,22 @@
     <body ng-controller="AppCtrl">
 
     <div class="ui menu">
-      <a class="active item" href="/">
+      <a class="item" href="/">
         <i class="home icon"></i> <%= __('Forum') %>
       </a>
 
       <div class="right menu">
         <a ng-hide="{{$root.isLogin}}" href="/signup" class="item">
-          <i class="home icon"></i> <%= __('Signup') %>
+          <%= __('Signup') %>
         </a>
         <a ng-hide="{{$root.isLogin}}" href="/login" class="item">
-          <i class="home icon"></i> <%= __('Login') %>
+          <%= __('Login') %>
         </a>
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
-          <i class="home icon"></i>
+          
         </a>
         <a ng-show="{{$root.isLogin}}" href="/logout" class="item">
-          <i class="home icon"></i> <%= __('Logout') %>
+         <%= __('Logout') %>
         </a>
         <div class="item">
         <select ng-model="$root.lang">

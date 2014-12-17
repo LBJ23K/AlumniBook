@@ -1,188 +1,504 @@
-<style >
-.btn_head{
-	position: absolute;
-	right:20%;
-	top:30%;
-}
-.btn_head2{
-	position: absolute;
-	right:10%;
-	top:30%;
-}
-</style>
 <div class="container" ng-init="init()">
-    <div class="row">
-        <div class="col-md-3" >
-            <img ng-hide="post.Member.photo" src="http://faberbooks.net/plus/wp-content/uploads/sites/15/2013/12/person_placeholder_large.3cab151d9843-300x400.gif" class="img-responsive" alt="Responsive image">
-            <img ng-show="post.Member.photo" ng-src="{{user.photo}}" class="img-responsive" alt="Responsive image">
-            <div class="form-group" style="text-align:center">
-                <h3>{{user.name}}</h3>
-            </div>
-            <div class="form-group">
-            	<p>性別：{{user.gender}}</p>
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="panel panel-primary">
-                <div class="panel-heading" style="position:relative">
-                    <h3>個人資料</h3>
-                    <button class="btn btn-info btn_head" ng-click="edit=true" ng-hide="edit">修改資料</button>
-                    <button class="btn btn-success btn_head" ng-click="modifysubmit()" ng-show="edit">送出</button>
-                    <button class="btn btn-danger btn_head2" ng-click="edit=false" ng-show="edit">取消</button>
-                </div>
-                <div class="panel-body" style="min-height:300px">
-                	<div ng-hide="edit">
-	                	<h4>學歷</h4>
-	                	<hr/>
-	                	<p>Department:
-	                		<span ng-show="!user.Education.dept">尚未填寫</span>
-	                		<span ng-show="user.Education.dept">{{user.Education.dept}}</span>
-	                	</p>
-	                	<p>Degree:
-	                		<span ng-show="!user.Education.degree">尚未填寫</span>
-	                		<span ng-show="user.Education.degree">{{user.Education.degree}}</span>
-	                	</p>
-	                	<p>Stuid:
-	                		<span ng-show="!user.Education.stuid">尚未填寫</span>
-	                		<span ng-show="user.Education.stuid">{{user.Education.stuid}}</span>
-	                	</p>
-	                	<p>Institute:
-	                		<span ng-show="!user.Education.institute">尚未填寫</span>
-	                		<span ng-show="user.Education.institute">{{user.Education.institute}}</span>
-	                	</p>
-	                	<p>Start Date:
-	                		<span ng-show="!user.Education.startdate">尚未填寫</span>
-	                		<span ng-show="user.Education.startdate">{{user.Education.startdate}}</span>
-	                	</p>
-	                	<p>End Date:
-	                		<span ng-show="!user.Education.enddate">尚未填寫</span>
-	                		<span ng-show="user.Education.enddate">{{user.Education.enddate}}</span>
-	                	</p>
-	                	<hr/>
-	                	<h4>經歷</h4>
-	                	<hr/>
-	                	<p>Organization:
-	                		<span ng-show="!user.Experience.org">尚未填寫</span>
-	                		<span ng-show="user.Experience.org">{{user.Experience.org}}</span>
-	                	</p>
-	                	<p>Department:
-	                		<span ng-show="!user.Experience.dept">尚未填寫</span>
-	                		<span ng-show="user.Experience.dept">{{user.Experience.dept}}</span>
-	                	</p>
-	                	<p>Position:
-	                		<span ng-show="!user.Experience.position">尚未填寫</span>
-	                		<span ng-show="user.Experience.position">{{user.Experience.position}}</span>
-	                	</p>
-	                	<p>Description:
-	                		<span ng-show="!user.Experience.description">尚未填寫</span>
-	                		<span ng-show="user.Experience.description">{{user.Experience.description}}</span>
-	                	</p>
-	                	<p>Start Date:
-	                		<span ng-show="!user.Experience.startdate">尚未填寫</span>
-	                		<span ng-show="user.Experience.startdate">{{user.Experience.startdate}}</span>
-	                	</p>
-	                	<p>End Date:
-	                		<span ng-show="!user.Experience.enddate">尚未填寫</span>
-	                		<span ng-show="user.Experience.enddate">{{user.Experience.enddate}}</span>
-	                	</p>
+<div class="ui page grid">
+	<div class="two wide column">
+		<div class="ui icon header">
+		  <div class="col-md-2" style="margin-top:20px">
+				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+			</div>
+		  <div class="content member-info">
+		    <span ng-bind="user.name"></span>
+		    <div class="sub header">
+		    	<span ng-bind="user.gender"></span>
+		    </div>
+		    <div class="ui divider"></div>
+		    
+		  </div>
+		</div>
+	</div>
+  <div class="fourteen wide column">
+    <div class="ui teal segment">
 
-	                	<hr/>
-	                	<h4>聯絡方式</h4>
-	                	<hr/>
-	                	<p>Email:
-	                		<span ng-show="!user.Contact.email">尚未填寫</span>
-	                		<span ng-show="user.Contact.email">{{user.Contact.email}}</span>
-	                	</p>
-	                	<p>Address:
-	                		<span ng-show="!user.Contact.address">尚未填寫</span>
-	                		<span ng-show="user.Contact.address">{{user.Contact.address}}</span>
-	                	</p>
-	                	<p>Phone number(Home):
-	                		<span ng-show="!user.Contact.phone_home">尚未填寫</span>
-	                		<span ng-show="user.Contact.phone_home">{{user.Contact.phone_home}}</span>
-	                	</p>
-	                	<p>Phone number(Mobile):
-	                		<span ng-show="!user.Contact.phone_mobile">尚未填寫</span>
-	                		<span ng-show="user.Contact.phone_mobile">{{user.Contact.phone_mobile}}</span>
-	                	</p>
-	                	<p>Phone number(Work):
-	                		<span ng-show="!user.Contact.phone_work">尚未填寫</span>
-	                		<span ng-show="user.Contact.phone_work">{{user.Contact.phone_work}}</span>
-	                	</p>
-	                	<p>End Date:
-	                		<span ng-show="!user.Contact.enddate">尚未填寫</span>
-	                		<span ng-show="user.Contact.enddate">{{user.Contact.enddate}}</span>
-	                	</p>
-	                </div>
+			<div class="ui basic segment">
+				<h3 class="ui dividing header" >Profile</h3>
+    		<pre class="segment" ng-bind="post.content"></pre>
+				
+				<div class="ui basic right aligned segment">
+	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit">修改資料</button>
+                    <button class="ui primary button" ng-click="modifysubmit()" ng-show="edit">送出</button>
+                    <button class="ui button" ng-click="edit=false" ng-show="edit">取消</button>	
+		   	</div>
+    	</div>
 
-	                <div ng-show="edit">
-	                	<h4>學歷</h4>
-	                	<hr/>
-	                	<p>Department:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.dept">
-	                	</p>
-	                	<p>Degree:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.degree">
-	                	</p>
-	                	<p>Stuid:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.stuid">
-	                	</p>
-	                	<p>Institute:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.institute">
-	                	</p>
-	                	<p>Start Date:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.startdate">
-	                	</p>
-	                	<p>End Date:
-	                		<input type="text" class="form-control" ng-model="editdata.Education.enddate">
-	                	</p>
-	                	<hr/>
-	                	<h4>經歷</h4>
-	                	<hr/>
-	                	<p>Organization:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.org">
-	                	</p>
-	                	<p>Department:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.dept">
-	                	</p>
-	                	<p>Position:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.position">
-	                	</p>
-	                	<p>Description:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.description">
-	                	</p>
-	                	<p>Start Date:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.startdate">
-	                	</p>
-	                	<p>End Date:
-	                		<input type="text" class="form-control" ng-model="editdata.Experience.enddate">
-	                	</p>
+			<div class="ui grid">
+	  		<div class="right floated ui fourteen wide column comments">
+				  
 
-	                	<hr/>
-	                	<h4>聯絡方式</h4>
-	                	<hr/>
-	                	<p>Email:
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.email">
-	                	</p>
-	                	<p>Address:
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.address">
-	                	</p>
-	                	<p>Phone number(Home):
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.phone_home">
-	                	</p>
-	                	<p>Phone number(Mobile):
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile">
-	                	</p>
-	                	<p>Phone number(Work):
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.phone_work">
-	                	</p>
-	                	<p>End Date:
-	                		<input type="text" class="form-control" ng-model="editdata.Contact.enddate">
-	                	</p>
-	                </div>
-                </div>
+				  <div ng-hide="edit" >
+					<div class="ui stackable four column grid">
+						<div class="column">
+							<div class="ui list">
+							<div class="item">		
+							<div class="content">
+							<div class="header">學歷</div>
+								<div class="list">
+								<div class="item">
+									<i class="top aligned right triangle icon"></i>
+								<div class="content">
+									<div class="header">Department</div>
+									<div class="description">
+										<span ng-show="!user.Education.dept">尚未填寫</span>
+										<span ng-show="user.Education.dept">{{user.Education.dept}}</span>
+									</div>
+								</div>
+								</div>
 
-            </div>
-        </div>
+								<div class="item">
+									<i class="top aligned right triangle icon"></i>
+								<div class="content">
+									<div class="header">Degree</div>
+									<div class="description">
+										<span ng-show="!user.Education.degree">尚未填寫</span>
+										<span ng-show="user.Education.degree">{{user.Education.degree}}</span>
+									</div>
+								</div>
+								</div>
+								
+								<div class="item">
+									<i class="top aligned right triangle icon"></i>
+								<div class="content">
+									<div class="header">Stuid</div>
+									<div class="description">
+										<span ng-show="!user.Education.stuid">尚未填寫</span>
+										<span ng-show="user.Education.stuid">{{user.Education.stuid}}</span>
+									</div>
+								</div>
+								</div>
+								
+								<div class="item">
+									<i class="top aligned right triangle icon"></i>
+								<div class="content">
+									<div class="header">Institute</div>
+									<div class="description">
+										<span ng-show="!user.Education.institute">尚未填寫</span>
+										<span ng-show="user.Education.institute">{{user.Education.institute}}</span>
+									</div>
+								</div>
+								</div>
+								
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">Start Date</div>
+									<div class="description">
+									<span ng-show="!user.Education.startdate">尚未填寫</span>
+									<span ng-show="user.Education.startdate">{{user.Education.startdate}}</span>
+									</div>
+								</div>
+								</div>
+								
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">End Date</div>
+									<div class="description">
+									<span ng-show="!user.Education.enddate">尚未填寫</span>
+									<span ng-show="user.Education.enddate">{{user.Education.enddate}}</span>
+									</div>
+								</div>
+								</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+	
+						<div class="column">
+						<div class="ui list">
+								<div class="item">
+								
+								<div class="content">
+								  <div class="header">經歷</div>
+								  <div class="list">
+									<div class="item">
+									  <i class="top aligned right triangle icon"></i>
+									  <div class="content">
+										<div class="header">Organization</div>
+										<div class="description">
+											<span ng-show="!user.Experience.org">尚未填寫</span>
+											<span ng-show="user.Experience.org">{{user.Experience.org}}</span>
+										</div>
+									  </div>
+									</div>
+				
+				
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">Department</div>
+									<div class="description">
+									<span ng-show="!user.Experience.dept">尚未填寫</span>
+									<span ng-show="user.Experience.dept">{{user.Experience.dept}}</span>
+									</div>
+								  </div>
+								</div>
+												
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">Position</div>
+									<div class="description">
+									<span ng-show="!user.Experience.position">尚未填寫</span>
+									<span ng-show="user.Experience.position">{{user.Experience.position}}</span>
+									</div>
+								  </div>
+								</div>
+								
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">Description</div>
+									<div class="description">
+									<span ng-show="!user.Experience.description">尚未填寫</span>
+									<span ng-show="user.Experience.description">{{user.Experience.description}}</span>
+									</div>
+								  </div>
+								</div>
+								
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">Start Date</div>
+									<div class="description">
+									<span ng-show="!user.Experience.startdate">尚未填寫</span>
+									<span ng-show="user.Experience.startdate">{{user.Experience.startdate}}</span>
+									</div>
+								  </div>
+								</div>
+								
+								<div class="item">
+								  <i class="top aligned right triangle icon"></i>
+								  <div class="content">
+									<div class="header">End Date</div>
+									<div class="description">
+									<span ng-show="!user.Experience.enddate">尚未填寫</span>
+									<span ng-show="user.Experience.enddate">{{user.Experience.enddate}}</span>
+									</div>
+								  </div>
+								</div>
+			  </div>
+			</div>
+		  </div>			
+	</div>
+	</div>
+    <div class="column">
+	<div class="ui list">
+				<div class="item">
+				
+				<div class="content">
+				  <div class="header">聯絡方式</div>
+				  <div class="list">
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Email</div>
+						<div class="description">
+							<span ng-show="!user.Contact.email">尚未填寫</span>
+							<span ng-show="user.Contact.email">{{user.Contact.email}}</span>
+						</div>
+					  </div>
+					</div>
+					
+					
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Address</div>
+						<div class="description">
+						<span ng-show="!user.Contact.address">尚未填寫</span>
+						<span ng-show="user.Contact.address">{{user.Contact.address}}</span>
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Home)</div>
+						<div class="description">
+						<span ng-show="!user.Contact.phone_home">尚未填寫</span>
+						<span ng-show="user.Contact.phone_home">{{user.Contact.phone_home}}</span>
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Mobile)</div>
+						<div class="description">
+						<span ng-show="!user.Contact.phone_mobile">尚未填寫</span>
+						<span ng-show="user.Contact.phone_mobile">{{user.Contact.phone_mobile}}</span>
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Work)</div>
+						<div class="description">
+						<span ng-show="!user.Contact.phone_work">尚未填寫</span>
+						<span ng-show="user.Contact.phone_work">{{user.Contact.phone_work}}</span>
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">End Date</div>
+						<div class="description">
+						<span ng-show="!user.Contact.enddate">尚未填寫</span>
+						<span ng-show="user.Contact.enddate">{{user.Contact.enddate}}</span>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+	</div>
+	</div>
+  
+  </div>
+
+</div>
+</div>
+
+
+
+
+<div ng-show="edit" >
+<div class="ui stackable four column grid">
+    <div class="column">
+	<div class="ui list">
+				 <div class="item">
+			
+			<div class="content">
+			  <div class="header">學歷</div>
+			  <div class="list">
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Department</div>
+					<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Education.dept">
+					</div>
+				  </div>
+				</div>
+				
+				
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Degree</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Education.degree">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Stuid</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Education.stuid">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Institute</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Education.institute">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Start Date</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Education.startdate">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">End Date</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Education.enddate">
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+	</div>
+	</div>
+	
+    <div class="column">
+	<div class="ui list">
+			<div class="item">
+		
+			<div class="content">
+			  <div class="header">經歷</div>
+			  <div class="list">
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Organization</div>
+					<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Experience.org">
+					</div>
+				  </div>
+				</div>
+				
+				
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Department</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Experience.dept">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Position</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Experience.position">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Description</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Experience.description">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">Start Date</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Experience.startdate">
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <i class="top aligned right triangle icon"></i>
+				  <div class="content">
+					<div class="header">End Date</div>
+					<div class="description">
+					<input type="text" class="form-control" ng-model="editdata.Experience.enddate">
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>			
+	</div>
+	</div>
+    <div class="column">
+	<div class="ui list">
+				<div class="item">
+		
+				<div class="content">
+				  <div class="header">聯絡方式</div>
+				  <div class="list">
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Email</div>
+						<div class="description">
+							<input type="text" class="form-control" ng-model="editdata.Contact.email">
+						</div>
+					  </div>
+					</div>
+					
+					
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Address</div>
+						<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Contact.address">
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Home)</div>
+						<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_home">
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Mobile)</div>
+						<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile">
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">Phone number(Work)</div>
+						<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_work">
+						</div>
+					  </div>
+					</div>
+					<div class="item">
+					  <i class="top aligned right triangle icon"></i>
+					  <div class="content">
+						<div class="header">End Date</div>
+						<div class="description">
+						<input type="text" class="form-control" ng-model="editdata.Contact.enddate">
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+	</div>
+	</div>
+  
+  </div>
+
+</div>
+</div>
+
+				  
+
+				 
+				 
+			</div>
+			</div>
+
+
+
+
+		
     </div>
+  </div>
+</div>
 </div>
