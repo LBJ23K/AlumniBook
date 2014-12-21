@@ -205,33 +205,46 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
+    var expLen;
     $scope.init = function(){
       $http({
         method:"GET",
         url:"/api/user"
       })
       .success(function(data){
-        console.log(data);
         $scope.user = data;
         $scope.editdata = angular.copy(data);
+        expLen = data.Experiences.length;
+        // console.log($scope.user)
       })
       .error(function(){
         console.log('fail');
       })
     }
+    $scope.addnewExp = function(){
+      $scope.editdata.Experiences.push({})
+    }
     $scope.modifysubmit = function(){
       var modify = angular.copy($scope.editdata);
-      modify.Education = JSON.stringify(modify.Education);
-      modify.Experience = JSON.stringify(modify.Experience);
-      modify.Contact = JSON.stringify(modify.Contact);
-      console.log(modify);
+      // modify.Education = JSON.stringify(modify.Education);
+      // modify.Experience = JSON.stringify(modify.Experience);
+      // modify.Contact = JSON.stringify(modify.Contact); 
+      modify.expLen = expLen;
+      console.log(modify)
+      // return
       $http({
         method:"POST",
         url:"/api/user/modify",
-        data:$scope.editdata
+        data:modify
       })
       .success(function(data){
-        window.location.reload();
+        console.log(data);
+        if(!data.msg) {
+          alertify.alert(data.type+" error.", function (e) {
+                window.location.reload();
+          });
+        }
+        else window.location.reload();
       })
       .error(function(){
         console.log('fail');
