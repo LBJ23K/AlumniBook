@@ -61,7 +61,12 @@ exports.modifyUser = function(req, res) {
                     }
                 }).success(function(education) {
                     education.updateAttributes(educationdata).success(function(result) {
-                        callback(null, result)
+                        callback(null, true);
+                    }).error(function(err){
+                        Experror = _.pick(err.errors[0],'type','path','value');
+                        console.log(err.errors[0])
+                        Experror.source = 'Education';
+                        callback(null,Experror)
                     })
                 })
             },
@@ -72,69 +77,106 @@ exports.modifyUser = function(req, res) {
                     }
                 }).success(function(contact) {
                     contact.updateAttributes(contactdata).success(function(result) {
-                        callback(null, result)
+                        callback(null, true)
+                    }).error(function(err){ 
+                        Experror = _.pick(err.errors[0],'type','path','value');
+                        Experror.source = 'Contact';
+                        callback(null,Experror)
                     })
                 })
             },
         	function(callback) {
-                _.each(experiencedata,function(item,i){
+                Experror = {}
+                // _.each(experiencedata,function(item,i){
+                //     if(i<modifyLen){
+                //         Experience.find({
+                //             where: {
+                //                 experience_id: item.experience_id
+                //                 }
+                //             })
+                //             .success(function(experience) {
+                //                 experience.updateAttributes(experiencedata[i])
+                //                 .success(function(result) {
+                //                     console.log(i+' success')
+                //                 })
+                //                 .error(function(err){
+                //                     console.log(i+' fail');
+                //                     Experror = _.pick(err.errors[0],'type','path');
+                //                     Experror.index = i;
+                //                     Experror.msg=false;
+
+                //                     callback(null,Experror);
+                //                     // console.log(Experror)
+                //                 })
+                //             })
+                            
+                //     }
+                //     else{
+                //         item.member_id = id;
+                //         Experience.create(item)
+                //         .success(function(experience){
+                //         })
+                //         .error(function(err){
+                //             Experror = _.pick(err.errors[0],'type','path');
+                //             Experror.index = i;
+                //             Experror.msg=false;
+                //             callback(null,Experror);
+                //         })
+                //     }
+                // })
+                async.each(experiencedata,function(item,callback2){
+                    var i =experiencedata.indexOf(item)
                     if(i<modifyLen){
                         Experience.find({
-                    where: {
-                        experience_id: item.experience_id
-                        }
-                    }).success(function(experience) {
-                        experience.updateAttributes(experiencedata[i]).success(function(result) {
+                            where: {
+                                experience_id: item.experience_id
+                                }
                             })
-                        })
+                            .success(function(experience) {
+                                experience.updateAttributes(experiencedata[i])
+                                .success(function(result) {
+                                    callback2()
+                                })
+                                .error(function(err){
+                                    console.log(i+' fail');
+                                    Experror = _.pick(err.errors[0],'type','path','value');
+                                    Experror.index = i;
+                                    Experror.source = 'Experience';
+
+                                    callback2(Experror);
+                                    // console.log(Experror)
+                                })
+                            })
+                            
                     }
                     else{
                         item.member_id = id;
-                        Experience.create(item).success(function(experience){
+                        Experience.create(item)
+                        .success(function(experience){
+                            callback2()
+                        })
+                        .error(function(err){
+                            Experror = _.pick(err.errors[0],'type','path');
+                            Experror.index = i;
+                            Experror.msg=false;
+                            callback2(Experror);
                         })
                     }
-                    
-                })
-                    callback(null,null)
-                    // console.log(experiencedata[i])
-                    
-                // if(modifyLen==experiencedata.length) callback(null, null)
-                // for(i=modifyLen;i<experiencedata.length;i++){
-                //     experiencedata[i].member_id = id;
-                //     Experience.create(experiencedata[i]).success(function(experience){
-                //         console.log('create ok')
-                //         callback(null, null)
+                },function(err){
 
-                //     })
-                // }
-                // _.each(experiencedata,function(item){
-                //     item.member_id = id;
-                //     Experience.findOrCreate({where:item,defaults:{}}).success(function(experience) {
-                //     console.log('exp success')
-                // })
-                // })
-                
+                    // console.log('done')
+                    // console.log(err)
+                    if(err) callback(null,err)
+                    else callback(null,true)
+                })
+                    // console.log(Experror)
+                    // callback(null,null)
             }],
         function(err, results) {
-            if(err) console.log(err)
-            res.json({msg:true})
-            // res.json(results)
+            if(err) console.log(err);
+            // res.json({msg:true})
+            res.json(results)
         });
 }
 
-function validateData(target){
-    var re = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/;
-    var msg = [];
-    var i =0;
-    var educationdata = target.Education;
-    var contactdata = target.Contact;
-    var experiencedata = target.Experiences;
-    
-    if(isNaN(educationdata.degree)) msg.push({msg:false,type:'Education degree'})
-    if(isNaN(educationdata.stuid)) msg.push({msg:false,type:'Education stuid'})
-    if(!re.test(contactdata.email)) msg.push({msg:false,type:'Contact email'})
-    for(i=0;i<experiencedata.length;i++){
-        
-    }
-  
-}
+

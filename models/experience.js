@@ -3,12 +3,42 @@ exports.Experience = function(Sequelize, sequelize){
 
     experience_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true }, 
     member_id: Sequelize.INTEGER,
-    org:{ type: Sequelize.STRING },
-    dept: {type:Sequelize.STRING},
-    position:{type:Sequelize.STRING},   
-    startdate:{type:Sequelize.DATE},
-    enddate:{type:Sequelize.DATE},
-    description:{type:Sequelize.STRING}
+    org:{ 
+      type: Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+      },
+    dept: {
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    },
+    position:{
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    },   
+    startdate:{
+      type:Sequelize.DATE,
+      allowNull: true,
+      defaultValue:null,
+      validate:{
+        isDate: true
+      }
+    },
+    enddate:{
+      type:Sequelize.DATE,
+      allowNull: true,
+      defaultValue:null,
+      validate:{
+        isDate: true
+      }
+    },
+    description:{
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    }
   },{
     tableName: 'experience'
   });

@@ -226,6 +226,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.modifysubmit = function(){
       var modify = angular.copy($scope.editdata);
+      var errorMsg = []
       // modify.Education = JSON.stringify(modify.Education);
       // modify.Experience = JSON.stringify(modify.Experience);
       // modify.Contact = JSON.stringify(modify.Contact); 
@@ -239,12 +240,20 @@ angular.module('myApp.controllers', ['ngRoute']).
       })
       .success(function(data){
         console.log(data);
-        if(!data.msg) {
-          alertify.alert(data.type+" error.", function (e) {
-                window.location.reload();
-          });
-        }
-        else window.location.reload();
+        _.each(data,function(item){
+            if( item!=true){ 
+              alertify.error(item.value+' on '+item.source+' ' +item.path);
+              errorMsg.push(item)
+          }
+        })
+        // console.log(errorMsg)
+        if(errorMsg.length==0) window.location.reload();
+        // if(!data.msg) {
+        //   alertify.alert(data.type, function (e) {
+        //         window.location.reload();
+        //   });
+        // }
+        // else window.location.reload();
       })
       .error(function(){
         console.log('fail');
