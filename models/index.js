@@ -27,7 +27,7 @@ Education.belongsTo(Member, {foreignKey: 'member_id'})
 Member.hasOne(Contact, {foreignKey: 'member_id'})
 Contact.belongsTo(Member, {foreignKey: 'member_id'})
 
-Member.hasOne(Experience, {foreignKey: 'member_id'})
+Member.hasMany(Experience, {foreignKey: 'member_id'})
 Experience.belongsTo(Member, {foreignKey: 'member_id'})
 
 Member.hasMany(Post, {foreignKey: 'member_id'})

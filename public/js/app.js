@@ -50,6 +50,7 @@ angular.module('myApp', [
       templateUrl: 'partial/usersetting',
       controller: 'Usersetting'
     })
+
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
 }]);
