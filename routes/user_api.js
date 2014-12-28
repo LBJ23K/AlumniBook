@@ -34,6 +34,9 @@ exports.getUserData = function(req,res){
         },
         include: [Education, Contact, Experience]
     }).success(function(member) {
+        res.json(member);
+    })
+}
 
 exports.findAllUser = function(req, res) {
     // var id = req.session.user.member_id;

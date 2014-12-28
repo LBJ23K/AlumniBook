@@ -17,6 +17,19 @@ var session = require('express-session');
 var local = require('./config/local');
 var i18n = require('i18n');
 var i18nController = require('./routes/i18nController');
+var passport = require('passport');
+var SamlStrategy = require('passport-saml').Strategy
+passport.use(new SamlStrategy(
+  {
+    path: '/login/callback',
+    entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
+    issuer: 'passport-saml'
+  },
+  function(profile, done) {
+    console.log(profile);
+    return done(null, profile);
+  })
+);
 
 i18n.configure({
   locales:['en', 'zh-TW'],
@@ -110,6 +123,20 @@ app.get('/logout', function(req, res){
     res.redirect("/");
   });
 });
+//saml
+app.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+app.get('/login',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
 // for clear logout
