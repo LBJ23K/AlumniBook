@@ -11,7 +11,8 @@ var express = require('express'),
   user_api = require('./routes/user_api'),
   path = require('path'),
   issue = require('./routes/issue'),
-  comment = require('./routes/comment');
+  comment = require('./routes/comment'),
+  postCategory = require('./routes/postCategory');
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -117,6 +118,10 @@ app.get('/comment/destroy', api.checkLogin, comment.destroy);
 app.get('/api/like/:id', api.checkLogin, api.likePost);
 app.get('/api/dislike/:id', api.checkLogin, api.dislikePost);
 
+app.post('/category/create', postCategory.create);
+app.get('/category/list', postCategory.list);
+app.post('/category/update', postCategory.update);
+app.get('/category/destroy', postCategory.destroy);
 
 app.get('/logout', function(req, res){
   req.session.destroy(function() {
