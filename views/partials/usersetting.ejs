@@ -113,20 +113,21 @@
 					</div>
 					</div>
 	
-						<div class="column">
+						<div class="column" ng-repeat="item in user.Experiences">
 						<div class="ui list">
 								<div class="item">
 								
 								<div class="content">
 								  <div class="header">經歷</div>
 								  <div class="list">
+
 									<div class="item">
 									  <i class="top aligned right triangle icon"></i>
 									  <div class="content">
 										<div class="header">Organization</div>
 										<div class="description">
-											<span ng-show="!user.Experience.org">尚未填寫</span>
-											<span ng-show="user.Experience.org">{{user.Experience.org}}</span>
+											<span ng-show="!item.org">尚未填寫</span>
+											<span ng-show="item.org">{{item.org}}</span>
 										</div>
 									  </div>
 									</div>
@@ -137,8 +138,8 @@
 								  <div class="content">
 									<div class="header">Department</div>
 									<div class="description">
-									<span ng-show="!user.Experience.dept">尚未填寫</span>
-									<span ng-show="user.Experience.dept">{{user.Experience.dept}}</span>
+									<span ng-show="!item.dept">尚未填寫</span>
+									<span ng-show="item.dept">{{item.dept}}</span>
 									</div>
 								  </div>
 								</div>
@@ -148,8 +149,8 @@
 								  <div class="content">
 									<div class="header">Position</div>
 									<div class="description">
-									<span ng-show="!user.Experience.position">尚未填寫</span>
-									<span ng-show="user.Experience.position">{{user.Experience.position}}</span>
+									<span ng-show="!item.position">尚未填寫</span>
+									<span ng-show="item.position">{{item.position}}</span>
 									</div>
 								  </div>
 								</div>
@@ -159,8 +160,8 @@
 								  <div class="content">
 									<div class="header">Description</div>
 									<div class="description">
-									<span ng-show="!user.Experience.description">尚未填寫</span>
-									<span ng-show="user.Experience.description">{{user.Experience.description}}</span>
+									<span ng-show="!item.description">尚未填寫</span>
+									<span ng-show="item.description">{{item.description}}</span>
 									</div>
 								  </div>
 								</div>
@@ -170,8 +171,8 @@
 								  <div class="content">
 									<div class="header">Start Date</div>
 									<div class="description">
-									<span ng-show="!user.Experience.startdate">尚未填寫</span>
-									<span ng-show="user.Experience.startdate">{{user.Experience.startdate}}</span>
+									<span ng-show="!item.startdate">尚未填寫</span>
+									<span ng-show="item.startdate">{{item.startdate}}</span>
 									</div>
 								  </div>
 								</div>
@@ -181,8 +182,8 @@
 								  <div class="content">
 									<div class="header">End Date</div>
 									<div class="description">
-									<span ng-show="!user.Experience.enddate">尚未填寫</span>
-									<span ng-show="user.Experience.enddate">{{user.Experience.enddate}}</span>
+									<span ng-show="!item.enddate">尚未填寫</span>
+									<span ng-show="item.enddate">{{item.enddate}}</span>
 									</div>
 								  </div>
 								</div>
@@ -250,16 +251,6 @@
 						</div>
 					  </div>
 					</div>
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">End Date</div>
-						<div class="description">
-						<span ng-show="!user.Contact.enddate">尚未填寫</span>
-						<span ng-show="user.Contact.enddate">{{user.Contact.enddate}}</span>
-						</div>
-					  </div>
-					</div>
 				  </div>
 				</div>
 			  </div>
@@ -299,7 +290,7 @@
 				  <div class="content">
 					<div class="header">Degree</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.degree">
+					<input type="text" class="form-control"  ng-model="editdata.Education.degree">
 					</div>
 				  </div>
 				</div>
@@ -344,20 +335,21 @@
 		  </div>
 	</div>
 	</div>
-	
-    <div class="column">
+	 <button class="ui blue button" ng-click="addnewExp()">增加經歷</button>
+    <div class="column" ng-repeat="item in editdata.Experiences">
 	<div class="ui list">
 			<div class="item">
 		
 			<div class="content">
 			  <div class="header">經歷</div>
 			  <div class="list">
+
 				<div class="item">
 				  <i class="top aligned right triangle icon"></i>
 				  <div class="content">
 					<div class="header">Organization</div>
 					<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Experience.org">
+						<input type="text" class="form-control" ng-model="item.org">
 					</div>
 				  </div>
 				</div>
@@ -368,7 +360,7 @@
 				  <div class="content">
 					<div class="header">Department</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Experience.dept">
+					<input type="text" class="form-control" ng-model="item.dept">
 					</div>
 				  </div>
 				</div>
@@ -377,7 +369,7 @@
 				  <div class="content">
 					<div class="header">Position</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Experience.position">
+					<input type="text" class="form-control" ng-model="item.position">
 					</div>
 				  </div>
 				</div>
@@ -386,7 +378,7 @@
 				  <div class="content">
 					<div class="header">Description</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Experience.description">
+					<input type="text" class="form-control" ng-model="item.description">
 					</div>
 				  </div>
 				</div>
@@ -395,7 +387,8 @@
 				  <div class="content">
 					<div class="header">Start Date</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Experience.startdate">
+					<input type="text" class="form-control" ng-model="item.startdate">
+					<!-- <input type="text"  date-time ng-model="item.startdate" min-view="date"> -->
 					</div>
 				  </div>
 				</div>
@@ -404,7 +397,8 @@
 				  <div class="content">
 					<div class="header">End Date</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Experience.enddate">
+					<!-- <input type="text"  date-time  ng-model="item.enddate" min-view="date"> -->
+					<input type="text" class="form-control" ng-model="item.enddate">
 					</div>
 				  </div>
 				</div>
@@ -464,15 +458,6 @@
 						<div class="header">Phone number(Work)</div>
 						<div class="description">
 						<input type="text" class="form-control" ng-model="editdata.Contact.phone_work">
-						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">End Date</div>
-						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.enddate">
 						</div>
 					  </div>
 					</div>

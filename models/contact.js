@@ -3,12 +3,38 @@ exports.Contact = function(Sequelize, sequelize){
 
     contact_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true }, 
     member_id: Sequelize.INTEGER,
-    name:{ type: Sequelize.STRING },
-    address: {type:Sequelize.STRING},
-    email:{type:Sequelize.STRING},   
-    phone_mobile:{type:Sequelize.STRING},
-    phone_work:{type:Sequelize.STRING},
-    phone_home:{type:Sequelize.STRING}
+    name:{ 
+      type: Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+      },
+    address: {
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    },
+    email:{
+      type:Sequelize.STRING,
+      allowNull:false,
+      validate:  {
+        isEmail: true
+      }
+    },   
+    phone_mobile:{
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    },
+    phone_work:{
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    },
+    phone_home:{
+      type:Sequelize.STRING,
+      allowNull: true,
+      defaultValue:null
+    }
   },{
     tableName: 'contact'
   });
