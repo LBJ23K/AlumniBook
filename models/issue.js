@@ -6,6 +6,7 @@ exports.Issue = function(Sequelize, sequelize){
     title: { type: Sequelize.TEXT },
     content: { type: Sequelize.TEXT },
     parent_issue: { type: Sequelize.INTEGER },
+    postCategory_id: { type: Sequelize.INTEGER },
 
   },{
     tableName: 'issue'

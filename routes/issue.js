@@ -5,6 +5,7 @@ var Member = require('../models').Member;
 var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
 var Like = require('../models').Like;
+var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
 
 exports.create = function(req, res){
@@ -14,7 +15,7 @@ exports.create = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue})
+      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id})
       .save()
       .success(function(anotherTask) {
         // you can now access the currently saved task with the variable anotherTask... nice!
@@ -32,7 +33,7 @@ exports.list = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .findAll({include: [ models.Member, Comment ],order: [['createdAt', 'DESC']]}).success(function(result){
+      .findAll({include: [ models.Member, Comment, PostCategory ],order: [['createdAt', 'DESC']]}).success(function(result){
         console.log(result.dataValues);
         _.each(result, function(oneResult){
           var temp = _.omit(oneResult.Member.dataValues, 'password');
@@ -63,7 +64,7 @@ exports.listById = function(req, res){
   //       console.log(error);
   //       res.json(error);
   //     })
-  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member]}).success(function(post){
+  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member, PostCategory]}).success(function(post){
     // console.log(post)
     if(post.Member != null)
       post.Member.password = "";
@@ -147,7 +148,7 @@ exports.update = function(req, res){
       .find({where: {issue_id: req.body.issue_id}}).success(function(result){
         console.log('retrieve success');
         if (req.session.user.member_id == result.member_id) {
-            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue}).success(function(updatedResult) {
+            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id}).success(function(updatedResult) {
                 res.json(updatedResult);
               }).error(function(error) {
             // Ooops, do some error-handling
