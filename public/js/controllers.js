@@ -203,6 +203,30 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.user = {};
     window.location.reload();
   }).
+  controller('Userlist', function($scope, $location, $state, $http){
+    $http({
+        method:"GET",
+        url:"/api/user/list"
+      }).success(function(data){
+        console.log(data);
+        $scope.members = data;
+      })
+    $scope.queryUser = function(member_id){
+      $http({
+        method:"GET",
+        url:"/api/user/"+member_id
+      }).success(function(data){
+        console.log(data);
+        $scope.member = data;
+        $scope.member_contact = JSON.stringify(data.Contact, undefined, 2 )
+        $scope.member_experience = JSON.stringify(data.Experience, undefined, 2 )
+        $scope.member_eduction = JSON.stringify(data.Education, undefined, 2 )
+      })
+    }
+    // $rootScope.isLogin = false;
+    // $rootScope.user = {};
+    // window.location.reload();
+  }).
   controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
     $scope.init = function(){

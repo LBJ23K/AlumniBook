@@ -26,6 +26,31 @@ exports.getUser = function(req, res) {
     })
 }
 
+exports.findAllUser = function(req, res) {
+    // var id = req.session.user.member_id;
+    Member.findAll({
+        where: {
+            // member_id: id
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        res.json(member);
+    })
+}
+
+exports.findOneUser = function(req, res) {
+    // var id = req.session.user.member_id;
+
+    Member.find({
+        where: {
+            member_id: req.params.id
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        res.json(member);
+    })
+}
+
 exports.modifyUser = function(req, res) {
     var id = req.session.user.member_id;
     // var educationdata = JSON.parse(req.body.education);

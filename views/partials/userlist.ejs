@@ -1,0 +1,36 @@
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
+  
+    <div ng-repeat="member in members">
+      <span ng-bind="member.name"></span>
+      <button ng-click="queryUser(member.member_id)">更多</button>
+    </div>
+    <div >
+      <span ng-bind="member.name"></span><br>
+      <span ng-bind="member.school"></span><br>
+      <span ng-bind="member.department"></span><br>
+      <span ng-bind="member.gender"></span><br>
+      <span ng-bind="member.grade"></span><br>
+      
+      <img ng-src="{{member.photo}}"></span><br>
+      <pre ng-bind="member_contact"></pre><br>
+      <pre ng-bind="member_experience"></pre><br>
+      <pre ng-bind="member_eduction"></pre><br>
+  <!--     <span ng-bind="member.name"></span>
+      <span ng-bind="member.name"></span>
+      <span ng-bind="member.name"></span> -->
+    </div>
+    <!-- <form action="" class="ui form">
+    	<div class="field">
+        <label><%= __('Username') %></label><input type="text" ng-model="account">
+      </div>
+      <div class="field">
+        <label><%= __('Password') %></label><input type="password" ng-model="password">
+      </div>
+      <button class="ui button " ng-click="Login()"><%= __('Login') %></button>
+    </form> -->
+
+    </div>
+  </div>
+</div>

@@ -50,6 +50,12 @@ angular.module('myApp', [
       templateUrl: 'partial/usersetting',
       controller: 'Usersetting'
     })
+    .
+    state('userlist', {
+      url:'/userlist',
+      templateUrl: 'partial/userlist',
+      controller: 'Userlist'
+    })
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
 }]);
