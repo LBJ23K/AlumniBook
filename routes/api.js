@@ -171,6 +171,7 @@ exports.commentOn = function(req, res){
 	Comment.create(comment).success(function(theCommnet){
 		console.log(theCommnet.dataValues);
 		res.json({msg:"success"})
+		//send mail to subscribers
 	})
 
 }
