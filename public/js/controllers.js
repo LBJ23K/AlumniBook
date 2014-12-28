@@ -18,6 +18,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $rootScope.user = {
       name: $window.userName,
+      user_id: $window.userId,
       gender: $window.gender,
       school: $window.userSchool,
       department: $window.userDepartment,
@@ -203,6 +204,24 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.user = {};
     window.location.reload();
   }).
+  controller('Profile', function($scope, $location, $state,$http,$rootScope){
+    $scope.id = $state.params.id;
+    // $scope.myid = $rootScope.user.user_id
+    $scope.init = function(){
+      $http({
+        method:"GET",
+        url:"/api/users/"+$scope.id
+      })
+      .success(function(data){
+        console.log(data);
+        $scope.user = data;
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
+
+  }).
   controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
     var expLen;
@@ -213,6 +232,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       })
       .success(function(data){
         $scope.user = data;
+        console.log($scope.user)
         $scope.editdata = angular.copy(data);
         expLen = data.Experiences.length;
         // console.log($scope.user)
@@ -223,6 +243,10 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.addnewExp = function(){
       $scope.editdata.Experiences.push({})
+    }
+    $scope.cancelsubmit = function(){
+      $scope.edit = false;
+      $scope.editdata = angular.copy($scope.user);
     }
     $scope.modifysubmit = function(){
       var modify = angular.copy($scope.editdata);
@@ -243,6 +267,7 @@ angular.module('myApp.controllers', ['ngRoute']).
         _.each(data,function(item){
             if( item!=true){ 
               alertify.error(item.value+' on '+item.source+' ' +item.path);
+
               errorMsg.push(item)
           }
         })

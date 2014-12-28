@@ -1,10 +1,21 @@
+<style>
+.form-control {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+    background: transparent;
+ }
+ .form-control.ng-invalid {
+    background: rgb(244, 134, 134);;
+ }
+
+</style>
 <div class="container" ng-init="init()">
 <div class="ui page grid">
 	<div class="two wide column">
 		<div class="ui icon header">
 		  <div class="col-md-2" style="margin-top:20px">
-				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+				<img class="ui medium circular image" ng-hide="user.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				<img ng-show="user.photo" ng-src="{{user.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
 			</div>
 		  <div class="content member-info">
 		    <span ng-bind="user.name"></span>
@@ -24,9 +35,9 @@
     		<pre class="segment" ng-bind="post.content"></pre>
 				
 				<div class="ui basic right aligned segment">
-	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit">修改資料</button>
+	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id" >修改資料</button>
                     <button class="ui primary button" ng-click="modifysubmit()" ng-show="edit">送出</button>
-                    <button class="ui button" ng-click="edit=false" ng-show="edit">取消</button>	
+                    <button class="ui button" ng-click="cancelsubmit()" ng-show="edit">取消</button>	
 		   	</div>
     	</div>
 
@@ -290,7 +301,7 @@
 				  <div class="content">
 					<div class="header">Degree</div>
 					<div class="description">
-					<input type="text" class="form-control"  ng-model="editdata.Education.degree">
+					<input type="text" ng-pattern="/^\d+$/" class="form-control"  ng-model="editdata.Education.degree">
 					</div>
 				  </div>
 				</div>

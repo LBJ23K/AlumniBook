@@ -74,7 +74,7 @@ app.get('/partial/:name', routes.partial);
 
 app.get('/api/user', api.checkLogin,user_api.getUser);
 app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
-app.get('/api/user/:id',user_api.getUserData);
+app.get('/api/users/:id',user_api.getUserData);
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
@@ -87,7 +87,6 @@ app.post('/api/login', api.login);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
 app.post('/api/signup', api.createMember);
-
 
 app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);

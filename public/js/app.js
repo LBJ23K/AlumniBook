@@ -42,15 +42,23 @@ angular.module('myApp', [
       url:'/topic/:id',
       templateUrl: 'partial/topic',
       controller: 'Topic'
-    }).state('otherwise',{
-      url: "/"
     }).
     state('usersetting', {
       url:'/usersetting',
       templateUrl: 'partial/usersetting',
       controller: 'Usersetting'
+    }).
+    state('userprofile', {
+      url:'/users/:id',
+      templateUrl: 'partial/usersetting',
+      controller: 'Profile'
+    }).
+    state('otherwise',{
+      url: "/"
     })
 
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
 }]);
+
+
