@@ -5,6 +5,7 @@ var Member = require('../models').Member;
 var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
 var Like = require('../models').Like;
+var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
 var Notify_issue = require("../models").Notify_issue;
 
@@ -15,7 +16,7 @@ exports.create = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue})
+      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id})
       .save()
       .success(function(anotherTask) {
         // you can now access the currently saved task with the variable anotherTask... nice!
@@ -33,7 +34,7 @@ exports.list = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .findAll({include: [ models.Member, Comment ],order: [['createdAt', 'DESC']]}).success(function(result){
+      .findAll({include: [ models.Member, Comment, PostCategory ],order: [['createdAt', 'DESC']]}).success(function(result){
         console.log(result.dataValues);
         _.each(result, function(oneResult){
           var temp = _.omit(oneResult.Member.dataValues, 'password');
@@ -64,8 +65,8 @@ exports.listById = function(req, res){
   //       console.log(error);
   //       res.json(error);
   //     })
-  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member]}).success(function(post){
-    // console.log(post)
+  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member, PostCategory]}).success(function(post){
+    console.log(req.session.user)
     if(post.Member != null)
       post.Member.password = "";
     async.parallel([
@@ -103,19 +104,24 @@ exports.listById = function(req, res){
         })
       },
       function(callback){
-        Notify_issue.findAll({
-          where:{
-            issue_id:req.param('issue_id'), 
-            member_id:req.session.user.member_id 
-          }
-        }).success(function(subscribe){
-          if(subscribe.length == 0){
-            callback(null, false);
-          }
-          else{
-            callback(null, true);
-          }
-        })
+        if(req.session.user){
+            Notify_issue.findAll({
+              where:{
+                issue_id:req.param('issue_id'), 
+                member_id:req.session.user.member_id 
+              }
+            }).success(function(subscribe){
+              if(subscribe.length == 0){
+                callback(null, false)
+              }
+              else{
+                callback(null, true)
+              }
+            })
+        }
+        else{
+          callback(null, false)
+        }
       }],function(err, result){
         // console.log(result)
         var isAuthor
@@ -129,8 +135,9 @@ exports.listById = function(req, res){
           likeThis:result[0], 
           like:result[1],
           comments:result[2], 
-          isAuthor:isAuthor,
-          isSubscribe: result[3]
+          isSubscribe: result[3],
+          isAuthor:isAuthor
+          
         });
       })
     
@@ -170,7 +177,7 @@ exports.update = function(req, res){
       .find({where: {issue_id: req.body.issue_id}}).success(function(result){
         console.log('retrieve success');
         if (req.session.user.member_id == result.member_id) {
-            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue}).success(function(updatedResult) {
+            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id}).success(function(updatedResult) {
                 res.json(updatedResult);
               }).error(function(error) {
             // Ooops, do some error-handling

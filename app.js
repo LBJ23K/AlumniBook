@@ -12,7 +12,8 @@ var express = require('express'),
   path = require('path'),
   issue = require('./routes/issue'),
   comment = require('./routes/comment'),
-  notify = require('./routes/notify');
+  notify = require('./routes/notify'),
+  postCategory = require('./routes/postCategory');
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -122,6 +123,10 @@ app.get('/notify/subscribe/:id', api.checkLogin, notify.subscribe);
 app.get('/notify/unsubscribe/:id', api.checkLogin, notify.unsubscribe);
 app.get('/api/notify/:id/:type', api.checkLogin, notify.notify);
 
+app.post('/category/create', postCategory.create);
+app.get('/category/list', postCategory.list);
+app.post('/category/update', postCategory.update);
+app.get('/category/destroy', postCategory.destroy);
 
 app.get('/logout', function(req, res){
   req.session.destroy(function() {

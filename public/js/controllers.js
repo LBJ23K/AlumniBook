@@ -93,7 +93,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     // write Ctrl here
     $scope.myComment = "";
     // $scope.SubscribeThis = true;
-    console.log($state.params.id)
+    // console.log($state.params.id)
     $http({method:"GET", url:'/issue/listById?issue_id='+$state.params.id}).success(function(result){
       $scope.post = result.post;
       $scope.comments = result.comments;
@@ -101,7 +101,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.like = result.like;
       $scope.isAuthor = result.isAuthor;
       $scope.SubscribeThis = result.isSubscribe;
-      console.log(result);
+      console.log(result.post.issue_id);
     })
     $scope.deleteIssue = function(){
       $http({method:"GET", url:'/issue/destroy?issue_id='+$state.params.id}).success(function(result){

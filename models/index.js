@@ -19,6 +19,7 @@ var Contact = require("./contact").Contact(Sequelize,sequelize);
 var Experience = require("./experience").Experience(Sequelize,sequelize);
 var Notify_issue = require("./notify_issue").Notify_issue(Sequelize,sequelize);
 var Notification = require("./notification").Notification(Sequelize,sequelize);
+var PostCategory = require("./postCategory").PostCategory(Sequelize,sequelize);
 
 Member.hasOne(Education, {foreignKey: 'member_id'})
 Education.belongsTo(Member, {foreignKey: 'member_id'})
@@ -44,9 +45,11 @@ Comment.belongsTo(Issue, {foreignKey:'issue_id'});
 Member.hasMany(Comment, {foreignKey:'member_id'});
 Comment.belongsTo(Member, {foreignKey:'member_id'});
 
-
 Issue.hasMany(Like, {foreignKey: 'issue_id'});
 Like.belongsTo(Issue, {foreignKey:'issue_id'});
+
+PostCategory.hasMany(Issue, {foreignKey: 'postCategory_id'});
+Issue.belongsTo(PostCategory, {foreignKey:'postCategory_id'});
 
 Member.hasMany(Like, {foreignKey:'member_id'});
 Like.belongsTo(Member, {foreignKey:'member_id'});
@@ -71,3 +74,5 @@ exports.Issue = Issue;
 exports.Like = Like;
 exports.Notify_issue = Notify_issue;
 exports.Notification = Notification;
+
+exports.PostCategory = PostCategory;
