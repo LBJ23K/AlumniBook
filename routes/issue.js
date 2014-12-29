@@ -6,6 +6,7 @@ var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
 var Like = require('../models').Like;
 var sanitizer = require('sanitizer');
+var Notify_issue = require("../models").Notify_issue;
 
 exports.create = function(req, res){
   console.log(req.body);
@@ -100,6 +101,21 @@ exports.listById = function(req, res){
           callback(null, comments)
           
         })
+      },
+      function(callback){
+        Notify_issue.findAll({
+          where:{
+            issue_id:req.param('issue_id'), 
+            member_id:req.session.user.member_id 
+          }
+        }).success(function(subscribe){
+          if(subscribe.length == 0){
+            callback(null, false);
+          }
+          else{
+            callback(null, true);
+          }
+        })
       }],function(err, result){
         // console.log(result)
         var isAuthor
@@ -107,8 +123,15 @@ exports.listById = function(req, res){
           isAuthor = (req.session.user.member_id==post.member_id);
         else
           isAuthor = 0;
-
-        res.json({post:post, likeThis:result[0], like:result[1],comments:result[2], isAuthor:isAuthor});
+        console.log(result);
+        res.json({
+          post:post,
+          likeThis:result[0], 
+          like:result[1],
+          comments:result[2], 
+          isAuthor:isAuthor,
+          isSubscribe: result[3]
+        });
       })
     
   });

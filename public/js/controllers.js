@@ -89,9 +89,10 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Topic', function ($scope, $state, $http, $route, $location) {
+  controller('Topic', function ($scope, $state, $http, $route, $location, $window) {
     // write Ctrl here
     $scope.myComment = "";
+    // $scope.SubscribeThis = true;
     console.log($state.params.id)
     $http({method:"GET", url:'/issue/listById?issue_id='+$state.params.id}).success(function(result){
       $scope.post = result.post;
@@ -99,6 +100,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.likeThis = result.likeThis;
       $scope.like = result.like;
       $scope.isAuthor = result.isAuthor;
+      $scope.SubscribeThis = result.isSubscribe;
       console.log(result);
     })
     $scope.deleteIssue = function(){
@@ -125,6 +127,24 @@ angular.module('myApp.controllers', ['ngRoute']).
         }
       })
     }
+    $scope.subscribePost = function(){
+      if($window.isLogin == true){
+
+      $scope.SubscribeThis = true;
+      $http({method:"GET", url:'/notify/subscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+      }
+      else{
+        alert("Please login first!");
+      }
+    }
+    $scope.unsubscribePost = function(){
+      $scope.SubscribeThis = false;
+      $http({method:"GET", url:'/notify/unsubscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+    }    
     $scope.submitComment = function(){
       var data = {
         post_id : $state.params.id,

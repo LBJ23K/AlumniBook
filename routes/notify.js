@@ -42,12 +42,12 @@ exports.unsubscribe = function(req, res){
 	});
 }
 
-exports.notify = function(req, res){
+exports.notify = function(post, type){
 	
 	//send mail to all subscribers
 	Notify_issue.findAll({
         where: {
-             issue_id: req.params.id
+             issue_id: post.issue_id
         },
     }).success(function(notify_issues) {
         // console.log(notify_issue);
@@ -56,7 +56,7 @@ exports.notify = function(req, res){
         	Notification.create({
 				issue_id: issue.issue_id, 
 				member_id: issue.member_id,
-				type: req.params.type,
+				type: type,
 				read: "unread"
 			}).success(function(){
 				res.json({
@@ -67,3 +67,29 @@ exports.notify = function(req, res){
         });
     });
 }
+
+// exports.notify = function(req, res){
+	
+// 	//send mail to all subscribers
+// 	Notify_issue.findAll({
+//         where: {
+//              issue_id: req.params.id
+//         },
+//     }).success(function(notify_issues) {
+//         // console.log(notify_issue);
+//         //find all user
+//         notify_issues.forEach(function(issue){
+//         	Notification.create({
+// 				issue_id: issue.issue_id, 
+// 				member_id: issue.member_id,
+// 				type: req.params.type,
+// 				read: "unread"
+// 			}).success(function(){
+// 				res.json({
+// 					msg:"notify success"
+// 				});
+// 				console.log("notify success");	
+// 			});
+//         });
+//     });
+// }

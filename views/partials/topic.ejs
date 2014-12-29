@@ -33,8 +33,11 @@
 				<div class="ui basic right aligned segment">
 	    		<button ng-show="likeThis"class="ui teal labeled icon button" ng-click="dislikePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
 			   	<button ng-hide="likeThis" class="ui labeled icon button" ng-click="likePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
+			
+			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>
 
-			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>	
+			   	<button ng-hide="SubscribeThis"class="ui teal labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span>追蹤</span></button>
+			   	<button ng-show="SubscribeThis" class="ui labeled icon button" ng-click="unsubscribePost()"><i class="remove icon"></i><span>取消追蹤</span></button>	
 		   	</div>
     	</div>
 
