@@ -21,6 +21,14 @@ var i18nController = require('./routes/i18nController');
 var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
+passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 passport.use(new SamlStrategy(
   {
     path: '/login/callback',
