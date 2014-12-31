@@ -137,6 +137,7 @@ app.post('/category/update', postCategory.update);
 app.get('/category/destroy', postCategory.destroy);
 
 app.get('/logout', function(req, res){
+  req.logout();
   req.session.destroy(function() {
     res.redirect("/");
   });
@@ -145,6 +146,7 @@ app.get('/logout', function(req, res){
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
+    console.log(req.body);
     res.redirect('/');
   }
 );
