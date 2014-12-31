@@ -20,6 +20,7 @@ var i18n = require('i18n');
 var i18nController = require('./routes/i18nController');
 var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
+
 passport.use(new SamlStrategy(
   {
     path: '/login/callback',
@@ -64,6 +65,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
 app.use(app.router);
 app.use(passport.initialize());
+app.use(passport.session());
+
 // development only
 if (app.get('env') === 'development') {
   app.use(express.errorHandler());
