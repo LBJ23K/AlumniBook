@@ -63,9 +63,10 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
-app.use(app.router);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(app.router);
+
 
 // development only
 if (app.get('env') === 'development') {
