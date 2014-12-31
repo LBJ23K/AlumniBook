@@ -22,7 +22,8 @@ var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  console.log(user);
+  done(null, user);
   });
 
 passport.deserializeUser(function(user, done) {
