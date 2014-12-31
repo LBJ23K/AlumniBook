@@ -23,7 +23,7 @@ passport.use(new SamlStrategy(
   {
     path: '/login/callback',
     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
-    issuer: 'passport-saml'
+    issuer: 'passport-saml-sso-2'
   },
   function(profile, done) {
     console.log(profile);
