@@ -151,9 +151,9 @@ app.post('/login/callback',
   }
 );
 app.get('/login',
-  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/login');
   }
 );
 
