@@ -2,13 +2,14 @@
 /*
  * GET home page.
  */
+var Notification = require('../models').Notification;
+var _ = require('underscore');
 
 var Notification = require('../models').Notification;
 var _ = require('underscore');
 
 exports.index = function(req, res){
 	var config = {};
-	// console.log(req.session)
     config.isLogin = req.session.isLogin ? true : false;
     if(config.isLogin){
     	config.User = req.session.user;

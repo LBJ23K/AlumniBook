@@ -147,9 +147,6 @@ exports.listById = function(req, res){
                   }
               });
           }
-        else{
-          callback(null, false);
-        }        
       }],function(err, result){
         // console.log(result)
         var isAuthor

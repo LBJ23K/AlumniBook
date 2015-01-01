@@ -25,8 +25,8 @@
             var userGender = "<%- User.gender %>";
             var userPhoto = "<%- User.photo %>";
             var notifications = "<%- Notifications %>"
-            // console.log(notifications);
         }
+        console.log(notifications)
         console.log(isLogin)
         </script>
     </head>
@@ -45,7 +45,6 @@
           <%= __('Login') %>
         </a>
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.notifications"  class="item">
-
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
           
         </a>
