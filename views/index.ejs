@@ -23,7 +23,9 @@
             var userGrade = "<%- User.grade %>";
             var userDepartment = "<%- User.department %>";
             var userGender = "<%- User.gender %>";
-            var userPhoto = "<%- User.photo %>"
+            var userPhoto = "<%- User.photo %>";
+            var notifications = "<%- Notifications %>"
+            // console.log(notifications);
         }
         console.log(isLogin)
         </script>
@@ -42,6 +44,8 @@
         <a ng-hide="{{$root.isLogin}}" href="/login" class="item">
           <%= __('Login') %>
         </a>
+        <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.notifications"  class="item">
+
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
           
         </a>

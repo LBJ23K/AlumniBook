@@ -8,6 +8,7 @@ var Like = require('../models').Like;
 var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
 var Notify_issue = require("../models").Notify_issue;
+var Notification = require('../models').Notification;
 
 exports.create = function(req, res){
   console.log(req.body);
@@ -122,6 +123,33 @@ exports.listById = function(req, res){
         else{
           callback(null, false)
         }
+      },function(callback){
+          if(req.session.user){
+              Notification.findAll({
+                  where: {
+                      member_id: req.session.user.member_id,
+                      issue_id: req.param('issue_id'),
+                      read: "unread"
+                  }
+              }).success(function(unread){
+                  if(_.size(unread) != 0){
+                      _.map(unread, function(unread){
+                          unread.updateAttributes({
+                              read: "read"
+                          }).success(function(){
+                              // console.log(unread);
+                              callback(null, true);
+                          });
+                      });
+                  }
+                  else{
+                      callback(null, true);
+                  }
+              });
+          }
+        else{
+          callback(null, false);
+        }        
       }],function(err, result){
         // console.log(result)
         var isAuthor

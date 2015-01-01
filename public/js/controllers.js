@@ -22,7 +22,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       school: $window.userSchool,
       department: $window.userDepartment,
       grade: $window.userGrade,
-      photo: $window.userPhoto
+      photo: $window.userPhoto,
+      notifications: $window.notifications
     }
 
     console.log($rootScope.lang)
