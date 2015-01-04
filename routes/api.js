@@ -67,7 +67,7 @@ exports.modifyaccount = function (req, res){
 									 school:req.body.school, 
 									 department:req.body.department,
 									 grade:req.body.gender,
-									 photo:req.body.gender.photo}).success(function(change){
+									 photo:req.body.photo}).success(function(change){
 				// console.log(change)
 				req.session.user = change.dataValues;
 				// console.log(change.dataValues)
