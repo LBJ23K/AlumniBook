@@ -66,6 +66,9 @@
         <a href="/users/userlist" class="item">
             <%= __('User List') %>
         </a>
+        <a ng-show="{{$root.isLogin}}" href="/chart" class="item">
+          <%= __('Chart') %>
+        </a>
         <a ng-show="{{$root.isLogin}}" href="/logout" class="item">
          <%= __('Logout') %>
         </a>
@@ -98,6 +101,9 @@
     <script src="../js/controllers.js"></script>
     <script src="../js/filters.js"></script>
     <script src="../js/directives.js"></script>
+    <script src="../js/highcharts-ng/src/highcharts-ng.js"></script>
+    <script src="//code.highcharts.com/highcharts.src.js"></script>
+    <script src="../js/charts.js"></script>
     <script src="../js/alertify.js-0.3.11/lib/alertify.min.js"></script>
 
     </body>

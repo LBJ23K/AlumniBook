@@ -407,4 +407,186 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log('fail');
       })
     }
-  });
+  }).
+  controller('Chart', function ($scope, $location, $state, $http){
+    
+
+    $scope.addPoints = function () {
+        var seriesArray = $scope.chartConfig.series
+        var rndIdx = Math.floor(Math.random() * seriesArray.length);
+        seriesArray[rndIdx].data = seriesArray[rndIdx].data.concat([1, 10, 20])
+    };
+
+    $scope.addSeries = function () {
+        var rnd = []
+        for (var i = 0; i < 10; i++) {
+            rnd.push(Math.floor(Math.random() * 20) + 1)
+        }
+        $scope.chartConfig.series.push({
+            data: rnd
+        })
+    }
+
+    $scope.removeRandomSeries = function () {
+        var seriesArray = $scope.chartConfig.series
+        var rndIdx = Math.floor(Math.random() * seriesArray.length);
+        seriesArray.splice(rndIdx, 1)
+    }
+
+    $scope.swapChartType = function () {
+        if (this.chartConfig.options.chart.type === 'column') {
+            this.chartConfig.options.chart.type = 'bar'
+        } else if (this.chartConfig.options.chart.type === 'bar'){
+            this.chartConfig.options.chart.type = 'line'
+            this.chartConfig.options.chart.zoomType = 'x'
+        } else if (this.chartConfig.options.chart.type === 'line'){
+            this.chartConfig.options.chart.type = 'column' 
+        } else {
+            this.chartConfig.options.chart.type = 'column' 
+        }
+    }
+
+    $scope.toggleLoading = function () {
+        this.chartConfig.loading = !this.chartConfig.loading
+    }
+
+    $scope.seeGrade = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].grade;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+      var xAxis = Object.keys(obj);
+      var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'grade',data: yAxis}];
+        $scope.chartConfig.title.text = ' grade statistic, total ' + $scope.members.length;
+    }
+
+    $scope.seeGender = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].gender;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+      var xAxis = Object.keys(obj);
+      var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'gender',data: yAxis}];
+        $scope.chartConfig.title.text = ' gender statistic, total ' + $scope.members.length;
+    }
+
+    $scope.seeDepartment = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].department;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+        var xAxis = Object.keys(obj);
+        var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'department',data: yAxis}];
+        $scope.chartConfig.title.text = ' department statistic, total ' + $scope.members.length;
+    }
+
+    $scope.seeSchool = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].school;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+      var xAxis = Object.keys(obj);
+      var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'school',data: yAxis}];
+        $scope.chartConfig.title.text = ' school statistic, total ' + $scope.members.length;
+    }
+
+    $scope.seeOrganization = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].Experiences.org;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+      var xAxis = Object.keys(obj);
+      var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'organization',data: yAxis}];
+        $scope.chartConfig.title.text = ' organization statistic, total ' + $scope.members.length;
+    }
+
+    $scope.seeEndDate = function(){
+      var obj = {};
+      for(var i = 0; i < $scope.members.length; i++){
+          var single = $scope.members[i].Education.enddate;
+          if(single === null)single='null'
+          if(obj[single] === undefined ){
+            obj[single] = 1;
+          }else{
+            obj[single] = obj[single] + 1;
+          }
+      }
+      var xAxis = Object.keys(obj);
+      var yAxis = xAxis.map(function(i){return obj[i];});
+        $scope.chartConfig.xAxis.categories= xAxis;
+        $scope.chartConfig.series = [{name:'enddate',data: yAxis}];
+        $scope.chartConfig.title.text = ' enddate statistic, total ' + $scope.members.length;
+    }
+
+    $http({
+        method:"GET",
+        url:"/api/users"
+      }).success(function(data){
+        console.log(data);
+        $scope.members = data;
+      })
+
+    $scope.chartConfig = {
+        options: {
+            chart: {
+                type: 'column'
+            },
+                 tooltip: {
+                     style: {
+                         padding: 10,
+                         fontWeight: 'bold'
+                     }
+                 }
+        },
+        series: [{
+            data: []
+        }],
+        title: {
+            text: 'Hello'
+        },
+        xAxis: { minRange: 1,title: {text: 'number'}},
+        yAxis: {title:{text:'number of persons'},minRange:1 },
+        loading: false
+    }
+
+});

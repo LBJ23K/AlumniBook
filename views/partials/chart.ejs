@@ -1,0 +1,27 @@
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
+
+        <div class="span12">
+            <!--<input ng-model="chartConfig.title.text">-->
+            <button ng-click="seeGrade()">Grade</button>
+            <button ng-click="seeGender()">Gender</button>
+            <button ng-click="seeSchool()">School</button>
+            <button ng-click="seeDepartment()">Department</button>
+            <button ng-click="seeOrganization()">Organization</button>
+            <button ng-click="seeEndDate()">EndDate</button>
+            <!--<button ng-click="addSeries()">Add Series</button>-->
+            <!--<button ng-click="addPoints()">Add Points to Random Series</button>-->
+            <button ng-click="removeRandomSeries()">Remove Series</button>
+            <button ng-click="swapChartType()">Line/Bar/Column</button>
+            <!--<button ng-click="toggleLoading()">Loading?</button>-->
+        </div>
+        <div class="row">
+            <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+        </div>
+    </div>
+    </div>
+
+    </div>
+  </div>
+</div>

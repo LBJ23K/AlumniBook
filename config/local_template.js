@@ -5,7 +5,7 @@ module.exports = {
 	
 	enviroment: "development",
 
-	port : (process.env.PORT || 3000),
+	port : (process.env.PORT || 3001),
 
 	middleware: {
 		view_cache : false,

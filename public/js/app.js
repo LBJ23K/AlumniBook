@@ -8,8 +8,8 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'ui.router',
-
+  'highcharts-ng',
+  'ui.router'
 ])
 .config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
   
@@ -58,6 +58,11 @@ angular.module('myApp', [
       templateUrl: 'partial/usersetting',
       controller: 'Profile'
     }).
+    state('chart',{
+      url:'/chart',
+      templateUrl: 'partial/chart',
+      controller: 'Chart'
+     }).
     state('otherwise',{
       url: "/"
     })
