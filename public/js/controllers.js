@@ -317,6 +317,8 @@ angular.module('myApp.controllers', ['ngRoute']).
             this.chartConfig.options.chart.zoomType = 'x'
         } else if (this.chartConfig.options.chart.type === 'line'){
             this.chartConfig.options.chart.type = 'column' 
+        } else {
+            this.chartConfig.options.chart.type = 'column' 
         }
     }
 
@@ -338,8 +340,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
-        $scope.chartConfig.title.text = ' education statistic, total ' + $scope.members.length;
+        $scope.chartConfig.series = [{name:'grade',data: yAxis}];
+        $scope.chartConfig.title.text = ' grade statistic, total ' + $scope.members.length;
     }
 
     $scope.seeGender = function(){
@@ -356,7 +358,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
+        $scope.chartConfig.series = [{name:'gender',data: yAxis}];
         $scope.chartConfig.title.text = ' gender statistic, total ' + $scope.members.length;
     }
 
@@ -374,8 +376,8 @@ angular.module('myApp.controllers', ['ngRoute']).
         var xAxis = Object.keys(obj);
         var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
-        $scope.chartConfig.title.text = ' Department statistic, total ' + $scope.members.length;
+        $scope.chartConfig.series = [{name:'department',data: yAxis}];
+        $scope.chartConfig.title.text = ' department statistic, total ' + $scope.members.length;
     }
 
     $scope.seeSchool = function(){
@@ -392,8 +394,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
-        $scope.chartConfig.title.text = ' School statistic, total ' + $scope.members.length;
+        $scope.chartConfig.series = [{name:'school',data: yAxis}];
+        $scope.chartConfig.title.text = ' school statistic, total ' + $scope.members.length;
     }
 
     $scope.seeOrganization = function(){
@@ -410,7 +412,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
+        $scope.chartConfig.series = [{name:'organization',data: yAxis}];
         $scope.chartConfig.title.text = ' organization statistic, total ' + $scope.members.length;
     }
 
@@ -428,7 +430,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
         $scope.chartConfig.xAxis.categories= xAxis;
-        $scope.chartConfig.series = [{data: yAxis}];
+        $scope.chartConfig.series = [{name:'enddate',data: yAxis}];
         $scope.chartConfig.title.text = ' enddate statistic, total ' + $scope.members.length;
     }
 
