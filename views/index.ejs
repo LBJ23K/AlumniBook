@@ -81,6 +81,9 @@
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
           
         </a>
+        <a ng-show="{{$root.isLogin}}" href="/chart" class="item">
+          <%= __('Chart') %>
+        </a>
         <a ng-show="{{$root.isLogin}}" href="/logout" class="item">
          <%= __('Logout') %>
         </a>

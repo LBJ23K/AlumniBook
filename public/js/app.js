@@ -58,6 +58,11 @@ angular.module('myApp', [
       templateUrl: 'partial/userList',
       controller: 'UserList'
     }).
+    state('chart',{
+      url:'/chart',
+      templateUrl: 'partial/chart',
+      controller: 'Chart'
+     }).
     state('otherwise',{
       url: "/"
     })

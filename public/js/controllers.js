@@ -574,7 +574,7 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $http({
         method:"GET",
-        url:"/api/user/list"
+        url:"/api/users"
       }).success(function(data){
         console.log(data);
         $scope.members = data;
