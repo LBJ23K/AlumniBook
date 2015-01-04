@@ -14,6 +14,49 @@ var sequelize = new Sequelize(
     local.model.mysql.options
 );
 
+exports.login = function(req, res){
+    // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
+    // console.log(req.user.uid)
+    // console.log(req.session.user);
+    var query = {
+        where:{
+            account: req.user.uid
+        }
+    }
+    Member.find(query).success(function(member){
+        console.log(JSON.stringify(member));
+        if(member == null){
+            // res.end("fail");
+            // res.json({msg:"No user!"});
+            var user = {}
+            Member.create({account:req.user.uid}).success(function(member){
+                Education.create({member_id:member.dataValues.member_id})
+                Experience.create({member_id:member.dataValues.member_id})
+                Contact.create({member_id:member.dataValues.member_id})
+                // res.json({msg:"success"});
+                var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+                req.session.user = user;
+                req.session.isLogin = true;
+                res.redirect('/');
+                
+        })
+        .error(function(err){
+            console.log(err);
+        })
+        }
+        else{
+            var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+            // console.log(user)
+            req.session.user = user;
+            req.session.isLogin = true;
+            res.redirect('/');
+            
+        }
+
+    });    
+  }
+
+
 exports.getUser = function(req, res) {
     var id = req.session.user.member_id;
     Member.find({
@@ -62,21 +105,20 @@ exports.findOneUser = function(req, res) {
         res.json(member);
     })
 }
+exports.getAlluser = function(req,res){
+    Member.findAll({include: [Education, Contact, Experience]})
+    .success(function(member) {
+        res.json(member);
+    })
+}
 exports.modifyUser = function(req, res) {
     var id = req.session.user.member_id;
-    // var educationdata = JSON.parse(req.body.education);
-    // var contactdata = JSON.parse(req.body.contact);
-    // var experiencedata = JSON.parse(req.body.experience);
     var educationdata = req.body.Education;
     var contactdata = req.body.Contact;
     var experiencedata = req.body.Experiences;
     var modifyLen = req.body.expLen;
     var i=0;
-    // console.log(educationdata)
-    // console.log(contactdata)
-    // console.log(experiencedata)
-    // return;
-    
+    console.log(educationdata)
     async.series([
             function(callback) {
                 Education.find({
@@ -103,6 +145,7 @@ exports.modifyUser = function(req, res) {
                     contact.updateAttributes(contactdata).success(function(result) {
                         callback(null, true)
                     }).error(function(err){ 
+                        console.log(err)
                         Experror = _.pick(err.errors[0],'type','path','value');
                         Experror.source = 'Contact';
                         callback(null,Experror)
@@ -111,43 +154,6 @@ exports.modifyUser = function(req, res) {
             },
         	function(callback) {
                 Experror = {}
-                // _.each(experiencedata,function(item,i){
-                //     if(i<modifyLen){
-                //         Experience.find({
-                //             where: {
-                //                 experience_id: item.experience_id
-                //                 }
-                //             })
-                //             .success(function(experience) {
-                //                 experience.updateAttributes(experiencedata[i])
-                //                 .success(function(result) {
-                //                     console.log(i+' success')
-                //                 })
-                //                 .error(function(err){
-                //                     console.log(i+' fail');
-                //                     Experror = _.pick(err.errors[0],'type','path');
-                //                     Experror.index = i;
-                //                     Experror.msg=false;
-
-                //                     callback(null,Experror);
-                //                     // console.log(Experror)
-                //                 })
-                //             })
-                            
-                //     }
-                //     else{
-                //         item.member_id = id;
-                //         Experience.create(item)
-                //         .success(function(experience){
-                //         })
-                //         .error(function(err){
-                //             Experror = _.pick(err.errors[0],'type','path');
-                //             Experror.index = i;
-                //             Experror.msg=false;
-                //             callback(null,Experror);
-                //         })
-                //     }
-                // })
                 async.each(experiencedata,function(item,callback2){
                     var i =experiencedata.indexOf(item)
                     if(i<modifyLen){
@@ -203,4 +209,98 @@ exports.modifyUser = function(req, res) {
         });
 }
 
+exports.searchUserAccount = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            account: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
 
+exports.searchUserName = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            name: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserSchool = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            school: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserDepartment = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            department: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGender = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            gender: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGrade = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            grade: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
