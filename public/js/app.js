@@ -19,10 +19,10 @@ angular.module('myApp', [
       templateUrl: 'partial/home',
       controller: 'Home'
     }).
-    state('signup', {
-      url:'/signup',
-      templateUrl: 'partial/signup',
-      controller: 'Signup'
+    state('account', {
+      url:'/accountsetting',
+      templateUrl: 'partial/account',
+      controller: 'Account'
     }).
     state('login', {
       url:'/login',
@@ -48,15 +48,15 @@ angular.module('myApp', [
       templateUrl: 'partial/usersetting',
       controller: 'Usersetting'
     }).
+    state('userList', {
+      url:'/users/userlist',
+      templateUrl: 'partial/userList',
+      controller: 'UserList'
+    }).
     state('userprofile', {
       url:'/users/:id',
       templateUrl: 'partial/usersetting',
       controller: 'Profile'
-    }).
-   state('userList', {
-      url:'/users',
-      templateUrl: 'partial/userList',
-      controller: 'UserList'
     }).
     state('otherwise',{
       url: "/"

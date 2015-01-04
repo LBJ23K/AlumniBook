@@ -27,7 +27,6 @@ angular.module('myApp.controllers', ['ngRoute']).
       notifications: $window.notifications
     };
 
-    console.log($rootScope.lang);
     $rootScope.$watch('lang',function(newValue, oldValue){   
 
       if(newValue!=oldValue){
@@ -253,40 +252,26 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Signup', function ($scope, $http, $location, $state) {
-    // write Ctrl here
+  controller('Account', function ($scope, $http, $location, $state) {
+    $scope.init = function(){
+      $http({method:"GET", url:'/api/getaccount'}).success(function(result){
+        $scope.data = result;
+        console.log(result)
+      })
+    }
     $scope.photo = "";
     $scope.upload = function(){
     
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
     filepicker.pickAndStore({},{location:"S3",container:"dcard-guang"},function(InkBlob){
       console.log(InkBlob);
-      $scope.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
+      $scope.data.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
       $scope.$apply();
       // alert("success");
     });  
   } 
-    $scope.name = userName;
-    $scope.school = userSchool;
-    $scope.gender = userGender;
-    $scope.department = userDepartment;
-    $scope.grade = userGrade;
-    $scope.photo = userPhoto;
-    $scope.account = userAccount;
-
     $scope.signup = function(){
-      var data = {
-        name: $scope.name,
-        school: $scope.school,
-        gender: $scope.gender,
-        department: $scope.department,
-        grade: $scope.grade,
-        photo: $scope.photo,
-        account: $scope.account,
-        member_id: userId
-        // password: $scope.password
-      }
-      $http({method:"POST", url:'/api/signup', data:data}).success(function(result){
+      $http({method:"POST", url:'/api/modifyaccount', data:$scope.data}).success(function(result){
         if(result.msg = "success")
           alertify.success("更新成功");
         // var data = {
@@ -325,7 +310,13 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('UserList', function($scope, $location, $state, $http){
+  controller('UserList', function($scope, $location, $state, $http,$filter){
+    // var category = $state.params.category;
+    // var search = $state.params.search;
+    // console.log(category);
+    // console.log(search);
+    // category = 'department';
+    // search = ''
     $scope.init = function(){
       $http({
         method:"GET",
@@ -339,6 +330,11 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log('fail');
       })
     }
+    // $scope.filteruser = function(users){
+    //   // return function(users) {
+    //     // return $filter('filter')(users.name,$scope.searchuser);
+    //   // }
+    // }
     $scope.select = function(userID){
       $location.path('/users/'+userID);
     }

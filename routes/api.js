@@ -47,7 +47,7 @@ exports.dislikePost = function(req, res){
 	});
 		
 }
-exports.createMember = function (req, res){
+exports.modifyaccount = function (req, res){
 	// console.log(req.body);
 	// req.body.password = md5(req.body.password);
 	// Member.create(req.body).success(function(member){
@@ -74,7 +74,18 @@ exports.createMember = function (req, res){
 	})
 
 }
-
+exports.getaccount = function(req,res){
+	var id = req.session.user.member_id;
+	console.log(req.session.user);
+    Member.find({
+        where: {
+            member_id: id
+        }
+    }).success(function(member) {
+    	var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+        res.json(user);
+    })
+}
 exports.login = function (req, res){
 	// var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
 	var query = {
@@ -83,14 +94,14 @@ exports.login = function (req, res){
 		}
 	}
 	Member.find(query).success(function(member){
-		console.log(JSON.stringify(member));
+		// console.log(JSON.stringify(member));
 		if(member == null){
 			// res.end("fail");
 			res.json({msg:"No user!"});
 		}
 		else if(md5(req.body.password) == member.dataValues.password){
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-			// console.log(user)
+			console.log(user);
 			req.session.user = user;
 			req.session.isLogin = true;
 			res.json({msg:"success"});

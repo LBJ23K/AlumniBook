@@ -39,7 +39,6 @@ passport.use(new SamlStrategy(
     issuer: 'passport-saml-sso-2'
   },
   function(profile, done){
-  
     return done(null, profile);
   })
 );
@@ -123,12 +122,12 @@ app.get('/api/users/:id',user_api.getUserData);//particular user
 app.get('/api/users',user_api.getAlluser);//alluserList
 
 
-app.get('/user/search/account', api.checkLogin, user_api.searchUserAccount);
-app.get('/user/search/name', api.checkLogin, user_api.searchUserName);
-app.get('/user/search/school', api.checkLogin, user_api.searchUserSchool);
-app.get('/user/search/gender', api.checkLogin, user_api.searchUserGender);
-app.get('/user/search/department', api.checkLogin, user_api.searchUserDepartment);
-app.get('/user/search/grade', api.checkLogin, user_api.searchUserGrade);
+app.get('/api/user/search/account', api.checkLogin, user_api.searchUserAccount);
+app.get('/api/user/search/name', api.checkLogin, user_api.searchUserName);
+app.get('/api/user/search/school', api.checkLogin, user_api.searchUserSchool);
+app.get('/api/user/search/gender', api.checkLogin, user_api.searchUserGender);
+app.get('/api/user/search/department', api.checkLogin, user_api.searchUserDepartment);
+app.get('/api/user/search/grade', api.checkLogin, user_api.searchUserGrade);
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
@@ -137,10 +136,11 @@ app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 
 app.post('/api/login', api.login);
+app.get('/api/getaccount', api.getaccount);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
-app.post('/api/signup', api.createMember);
+app.post('/api/modifyaccount', api.modifyaccount);
 
 app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);

@@ -3,8 +3,8 @@
 /* Filters */
 
 angular.module('myApp.filters', ['ngRoute']).
-  filter('interpolate', function (version) {
-    return function (text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    }
+  filter('userFilter', function () {
+  	return function(items,search) {
+  		console.log(search)
+  	};
   });
