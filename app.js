@@ -163,10 +163,11 @@ app.get('/logout', function(req, res){
 //saml
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-  function(req, res) {
-    console.log(req);
-    res.redirect('/');
-  }
+  user_api.login
+  // function(req, res) {
+  //   console.log(req.user);
+  //   res.redirect('/');
+  // }
 );
 app.get('/login',
   passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),

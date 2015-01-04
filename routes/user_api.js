@@ -16,9 +16,11 @@ var sequelize = new Sequelize(
 
 exports.login = function(req, res){
     // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
+    console.log(req.user.uid)
+    console.log(req.session.user);
     var query = {
         where:{
-            account: profile.uid
+            account: req.user.uid
         }
     }
     Member.find(query).success(function(member){
