@@ -49,16 +49,30 @@ exports.dislikePost = function(req, res){
 }
 exports.createMember = function (req, res){
 	// console.log(req.body);
-	req.body.password = md5(req.body.password);
-	Member.create(req.body).success(function(member){
-		Education.create({member_id:member.dataValues.member_id})
-		Experience.create({member_id:member.dataValues.member_id})
-		Contact.create({member_id:member.dataValues.member_id})
-		res.json({msg:"success"});
+	// req.body.password = md5(req.body.password);
+	// Member.create(req.body).success(function(member){
+	// 	Education.create({member_id:member.dataValues.member_id})
+	// 	Experience.create({member_id:member.dataValues.member_id})
+	// 	Contact.create({member_id:member.dataValues.member_id})
+	// 	res.json({msg:"success"});
+	// })
+	// .error(function(err){
+	// 	console.log(err);
+	// })
+	Member.find({account:req.body.account}).success(function(member){
+		if(member){
+			// console.log(member)
+			member.updateAttributes(req.body).success(function(change){
+				// console.log(change)
+				req.session.user = change.dataValues;
+				console.log(change.dataValues)
+				console.log(req.session.user)
+				res.json({msg:"success"});
+			})
+			
+		}
 	})
-	.error(function(err){
-		console.log(err);
-	})
+
 }
 
 exports.login = function (req, res){

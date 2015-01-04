@@ -60,6 +60,11 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $scope.search = function(text) {
       console.log(text);
+      if (!text || text == '') {
+        $rootScope.$broadcast('resetSearch');
+        return;
+      }
+
       var data = {
         field: $scope.searchField,
         searchText: text
@@ -67,6 +72,17 @@ angular.module('myApp.controllers', ['ngRoute']).
       $http.post('/issue/search', data).success(function(issues){
         console.log(issues);
         // TODO: NKT, display these issues PLZ!!!!!
+        $rootScope.searchResults = _.sortBy(issues, function(post) {
+          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+          return -(new Date(post.createdAt).getTime());
+        });
+        $rootScope.$broadcast('searchDone');
+
+
+//        $scope.posts = _.sortBy(issues, function(post) {
+//          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+//          return -(new Date(post.createdAt).getTime());
+//        });
       });
     };
     $scope.get_notifications = function(){
@@ -85,11 +101,20 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
     $http({method:"GET", url:'/issue/list'}).success(function(posts){
-      $scope.posts = _.sortBy(posts, function(post){
+      $scope.allPosts = $scope.posts = _.sortBy(posts, function(post){
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
       console.log(posts);
     });
+
+    $scope.$on('searchDone', function() {
+      $scope.posts = $rootScope.searchResults;
+    });
+
+    $scope.$on('resetSearch', function() {
+      $scope.posts = $scope.allPosts;
+    });
+
     $scope.time = function (t) {
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
     };
@@ -127,12 +152,17 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $scope.title = "";
     $scope.content = "";
+    $scope.cat_id = 1;
+    $http({method:"GET", url:'/category/list'}).success(function(category){
+      $scope.category = category;
+    })
     // console.log(userSchool);
     // write Ctrl here
     $scope.submitPost = function(){
       var data = {
         title: $scope.title, 
-        content: $scope.content
+        content: $scope.content,
+        postCategory_id:$scope.cat_id
       }
       $http({method:"POST", url:"/issue/create", data:data}).success(function(post){
         console.log(post);
@@ -236,7 +266,6 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('Signup', function ($scope, $http, $location, $state) {
     // write Ctrl here
     $scope.photo = "";
-    console.log('h')
     $scope.upload = function(){
     
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
@@ -246,7 +275,15 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.$apply();
       // alert("success");
     });  
-  }
+  } 
+    $scope.name = userName;
+    $scope.school = userSchool;
+    $scope.gender = userGender;
+    $scope.department = userDepartment;
+    $scope.grade = userGrade;
+    $scope.photo = userPhoto;
+    $scope.account = userAccount;
+
     $scope.signup = function(){
       var data = {
         name: $scope.name,
@@ -256,18 +293,21 @@ angular.module('myApp.controllers', ['ngRoute']).
         grade: $scope.grade,
         photo: $scope.photo,
         account: $scope.account,
-        password: $scope.password
+        member_id: userId
+        // password: $scope.password
       }
       $http({method:"POST", url:'/api/signup', data:data}).success(function(result){
-        var data = {
-        account:$scope.account,
-        password:$scope.password
-        }
-        $http({method:"POST", url:"/api/login", data:data}).success(function(post){
-            console.log(post);
-            window.location.reload();
-            $location.path('/')
-        });
+        if(result.msg = "success")
+          alertify.success("更新成功");
+        // var data = {
+        // account:$scope.account,
+        // password:$scope.password
+        // }
+        // $http({method:"POST", url:"/api/login", data:data}).success(function(post){
+        //     console.log(post);
+        //     window.location.reload();
+        //     $location.path('/')
+        // });
       })
     }
 

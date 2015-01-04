@@ -12,7 +12,7 @@
     	<label><%= __('Content') %></label>
     	<textarea type="text" ng-model="content" rows="10"></textarea>
     </div>
-    
+    <select name="" id="" ng-model="cat_id"><option value="{{cat.postCategory_id}}" ng-repeat="cat in category">{{cat.category_name}}</option></select><br>
     <button class="ui button" ng-click="submitPost()"><%= __('Submit') %></button>
     </form>
 
