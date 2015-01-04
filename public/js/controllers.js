@@ -26,7 +26,6 @@ angular.module('myApp.controllers', ['ngRoute']).
       photo: $window.userPhoto,
       notifications: $window.notifications
     };
-
     $rootScope.$watch('lang',function(newValue, oldValue){   
 
       if(newValue!=oldValue){
