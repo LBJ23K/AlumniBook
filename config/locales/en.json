@@ -31,5 +31,7 @@
 	"Upload": "Upload",
 	"Photo": "Photo",
 	"Upload Photo": "Upload Photo",
-	"Notification": "New comment on "
+	"Notification": "New comment on ",
+  "Search_Field_Title": "Search Title",
+  "Search_Field_Author": "Search Author"
 }

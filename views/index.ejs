@@ -45,10 +45,9 @@
       <div class="right menu">
 
         <div ng-show="{{$root.isLogin}}" class="ui simple dropdown item">
-          {{searchFieldText}} <i class="dropdown icon"></i>
+          {{searchingField.displayName}} <i class="dropdown icon"></i>
           <div class="menu">
-            <a class="item" ng-click="setSearchField(0)">文章標題</a>
-            <a class="item" ng-click="setSearchField(1)">文章作者</a>
+            <a class="item" ng-repeat="field in searchFields" ng-click="setSearchField(field)">{{field.displayName}}</a>
           </div>
         </div>
 

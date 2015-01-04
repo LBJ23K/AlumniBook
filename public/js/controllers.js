@@ -37,52 +37,36 @@ angular.module('myApp.controllers', ['ngRoute']).
           location.reload();
         });
       }
-
-      
-    })
+    });
     $rootScope.host = window.location.host;
 
-    $scope.searchFieldText = "文章標題";
-    $scope.searchField = "title";
-    $scope.setSearchField = function(option) {
-      switch (option) {
-        case 0:
-          $scope.searchFieldText = "文章標題";
-          $scope.searchField = "title";
-          break;
-        case 1:
-          $scope.searchFieldText = "文章作者";
-          $scope.searchField = "author";
-          break;
-        default:
-      }
+    $scope.searchFields = [];
+    $http.get('/issue/searchFields').success(function(fields) {
+      $scope.searchFields = fields;
+      $scope.searchingField = fields[0];
+    });
+
+    $scope.setSearchField = function(field) {
+      $scope.searchingField = field;
     };
 
     $scope.search = function(text) {
-      console.log(text);
       if (!text || text == '') {
         $rootScope.$broadcast('resetSearch');
         return;
       }
 
       var data = {
-        field: $scope.searchField,
+        field: $scope.searchingField.field,
         searchText: text
       };
       $http.post('/issue/search', data).success(function(issues){
         console.log(issues);
-        // TODO: NKT, display these issues PLZ!!!!!
         $rootScope.searchResults = _.sortBy(issues, function(post) {
           console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
           return -(new Date(post.createdAt).getTime());
         });
         $rootScope.$broadcast('searchDone');
-
-
-//        $scope.posts = _.sortBy(issues, function(post) {
-//          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
-//          return -(new Date(post.createdAt).getTime());
-//        });
       });
     };
     $scope.get_notifications = function(){

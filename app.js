@@ -147,6 +147,7 @@ app.get('/issue/list', issue.list);
 app.get('/issue/listById', issue.listById);
 app.post('/issue/update', api.checkLogin, issue.update);
 app.get('/issue/destroy', api.checkLogin, issue.destroy);
+app.get('/issue/searchFields', issue.supportedSearchFields);
 app.post('/issue/search', api.checkLogin, issue.search);
 
 app.post('/comment/update', api.checkLogin, comment.update);
