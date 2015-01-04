@@ -9,6 +9,7 @@ var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
 var Notify_issue = require("../models").Notify_issue;
 var Notification = require('../models').Notification;
+var i18n = require('i18n');
 
 exports.create = function(req, res){
   console.log(req.body);
@@ -221,6 +222,20 @@ exports.update = function(req, res){
         res.json(error);
       })   
   })
+};
+
+exports.supportedSearchFields = function(req, res) {
+  var fields = [
+    {
+      field: 'title',
+      displayName: req.__('Search_Field_Title')
+    },
+    {
+      field: 'author',
+      displayName: req.__('Search_Field_Author')
+    }
+  ];
+  res.json(fields);
 };
 
 // search issues
