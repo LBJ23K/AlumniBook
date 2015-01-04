@@ -250,9 +250,11 @@ angular.module('myApp.controllers', ['ngRoute']).
         url:"/api/user/me"
       })
       .success(function(data){
-        data.Education.startdate = moment(data.Education.startdate).format('YYYY-MM')
+        if(data.Education.startdate) data.Education.startdate = moment(data.Education.startdate).format('YYYY-MM')
+          if(data.Education.enddate) data.Education.enddate = moment(data.Education.enddate).format('YYYY-MM')
         _.each(data.Experiences,function(item){
           if(item.startdate) item.startdate = moment(item.startdate).format('YYYY-MM')
+          if(item.enddate) item.enddate = moment(item.enddate).format('YYYY-MM')
         })
         $scope.user = data;
         console.log($scope.user)

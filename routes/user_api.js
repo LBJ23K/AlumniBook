@@ -118,7 +118,7 @@ exports.modifyUser = function(req, res) {
     var experiencedata = req.body.Experiences;
     var modifyLen = req.body.expLen;
     var i=0;
-    
+    console.log(educationdata)
     async.series([
             function(callback) {
                 Education.find({
@@ -154,43 +154,6 @@ exports.modifyUser = function(req, res) {
             },
         	function(callback) {
                 Experror = {}
-                // _.each(experiencedata,function(item,i){
-                //     if(i<modifyLen){
-                //         Experience.find({
-                //             where: {
-                //                 experience_id: item.experience_id
-                //                 }
-                //             })
-                //             .success(function(experience) {
-                //                 experience.updateAttributes(experiencedata[i])
-                //                 .success(function(result) {
-                //                     console.log(i+' success')
-                //                 })
-                //                 .error(function(err){
-                //                     console.log(i+' fail');
-                //                     Experror = _.pick(err.errors[0],'type','path');
-                //                     Experror.index = i;
-                //                     Experror.msg=false;
-
-                //                     callback(null,Experror);
-                //                     // console.log(Experror)
-                //                 })
-                //             })
-                            
-                //     }
-                //     else{
-                //         item.member_id = id;
-                //         Experience.create(item)
-                //         .success(function(experience){
-                //         })
-                //         .error(function(err){
-                //             Experror = _.pick(err.errors[0],'type','path');
-                //             Experror.index = i;
-                //             Experror.msg=false;
-                //             callback(null,Experror);
-                //         })
-                //     }
-                // })
                 async.each(experiencedata,function(item,callback2){
                     var i =experiencedata.indexOf(item)
                     if(i<modifyLen){
