@@ -23,26 +23,26 @@ var i18nController = require('./routes/i18nController');
 var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
-// passport.serializeUser(function(user, done) {
-//   // console.log(user);
-//   done(null, user);
-//   });
+passport.serializeUser(function(user, done) {
+  // console.log(user);
+  done(null, user);
+  });
 
-// passport.deserializeUser(function(user, done) {
-//   done(null, user);
-// });
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
-// passport.use(new SamlStrategy(
-//   {
-//     path: '/login/callback',
-//     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
-//     issuer: 'passport-saml-sso-2'
-//   },
-//   function(profile, done){
+passport.use(new SamlStrategy(
+  {
+    path: '/login/callback',
+    entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
+    issuer: 'passport-saml-sso-2'
+  },
+  function(profile, done){
   
-//     return done(null, profile);
-//   })
-// );
+    return done(null, profile);
+  })
+);
 
 i18n.configure({
   locales:['en', 'zh-TW'],
@@ -172,20 +172,20 @@ app.get('/logout', function(req, res){
   });
 });
 // //saml
-// app.post('/login/callback',
-//   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-//   user_api.login
-//   // function(req, res) {
-//   //   console.log(req.user);
-//   //   res.redirect('/');
-//   // }
-// );
-// app.get('/login',
-//   passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
-//   function(req, res) {
-//     res.redirect('/login');
-//   }
-// );
+app.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  user_api.login
+  // function(req, res) {
+  //   console.log(req.user);
+  //   res.redirect('/');
+  // }
+);
+app.get('/login',
+  passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/login');
+  }
+);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
