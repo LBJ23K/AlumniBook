@@ -72,21 +72,23 @@ exports.notify = function(post, type, user){
     }).success(function(notify_issues) {
         // console.log(notify_issue);
         //find all user
-        if(issue.member_id != user){
+        
 	        notify_issues.forEach(function(issue){
-	        	Notification.create({
-					issue_id: issue.issue_id, 
-					member_id: issue.member_id,
-					type: type,
-					read: "unread"
-				}).success(function(){
-					res.json({
-						msg:"notify success"
+	        	if(issue.member_id != user){
+		        	Notification.create({
+						issue_id: issue.issue_id, 
+						member_id: issue.member_id,
+						type: type,
+						read: "unread"
+					}).success(function(){
+						res.json({
+							msg:"notify success"
+						});
+						console.log("notify success");	
 					});
-					console.log("notify success");	
-				});
+	        	}		
 	        });
-		}
+		
     });
 }
 
