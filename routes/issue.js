@@ -233,7 +233,16 @@ exports.search = function(req, res) {
     // first of all, sync Issue
     Issue.sync().success(function() {
       // find all issues which title contains searchText
-      Issue.findAll({where: {title: {like: searchText}}}).success(function(results) {
+      var query = {
+        where: {
+          title: {
+            like: searchText
+          }
+        },
+        include: [ models.Member, Comment, PostCategory ],
+        order: [['createdAt', 'DESC']]
+      };
+      Issue.findAll(query).success(function(results) {
         // handle process success
 
         // if no result, return an empty array
@@ -264,7 +273,14 @@ exports.search = function(req, res) {
           var issues = [];
           async.each(members, function(member, cb) {
             var member_id = member.dataValues.member_id;
-            Issue.findAll({where: {member_id: member_id}}).success(function(memberIssues) {
+            var query = {
+              where: {
+                member_id: member_id
+              },
+              include: [ models.Member, Comment, PostCategory ],
+              order: [['createdAt', 'DESC']]
+            };
+            Issue.findAll(query).success(function(memberIssues) {
               issues = issues.concat(memberIssues);
               cb();
             }).error(function(err) {
