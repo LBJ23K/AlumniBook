@@ -213,7 +213,7 @@ exports.commentOn = function(req, res){
 	}
 	Comment.create(comment).success(function(theCommnet){
 		console.log(theCommnet.dataValues);
-		Notify.notify(comment, "comment");
+		Notify.notify(comment, "comment", req.session.user.member_id);
 		res.json({msg:"success"});
 		//send mail to subscribers
 	})

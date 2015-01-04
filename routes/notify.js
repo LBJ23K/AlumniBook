@@ -62,7 +62,7 @@ exports.get_notifications = function(req, res){
 	});
 }
 
-exports.notify = function(post, type){
+exports.notify = function(post, type, user){
 	
 	//send mail to all subscribers
 	Notify_issue.findAll({
