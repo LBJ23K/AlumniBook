@@ -32,6 +32,10 @@
 	"Photo": "Photo",
 	"Upload Photo": "Upload Photo",
 	"Notification": "New comment on ",
-  "Search_Field_Title": "Search Title",
-  "Search_Field_Author": "Search Author"
+	"Search_Field_Title": "Search Title",
+	"Search_Field_Author": "Search Author",
+	"Delete_Post": "Delete Post",
+	"Follow": "Follow",
+	"Unfollow": "Unfollow",
+  "Submit": "Submit"
 }
