@@ -53,14 +53,24 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.newPost = function(){
       if(!$rootScope.isLogin){
-        alertify.alert("Please login.", function (e) {
-            if (e) {
-                // user clicked "ok"
-                $location.path('/login');
-                $scope.$apply();
+        // alertify.alert("Please login.", function (e) {
+        //     if (e) {
+        //         // user clicked "ok"
+        //         $location.path('/login');
+        //         $scope.$apply();
                 
-            }
-        });
+        //     }
+        // });
+
+        $('.ui.login.modal')
+        .modal({
+          closable  : true,
+          onApprove : function() {
+            $location.path('/login');
+            $scope.$apply();
+          }
+        })
+        .modal('show');
         
       }else{
         $location.path('/post')

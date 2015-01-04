@@ -1,10 +1,11 @@
 <div class="container" ng-init="init()">
-<div class="ui page grid">
+<div class="ui page grid stackable two column">
 	<div class="two wide column">
 		<div class="ui icon header">
 		  <div class="col-md-2" style="margin-top:20px">
-				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+				<img class="ui medium circular image" ng-hide="user.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				<div ng-show="user.photo" ng-style="{'background-image':'url('+user.photo+')'}" class="ui medium circular profile-img bg-img">
+				</div>
 			</div>
 		  <div class="content member-info">
 		    <span ng-bind="user.name"></span>

@@ -32,3 +32,28 @@
   margin: 0!important;
   padding: 1em 0!important;
 }
+
+.two.wide.column {
+	text-align: center!important;
+}
+
+.bg-img {
+	background-size: cover;
+}
+
+.profile-img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+}
+
+.comment-profile-img {
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+}
+
+
+.column {
+	/*border: red 1px solid;*/
+}
