@@ -39,7 +39,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
       
     })
- 
+  $rootScope.host = window.location.host;
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
@@ -141,6 +141,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Login', function ($scope, $http, $location, $state) {
     // write Ctrl here
+
     $scope.account = "";
     $scope.password = "";
     $scope.Login = function(){
@@ -240,7 +241,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       $location.path('/users/'+userID);
     }
   }).
-  controller('Usersetting', function($scope, $location, $state, $http){
+  controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
     var expLen;
     $scope.init = function(){

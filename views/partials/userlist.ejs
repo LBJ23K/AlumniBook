@@ -1,0 +1,16 @@
+<div class="ui page grid" ng-init="init()">
+  <div class="column">
+    <div class="ui teal segment" >
+    <div class="ui relaxed divided items post-item">
+      <div class="item" ng-repeat = "user in users" ng-click="select(user.member_id)">
+        <div class="ui small image">
+          <img src="{{user.photo}}">
+        </div>
+        <div class="content">
+          <p class="header" id="title" ng-bind="user.name"></p>
+          <div class="description" ng-bind="user.name"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>

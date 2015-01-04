@@ -14,6 +14,49 @@ var sequelize = new Sequelize(
     local.model.mysql.options
 );
 
+exports.login = function(req, res){
+    // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
+    // console.log(req.user.uid)
+    // console.log(req.session.user);
+    var query = {
+        where:{
+            account: req.user.uid
+        }
+    }
+    Member.find(query).success(function(member){
+        console.log(JSON.stringify(member));
+        if(member == null){
+            // res.end("fail");
+            // res.json({msg:"No user!"});
+            var user = {}
+            Member.create({account:req.user.uid}).success(function(member){
+                Education.create({member_id:member.dataValues.member_id})
+                Experience.create({member_id:member.dataValues.member_id})
+                Contact.create({member_id:member.dataValues.member_id})
+                // res.json({msg:"success"});
+                var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+                req.session.user = user;
+                req.session.isLogin = true;
+                res.redirect('/');
+                
+        })
+        .error(function(err){
+            console.log(err);
+        })
+        }
+        else{
+            var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+            // console.log(user)
+            req.session.user = user;
+            req.session.isLogin = true;
+            res.redirect('/');
+            
+        }
+
+    });    
+  }
+
+
 exports.getUser = function(req, res) {
     var id = req.session.user.member_id;
     Member.find({
@@ -34,7 +77,31 @@ exports.getUserData = function(req,res){
         },
         include: [Education, Contact, Experience]
     }).success(function(member) {
+        res.json(member);
+    })
+}
 
+exports.findAllUser = function(req, res) {
+    // var id = req.session.user.member_id;
+    Member.findAll({
+        where: {
+            // member_id: id
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        res.json(member);
+    })
+}
+
+exports.findOneUser = function(req, res) {
+    // var id = req.session.user.member_id;
+
+    Member.find({
+        where: {
+            member_id: req.params.id
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
         res.json(member);
     })
 }
@@ -179,4 +246,98 @@ exports.modifyUser = function(req, res) {
         });
 }
 
+exports.searchUserAccount = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            account: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
 
+exports.searchUserName = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            name: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserSchool = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            school: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserDepartment = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            department: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGender = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            gender: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGrade = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            grade: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}

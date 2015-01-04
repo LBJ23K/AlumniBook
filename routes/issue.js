@@ -5,6 +5,7 @@ var Member = require('../models').Member;
 var Issue = require('../models').Issue;
 var Comment = require('../models').Comment;
 var Like = require('../models').Like;
+var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
 
 exports.create = function(req, res){
@@ -14,7 +15,7 @@ exports.create = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue})
+      .build({title:req.body.title, member_id:req.session.user.member_id, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id})
       .save()
       .success(function(anotherTask) {
         // you can now access the currently saved task with the variable anotherTask... nice!
@@ -32,7 +33,7 @@ exports.list = function(req, res){
   models.Issue.sync().success(function() {
     // here comes your find command.
       models.Issue
-      .findAll({include: [ models.Member, Comment ],order: [['createdAt', 'DESC']]}).success(function(result){
+      .findAll({include: [ models.Member, Comment, PostCategory ],order: [['createdAt', 'DESC']]}).success(function(result){
         console.log(result.dataValues);
         _.each(result, function(oneResult){
           var temp = _.omit(oneResult.Member.dataValues, 'password');
@@ -63,7 +64,7 @@ exports.listById = function(req, res){
   //       console.log(error);
   //       res.json(error);
   //     })
-  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member]}).success(function(post){
+  Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member, PostCategory]}).success(function(post){
     // console.log(post)
     if(post.Member != null)
       post.Member.password = "";
@@ -147,7 +148,7 @@ exports.update = function(req, res){
       .find({where: {issue_id: req.body.issue_id}}).success(function(result){
         console.log('retrieve success');
         if (req.session.user.member_id == result.member_id) {
-            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue}).success(function(updatedResult) {
+            result.updateAttributes({title:req.body.title, content:req.body.content, parent_issue:req.body.parent_issue, postCategory_id: req.body.postCategory_id}).success(function(updatedResult) {
                 res.json(updatedResult);
               }).error(function(error) {
             // Ooops, do some error-handling
@@ -164,4 +165,74 @@ exports.update = function(req, res){
         res.json(error);
       })   
   })
+};
+
+// search issues
+// supports search by 'title' and 'member name' now.
+exports.search = function(req, res) {
+  var body = req.body;
+  var searchText = "%" + body.searchText + "%";
+  if (body.field == "title") {
+    // user searches for title
+    // first of all, sync Issue
+    Issue.sync().success(function() {
+      // find all issues which title contains searchText
+      Issue.findAll({where: {title: {like: searchText}}}).success(function(results) {
+        // handle process success
+
+        // if no result, return an empty array
+        if (!results || results.length == 0) res.json([]);
+        // else return results
+        res.json(results);
+
+      }).error(function(error) {
+        // handle process error
+        res.status(500).json(error);
+      });
+    });
+  } else if (body.field == "author") {
+    // user searches for author name
+    // first of all, sync Member
+    Member.sync().success(function() {
+      // find all members whose name contains searchText
+      Member.findAll({where: {name: {like: searchText}}}).success(function(members) {
+        // if no member, return an empty array
+        if (!members || members.length == 0) {
+          res.json([]);
+        }
+
+        // we found some members
+        // sync Issue
+        Issue.sync().success(function() {
+          // for each member, get her member_id and than get her issues
+          var issues = [];
+          async.each(members, function(member, cb) {
+            var member_id = member.dataValues.member_id;
+            Issue.findAll({where: {member_id: member_id}}).success(function(memberIssues) {
+              issues = issues.concat(memberIssues);
+              cb();
+            }).error(function(err) {
+              cb(err);
+            });
+
+          }, function(err) {
+            // if error occurs during async process
+            if (err) res.status(500).json(err);
+
+            // else, every thing was fine
+            // return issues to client
+            res.json(issues);
+          });
+        });
+
+      }).error(function(error) {
+        console.log(error);
+        res.status(500).json(error);
+      });
+    });
+
+  } else {
+    // user searches for fields that we haven't implement yet
+    res.status(500).json({error: "not implement yet"});
+  }
 };

@@ -26,7 +26,7 @@ angular.module('myApp', [
     }).
     state('login', {
       url:'/login',
-      templateUrl: 'partial/login',
+      // templateUrl: 'partial/login',
       controller: 'Login'
     }).
     state('logout', {
