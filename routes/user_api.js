@@ -14,7 +14,7 @@ var sequelize = new Sequelize(
     local.model.mysql.options
 );
 
-exports.login = function(profile, done){
+exports.login = function(req, res){
     // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
     var query = {
         where:{
@@ -25,15 +25,17 @@ exports.login = function(profile, done){
         console.log(JSON.stringify(member));
         if(member == null){
             // res.end("fail");
-            res.json({msg:"No user!"});
+            // res.json({msg:"No user!"});
+            return done({msg:"No user"}, profile);
         }
-        
-        var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-        // console.log(user)
-        req.session.user = user;
-        req.session.isLogin = true;
-        res.json({msg:"success"});
-        return done(null, profile);
+        else{
+            var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+            // console.log(user)
+            req.session.user = user;
+            req.session.isLogin = true;
+            res.json({msg:"success"});
+            
+        }
 
     });    
   }

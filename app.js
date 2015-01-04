@@ -37,7 +37,12 @@ passport.use(new SamlStrategy(
     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
     issuer: 'passport-saml-sso-2'
   },
-  user_api.login)
+  function(profile, done){
+    if (err) {
+        return done(err);
+    }
+    return done(null, profile);
+  })
 );
 
 i18n.configure({
@@ -160,7 +165,7 @@ app.get('/logout', function(req, res){
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    // console.log(req.body);
+    console.log(req);
     res.redirect('/');
   }
 );
