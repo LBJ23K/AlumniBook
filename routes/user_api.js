@@ -16,8 +16,8 @@ var sequelize = new Sequelize(
 
 exports.login = function(req, res){
     // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
-    console.log(req.user.uid)
-    console.log(req.session.user);
+    // console.log(req.user.uid)
+    // console.log(req.session.user);
     var query = {
         where:{
             account: req.user.uid
@@ -36,6 +36,7 @@ exports.login = function(req, res){
             req.session.user = user;
             req.session.isLogin = true;
             res.json({msg:"success"});
+            res.redirect('/');
             
         }
 
