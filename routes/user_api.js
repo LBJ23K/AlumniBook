@@ -26,9 +26,9 @@ exports.login = function(req, res){
     Member.find(query).success(function(member){
         console.log(JSON.stringify(member));
         if(member == null){
-            // res.end("fail");
-            // res.json({msg:"No user!"});
-            return done({msg:"No user"}, profile);
+            res.end("fail");
+            res.json({msg:"No user!"});
+            
         }
         else{
             var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
