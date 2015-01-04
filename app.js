@@ -22,26 +22,26 @@ var i18nController = require('./routes/i18nController');
 var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
-passport.serializeUser(function(user, done) {
-  // console.log(user);
-  done(null, user);
-  });
+// passport.serializeUser(function(user, done) {
+//   // console.log(user);
+//   done(null, user);
+//   });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
 
-passport.use(new SamlStrategy(
-  {
-    path: '/login/callback',
-    entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
-    issuer: 'passport-saml-sso-2'
-  },
-  function(profile, done){
+// passport.use(new SamlStrategy(
+//   {
+//     path: '/login/callback',
+//     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
+//     issuer: 'passport-saml-sso-2'
+//   },
+//   function(profile, done){
   
-    return done(null, profile);
-  })
-);
+//     return done(null, profile);
+//   })
+// );
 
 i18n.configure({
   locales:['en', 'zh-TW'],
@@ -113,14 +113,14 @@ if (app.get('env') === 'production') {
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
-// app.get('/auth/facebook', api.facebookAuth);
 
 
-app.get('/api/user', api.checkLogin,user_api.getUser);
+app.get('/api/user/me', api.checkLogin,user_api.getUser);//mysetting
 app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
 
-app.get('/api/user/list', api.checkLogin,user_api.findAllUser);
-app.get('/api/user/:id', api.checkLogin,user_api.findOneUser);
+app.get('/api/users/:id',user_api.getUserData);//particular user
+app.get('/api/users',user_api.getAlluser);//alluserList
+
 
 app.get('/user/search/account', api.checkLogin, user_api.searchUserAccount);
 app.get('/user/search/name', api.checkLogin, user_api.searchUserName);
@@ -140,7 +140,6 @@ app.post('/api/login', api.login);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
 app.post('/api/signup', api.createMember);
-
 
 app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);
@@ -166,21 +165,21 @@ app.get('/logout', function(req, res){
     res.redirect("/");
   });
 });
-//saml
-app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-  user_api.login
-  // function(req, res) {
-  //   console.log(req.user);
-  //   res.redirect('/');
-  // }
-);
-app.get('/login',
-  passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
-    res.redirect('/login');
-  }
-);
+// //saml
+// app.post('/login/callback',
+//   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+//   user_api.login
+//   // function(req, res) {
+//   //   console.log(req.user);
+//   //   res.redirect('/');
+//   // }
+// );
+// app.get('/login',
+//   passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
+//   function(req, res) {
+//     res.redirect('/login');
+//   }
+// );
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
