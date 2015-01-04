@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', ['ngRoute']).
-  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
+  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state, $location) {
     $rootScope.isLogin = $window.isLogin;
     if (typeof(Storage) != "undefined") {
       var lang = localStorage.getItem("lang");
@@ -23,7 +23,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       school: $window.userSchool,
       department: $window.userDepartment,
       grade: $window.userGrade,
-      photo: $window.userPhoto
+      photo: $window.userPhoto,
+      notifications: $window.notifications
     };
 
     console.log($rootScope.lang);
@@ -67,6 +68,17 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log(issues);
         // TODO: NKT, display these issues PLZ!!!!!
       });
+    };
+    $scope.get_notifications = function(){
+        $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+            $scope.notifications = result;         
+        });
+    };
+    $scope.select = function(id){
+      $location.path('/topic/'+id);
+      $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+          $scope.notifications = result;         
+      });      
     };
 
   }).
@@ -129,18 +141,21 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Topic', function ($scope, $state, $http, $route, $location) {
+  controller('Topic', function ($rootScope, $scope, $state, $http, $route, $location, $window) {
     // write Ctrl here
     $scope.myComment = "";
-    console.log($state.params.id)
+    // $scope.SubscribeThis = true;
+    // console.log($state.params.id)
     $http({method:"GET", url:'/issue/listById?issue_id='+$state.params.id}).success(function(result){
       $scope.post = result.post;
       $scope.comments = result.comments;
       $scope.likeThis = result.likeThis;
       $scope.like = result.like;
       $scope.isAuthor = result.isAuthor;
-      console.log(result);
+      $scope.SubscribeThis = result.isSubscribe;
+      $rootScope.user.notifications -= result.reads;
     })
+
     $scope.deleteIssue = function(){
       $http({method:"GET", url:'/issue/destroy?issue_id='+$state.params.id}).success(function(result){
         console.log(result);
@@ -165,6 +180,24 @@ angular.module('myApp.controllers', ['ngRoute']).
         }
       })
     }
+    $scope.subscribePost = function(){
+      if($window.isLogin == true){
+
+      $scope.SubscribeThis = true;
+      $http({method:"GET", url:'/notify/subscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+      }
+      else{
+        alert("Please login first!");
+      }
+    }
+    $scope.unsubscribePost = function(){
+      $scope.SubscribeThis = false;
+      $http({method:"GET", url:'/notify/unsubscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+    }    
     $scope.submitComment = function(){
       var data = {
         post_id : $state.params.id,

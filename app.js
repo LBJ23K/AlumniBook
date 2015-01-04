@@ -12,6 +12,7 @@ var express = require('express'),
   path = require('path'),
   issue = require('./routes/issue'),
   comment = require('./routes/comment'),
+  notify = require('./routes/notify'),
   postCategory = require('./routes/postCategory');
   var _ = require('underscore');
 
@@ -153,6 +154,11 @@ app.get('/comment/destroy', api.checkLogin, comment.destroy);
 
 app.get('/api/like/:id', api.checkLogin, api.likePost);
 app.get('/api/dislike/:id', api.checkLogin, api.dislikePost);
+
+app.get('/notify/subscribe/:id', api.checkLogin, notify.subscribe);
+app.get('/notify/unsubscribe/:id', api.checkLogin, notify.unsubscribe);
+app.get('/notify/get_notifications', api.checkLogin, notify.get_notifications)
+app.get('/api/notify/:id/:type', api.checkLogin, notify.notify);
 
 app.post('/category/create', postCategory.create);
 app.get('/category/list', postCategory.list);
