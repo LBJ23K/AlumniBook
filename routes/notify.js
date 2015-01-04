@@ -72,7 +72,7 @@ exports.notify = function(post, type, user){
     }).success(function(notify_issues) {
         // console.log(notify_issue);
         //find all user
-        if(issue.member_id != user)
+        if(issue.member_id != user){
 	        notify_issues.forEach(function(issue){
 	        	Notification.create({
 					issue_id: issue.issue_id, 
