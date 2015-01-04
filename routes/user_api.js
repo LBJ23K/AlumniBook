@@ -14,6 +14,31 @@ var sequelize = new Sequelize(
     local.model.mysql.options
 );
 
+exports.login = function(profile, done){
+    // var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
+    var query = {
+        where:{
+            account: profile.uid
+        }
+    }
+    Member.find(query).success(function(member){
+        console.log(JSON.stringify(member));
+        if(member == null){
+            // res.end("fail");
+            res.json({msg:"No user!"});
+        }
+        
+        var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+        // console.log(user)
+        req.session.user = user;
+        req.session.isLogin = true;
+        res.json({msg:"success"});
+        return done(null, profile);
+
+    });    
+  }
+
+
 exports.getUser = function(req, res) {
     var id = req.session.user.member_id;
     Member.find({

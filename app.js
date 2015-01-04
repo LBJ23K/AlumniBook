@@ -13,6 +13,7 @@ var express = require('express'),
   issue = require('./routes/issue'),
   comment = require('./routes/comment'),
   postCategory = require('./routes/postCategory');
+  var _ = require('underscore');
 
 var session = require('express-session');
 var local = require('./config/local');
@@ -22,7 +23,7 @@ var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
 passport.serializeUser(function(user, done) {
-  console.log(user);
+  // console.log(user);
   done(null, user);
   });
 
@@ -36,10 +37,7 @@ passport.use(new SamlStrategy(
     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
     issuer: 'passport-saml-sso-2'
   },
-  function(profile, done) {
-    console.log(profile);
-    return done(null, profile);
-  })
+  user_api.login)
 );
 
 i18n.configure({
@@ -64,17 +62,33 @@ app.use(session({
     }
   }));
 // all environments
+function allowCrossDomain(req, res, next) {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+
+  var origin = req.headers.origin;
+  if (_.contains(app.get('allowed_origins'), origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  } else {
+    next();
+  }
+}
 app.set('port', process.env.PORT || 3001);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(allowCrossDomain);
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
+
 
 
 // development only
@@ -112,7 +126,7 @@ app.post('/api/setLocale', i18nController.setLocale);
 app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 
-app.post('/api/login', api.login);
+// app.post('/api/login', api.login);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
@@ -146,7 +160,7 @@ app.get('/logout', function(req, res){
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     res.redirect('/');
   }
 );

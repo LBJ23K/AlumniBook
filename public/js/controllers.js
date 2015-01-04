@@ -38,7 +38,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
       
     })
- 
+  $rootScope.host = window.location.host;
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
@@ -140,6 +140,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Login', function ($scope, $http, $location, $state) {
     // write Ctrl here
+
     $scope.account = "";
     $scope.password = "";
     $scope.Login = function(){
