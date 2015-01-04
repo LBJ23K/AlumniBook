@@ -39,7 +39,6 @@ passport.use(new SamlStrategy(
     issuer: 'passport-saml-sso-2'
   },
   function(profile, done){
-  
     return done(null, profile);
   })
 );
@@ -128,6 +127,7 @@ app.get('/user/search/school', api.checkLogin, user_api.searchUserSchool);
 app.get('/user/search/gender', api.checkLogin, user_api.searchUserGender);
 app.get('/user/search/department', api.checkLogin, user_api.searchUserDepartment);
 app.get('/user/search/grade', api.checkLogin, user_api.searchUserGrade);
+
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
 
@@ -135,16 +135,18 @@ app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 
 app.post('/api/login', api.login);
+app.get('/api/getaccount', api.getaccount);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
-app.post('/api/signup', api.createMember);
+app.post('/api/modifyaccount', api.modifyaccount);
 
 app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);
 app.get('/issue/listById', issue.listById);
 app.post('/issue/update', api.checkLogin, issue.update);
 app.get('/issue/destroy', api.checkLogin, issue.destroy);
+app.get('/issue/searchFields', issue.supportedSearchFields);
 app.post('/issue/search', api.checkLogin, issue.search);
 
 app.post('/comment/update', api.checkLogin, comment.update);

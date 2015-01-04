@@ -35,10 +35,10 @@
 	    		<button ng-show="likeThis"class="ui teal labeled icon button" ng-click="dislikePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
 			   	<button ng-hide="likeThis" class="ui labeled icon button" ng-click="likePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
 			
-			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>
+			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()"><%= __("Delete_Post") %></button>
 
-			   	<button ng-hide="SubscribeThis"class="ui labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span>追蹤</span></button>
-			   	<button ng-show="SubscribeThis" class="ui teal labeled icon button" ng-click="unsubscribePost()"><i class="star icon"></i><span>取消追蹤</span></button>	
+			   	<button ng-hide="SubscribeThis"class="ui labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span><%= __('Follow') %></span></button>
+			   	<button ng-show="SubscribeThis" class="ui teal labeled icon button" ng-click="unsubscribePost()"><i class="star icon"></i><span><%= __('Unfollow') %></span></button>
 		   	</div>
     	</div>
 
@@ -67,7 +67,7 @@
 				      <textarea name="" id="" rows="10" ng-model="myComment"></textarea>
 				    </div>
 						<span ng-hide="$root.isLogin">請先<a href="/login" class="ui button">登入</a>再進行留言</span>
-						<button ng-show="$root.isLogin" class="ui teal labeled submit icon button" ng-click="submitComment()"><i class="icon edit"></i>送出</button>
+						<button ng-show="$root.isLogin" class="ui teal labeled submit icon button" ng-click="submitComment()"><i class="icon edit"></i><%= __('Submit') %></button>
 				  </form>
 				</div>
 
