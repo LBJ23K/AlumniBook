@@ -122,12 +122,12 @@ app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
 app.get('/api/user/list', api.checkLogin,user_api.findAllUser);
 app.get('/api/user/:id', api.checkLogin,user_api.findOneUser);
 
-app.get('/user/search/account', user_api.searchUserAccount);
-app.get('/user/search/name', user_api.searchUserName);
-app.get('/user/search/school', user_api.searchUserSchool);
-app.get('/user/search/gender', user_api.searchUserGender);
-app.get('/user/search/department', user_api.searchUserDepartment);
-app.get('/user/search/grade', user_api.searchUserGrade);
+app.get('/user/search/account', api.checkLogin, user_api.searchUserAccount);
+app.get('/user/search/name', api.checkLogin, user_api.searchUserName);
+app.get('/user/search/school', api.checkLogin, user_api.searchUserSchool);
+app.get('/user/search/gender', api.checkLogin, user_api.searchUserGender);
+app.get('/user/search/department', api.checkLogin, user_api.searchUserDepartment);
+app.get('/user/search/grade', api.checkLogin, user_api.searchUserGrade);
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
