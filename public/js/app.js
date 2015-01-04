@@ -24,11 +24,11 @@ angular.module('myApp', [
       templateUrl: 'partial/signup',
       controller: 'Signup'
     }).
-    // state('login', {
-    //   url:'/login',
-    //   // templateUrl: 'partial/login',
-    //   controller: 'Login'
-    // }).
+    state('login', {
+      url:'/login',
+      templateUrl: 'partial/login',
+      controller: 'Login'
+    }).
     state('logout', {
       url:'/logout',
       controller: 'Logout'

@@ -135,7 +135,7 @@ app.post('/api/setLocale', i18nController.setLocale);
 app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 
-// app.post('/api/login', api.login);
+app.post('/api/login', api.login);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
