@@ -1,12 +1,13 @@
-<div class="ui page grid">
+<div class="ui page grid stackable two column">
 	<div class="two wide column">
 		<div class="ui icon header">
-		  <div class="col-md-2" style="margin-top:20px">
+		  <div style="margin-top:20px">
 				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+				<a href="/users/{{post.Member.member_id}}"><div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="ui medium circular profile-img bg-img">
+				</div></a>	
 			</div>
 		  <div class="content member-info">
-		    <span ng-bind="post.Member.name"></span>
+		    <span class="author" ng-bind="post.Member.name"></span>
 		    <div class="sub header">
 		    	<span ng-bind="post.Member.school"></span>
 		    </div>
@@ -33,8 +34,11 @@
 				<div class="ui basic right aligned segment">
 	    		<button ng-show="likeThis"class="ui teal labeled icon button" ng-click="dislikePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
 			   	<button ng-hide="likeThis" class="ui labeled icon button" ng-click="likePost()"><i class="like outline icon"></i><span ng-bind="like"></span></button>
+			
+			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>
 
-			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>	
+			   	<button ng-hide="SubscribeThis"class="ui labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span>追蹤</span></button>
+			   	<button ng-show="SubscribeThis" class="ui teal labeled icon button" ng-click="unsubscribePost()"><i class="star icon"></i><span>取消追蹤</span></button>	
 		   	</div>
     	</div>
 
@@ -43,12 +47,14 @@
 				  <h4 class="ui dividing header">Comments</h4>
 
 				  <div class="comment" ng-repeat="comment in comments">
-				    <a class="avatar">
-				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-							<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
+				    <a class="avatar" href="/users/{{post.Member.member_id}}">
+				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive comment-profile-img" alt="Responsive image">
+							<!-- <img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image"> -->
+							<div ng-show="comment.Member.photo" ng-style="{'background-image':'url('+comment.Member.photo+')'}" class="comment-profile-img bg-img">
+							</div>	
 				    </a>
 				    <div class="content">
-				      <a class="author" ng-bind="comment.Member.name"></a>
+				      <a class="author" ng-bind="comment.Member.name" href="/users/{{post.Member.member_id}}"></a>
 				      <div class="metadata">
 				        <span class="date" ng-bind="time(comment.createdAt)"></span>
 				      </div>

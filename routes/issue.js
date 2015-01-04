@@ -7,6 +7,8 @@ var Comment = require('../models').Comment;
 var Like = require('../models').Like;
 var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
+var Notify_issue = require("../models").Notify_issue;
+var Notification = require('../models').Notification;
 
 exports.create = function(req, res){
   console.log(req.body);
@@ -65,7 +67,7 @@ exports.listById = function(req, res){
   //       res.json(error);
   //     })
   Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member, PostCategory]}).success(function(post){
-    // console.log(post)
+    console.log(req.session.user)
     if(post.Member != null)
       post.Member.password = "";
     async.parallel([
@@ -101,6 +103,51 @@ exports.listById = function(req, res){
           callback(null, comments)
           
         })
+      },
+      function(callback){
+        if(req.session.user){
+            Notify_issue.findAll({
+              where:{
+                issue_id:req.param('issue_id'), 
+                member_id:req.session.user.member_id 
+              }
+            }).success(function(subscribe){
+              if(subscribe.length == 0){
+                callback(null, false)
+              }
+              else{
+                callback(null, true)
+              }
+            })
+        }
+        else{
+          callback(null, false)
+        }
+      },function(callback){
+          if(req.session.user){
+              Notification.findAll({
+                  where: {
+                      member_id: req.session.user.member_id,
+                      issue_id: req.param('issue_id'),
+                      read: "unread"
+                  }
+              }).success(function(unread){
+                  if(_.size(unread) != 0){
+                      _.map(unread, function(unread){
+                          unread.updateAttributes({
+                              read: "read"
+                          });
+                      });
+                      callback(null, _.size(unread));
+                  }
+                  else{
+                      callback(null, 0);
+                  }
+              });
+          }
+          else{
+            callback(null, 0);
+          }
       }],function(err, result){
         // console.log(result)
         var isAuthor
@@ -108,8 +155,17 @@ exports.listById = function(req, res){
           isAuthor = (req.session.user.member_id==post.member_id);
         else
           isAuthor = 0;
-
-        res.json({post:post, likeThis:result[0], like:result[1],comments:result[2], isAuthor:isAuthor});
+        console.log(result);
+        res.json({
+          post:post,
+          likeThis:result[0], 
+          like:result[1],
+          comments:result[2], 
+          isSubscribe: result[3],
+          reads: result[4],
+          isAuthor:isAuthor
+          
+        });
       })
     
   });
@@ -165,4 +221,90 @@ exports.update = function(req, res){
         res.json(error);
       })   
   })
+};
+
+// search issues
+// supports search by 'title' and 'member name' now.
+exports.search = function(req, res) {
+  var body = req.body;
+  var searchText = "%" + body.searchText + "%";
+  if (body.field == "title") {
+    // user searches for title
+    // first of all, sync Issue
+    Issue.sync().success(function() {
+      // find all issues which title contains searchText
+      var query = {
+        where: {
+          title: {
+            like: searchText
+          }
+        },
+        include: [ models.Member, Comment, PostCategory ],
+        order: [['createdAt', 'DESC']]
+      };
+      Issue.findAll(query).success(function(results) {
+        // handle process success
+
+        // if no result, return an empty array
+        if (!results || results.length == 0) res.json([]);
+        // else return results
+        res.json(results);
+
+      }).error(function(error) {
+        // handle process error
+        res.status(500).json(error);
+      });
+    });
+  } else if (body.field == "author") {
+    // user searches for author name
+    // first of all, sync Member
+    Member.sync().success(function() {
+      // find all members whose name contains searchText
+      Member.findAll({where: {name: {like: searchText}}}).success(function(members) {
+        // if no member, return an empty array
+        if (!members || members.length == 0) {
+          res.json([]);
+        }
+
+        // we found some members
+        // sync Issue
+        Issue.sync().success(function() {
+          // for each member, get her member_id and than get her issues
+          var issues = [];
+          async.each(members, function(member, cb) {
+            var member_id = member.dataValues.member_id;
+            var query = {
+              where: {
+                member_id: member_id
+              },
+              include: [ models.Member, Comment, PostCategory ],
+              order: [['createdAt', 'DESC']]
+            };
+            Issue.findAll(query).success(function(memberIssues) {
+              issues = issues.concat(memberIssues);
+              cb();
+            }).error(function(err) {
+              cb(err);
+            });
+
+          }, function(err) {
+            // if error occurs during async process
+            if (err) res.status(500).json(err);
+
+            // else, every thing was fine
+            // return issues to client
+            res.json(issues);
+          });
+        });
+
+      }).error(function(error) {
+        console.log(error);
+        res.status(500).json(error);
+      });
+    });
+
+  } else {
+    // user searches for fields that we haven't implement yet
+    res.status(500).json({error: "not implement yet"});
+  }
 };

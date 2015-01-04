@@ -42,26 +42,28 @@ angular.module('myApp', [
       url:'/topic/:id',
       templateUrl: 'partial/topic',
       controller: 'Topic'
-    }).state('otherwise',{
-      url: "/"
     }).
     state('usersetting', {
       url:'/usersetting',
       templateUrl: 'partial/usersetting',
       controller: 'Usersetting'
-    })
-    .
-    state('userlist', {
-      url:'/userlist',
-      templateUrl: 'partial/userlist',
-      controller: 'Userlist'
     }).
-    state('chart',{
-      url:'/chart',
-      templateUrl: 'partial/chart',
-      controller: 'Chart'
+    state('userprofile', {
+      url:'/users/:id',
+      templateUrl: 'partial/usersetting',
+      controller: 'Profile'
+    }).
+   state('userList', {
+      url:'/users',
+      templateUrl: 'partial/userList',
+      controller: 'UserList'
+    }).
+    state('otherwise',{
+      url: "/"
     })
 
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
 }]);
+
+

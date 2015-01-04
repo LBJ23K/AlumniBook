@@ -1,10 +1,22 @@
+<style>
+.form-control {
+    -webkit-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+    background: transparent;
+ }
+ .form-control.ng-invalid {
+    background: rgb(244, 134, 134);;
+ }
+
+</style>
 <div class="container" ng-init="init()">
-<div class="ui page grid">
+<div class="ui page grid stackable two column">
 	<div class="two wide column">
 		<div class="ui icon header">
 		  <div class="col-md-2" style="margin-top:20px">
-				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+				<img class="ui medium circular image" ng-hide="user.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				<div ng-show="user.photo" ng-style="{'background-image':'url('+user.photo+')'}" class="ui medium circular profile-img bg-img">
+				</div>
 			</div>
 		  <div class="content member-info">
 		    <span ng-bind="user.name"></span>
@@ -15,7 +27,9 @@
 		    
 		  </div>
 		</div>
+		<a href="/signup"><button class="ui primary button" style="min-width:100px">帳號資料</button></a>
 	</div>
+
   <div class="fourteen wide column">
     <div class="ui teal segment">
 
@@ -24,9 +38,9 @@
     		<pre class="segment" ng-bind="post.content"></pre>
 				
 				<div class="ui basic right aligned segment">
-	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit">修改資料</button>
+	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id" >修改資料</button>
                     <button class="ui primary button" ng-click="modifysubmit()" ng-show="edit">送出</button>
-                    <button class="ui button" ng-click="edit=false" ng-show="edit">取消</button>	
+                    <button class="ui button" ng-click="cancelsubmit()" ng-show="edit">取消</button>	
 		   	</div>
     	</div>
 
@@ -290,7 +304,7 @@
 				  <div class="content">
 					<div class="header">Degree</div>
 					<div class="description">
-					<input type="text" class="form-control"  ng-model="editdata.Education.degree">
+					<input type="text" class="form-control"  ng-model="editdata.Education.degree" placeholder="1">
 					</div>
 				  </div>
 				</div>
@@ -299,7 +313,7 @@
 				  <div class="content">
 					<div class="header">Stuid</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.stuid">
+					<input type="text" class="form-control" ng-model="editdata.Education.stuid" placeholder="b00705031">
 					</div>
 				  </div>
 				</div>
@@ -317,7 +331,7 @@
 				  <div class="content">
 					<div class="header">Start Date</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.startdate">
+					<input type="text" class="form-control" ng-model="editdata.Education.startdate" placeholder="yyyy-mm">
 					</div>
 				  </div>
 				</div>
@@ -326,7 +340,7 @@
 				  <div class="content">
 					<div class="header">End Date</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.enddate">
+					<input type="text" class="form-control" ng-model="editdata.Education.enddate" placeholder="yyyy-mm">
 					</div>
 				  </div>
 				</div>
@@ -387,8 +401,7 @@
 				  <div class="content">
 					<div class="header">Start Date</div>
 					<div class="description">
-					<input type="text" class="form-control" ng-model="item.startdate">
-					<!-- <input type="text"  date-time ng-model="item.startdate" min-view="date"> -->
+					<input type="text" class="form-control" ng-model="item.startdate" placeholder="yyyy-mm">
 					</div>
 				  </div>
 				</div>
@@ -398,7 +411,7 @@
 					<div class="header">End Date</div>
 					<div class="description">
 					<!-- <input type="text"  date-time  ng-model="item.enddate" min-view="date"> -->
-					<input type="text" class="form-control" ng-model="item.enddate">
+					<input type="text" class="form-control" ng-model="item.enddate" placeholder="yyyy-mm">
 					</div>
 				  </div>
 				</div>
@@ -419,7 +432,7 @@
 					  <div class="content">
 						<div class="header">Email</div>
 						<div class="description">
-							<input type="text" class="form-control" ng-model="editdata.Contact.email">
+							<input type="text" class="form-control" ng-model="editdata.Contact.email" placeholder="im@im.com">
 						</div>
 					  </div>
 					</div>
@@ -439,7 +452,7 @@
 					  <div class="content">
 						<div class="header">Phone number(Home)</div>
 						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_home">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_home" placeholder="(02)0000-0000">
 						</div>
 					  </div>
 					</div>
@@ -448,7 +461,7 @@
 					  <div class="content">
 						<div class="header">Phone number(Mobile)</div>
 						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile" placeholder="0911-000-000">
 						</div>
 					  </div>
 					</div>
@@ -457,7 +470,7 @@
 					  <div class="content">
 						<div class="header">Phone number(Work)</div>
 						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_work">
+						<input type="text" class="form-control" ng-model="editdata.Contact.phone_work" placeholder="(02)0000-0000">
 						</div>
 					  </div>
 					</div>

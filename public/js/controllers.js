@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', ['ngRoute']).
-  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
+  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state, $location) {
     $rootScope.isLogin = $window.isLogin;
     if (typeof(Storage) != "undefined") {
       var lang = localStorage.getItem("lang");
@@ -18,14 +18,16 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $rootScope.user = {
       name: $window.userName,
+      user_id: $window.userId,
       gender: $window.gender,
       school: $window.userSchool,
       department: $window.userDepartment,
       grade: $window.userGrade,
-      photo: $window.userPhoto
-    }
+      photo: $window.userPhoto,
+      notifications: $window.notifications
+    };
 
-    console.log($rootScope.lang)
+    console.log($rootScope.lang);
     $rootScope.$watch('lang',function(newValue, oldValue){   
 
       if(newValue!=oldValue){
@@ -33,34 +35,109 @@ angular.module('myApp.controllers', ['ngRoute']).
         $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
           // $state.transitionTo('index', null, {'reload':true});
           location.reload();
-      });
-
+        });
       }
+
       
     })
- 
+    $rootScope.host = window.location.host;
+
+    $scope.searchFieldText = "文章標題";
+    $scope.searchField = "title";
+    $scope.setSearchField = function(option) {
+      switch (option) {
+        case 0:
+          $scope.searchFieldText = "文章標題";
+          $scope.searchField = "title";
+          break;
+        case 1:
+          $scope.searchFieldText = "文章作者";
+          $scope.searchField = "author";
+          break;
+        default:
+      }
+    };
+
+    $scope.search = function(text) {
+      console.log(text);
+      if (!text || text == '') {
+        $rootScope.$broadcast('resetSearch');
+        return;
+      }
+
+      var data = {
+        field: $scope.searchField,
+        searchText: text
+      };
+      $http.post('/issue/search', data).success(function(issues){
+        console.log(issues);
+        // TODO: NKT, display these issues PLZ!!!!!
+        $rootScope.searchResults = _.sortBy(issues, function(post) {
+          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+          return -(new Date(post.createdAt).getTime());
+        });
+        $rootScope.$broadcast('searchDone');
+
+
+//        $scope.posts = _.sortBy(issues, function(post) {
+//          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+//          return -(new Date(post.createdAt).getTime());
+//        });
+      });
+    };
+    $scope.get_notifications = function(){
+        $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+            $scope.notifications = result;         
+        });
+    };
+    $scope.select = function(id){
+      $location.path('/topic/'+id);
+      $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+          $scope.notifications = result;         
+      });      
+    };
+
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
     $http({method:"GET", url:'/issue/list'}).success(function(posts){
-      $scope.posts = _.sortBy(posts, function(post){
+      $scope.allPosts = $scope.posts = _.sortBy(posts, function(post){
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
       console.log(posts);
-    })
+    });
+
+    $scope.$on('searchDone', function() {
+      $scope.posts = $rootScope.searchResults;
+    });
+
+    $scope.$on('resetSearch', function() {
+      $scope.posts = $scope.allPosts;
+    });
+
     $scope.time = function (t) {
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
-    }
+    };
     $scope.newPost = function(){
       if(!$rootScope.isLogin){
-        alertify.alert("Please login.", function (e) {
-            if (e) {
-                // user clicked "ok"
-                $location.path('/login');
-                $scope.$apply();
+        // alertify.alert("Please login.", function (e) {
+        //     if (e) {
+        //         // user clicked "ok"
+        //         $location.path('/login');
+        //         $scope.$apply();
                 
-            }
-        });
+        //     }
+        // });
+
+        $('.ui.login.modal')
+        .modal({
+          closable  : true,
+          onApprove : function() {
+            $location.path('/login');
+            $scope.$apply();
+          }
+        })
+        .modal('show');
         
       }else{
         $location.path('/post')
@@ -75,12 +152,17 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $scope.title = "";
     $scope.content = "";
+    $scope.cat_id = 1;
+    $http({method:"GET", url:'/category/list'}).success(function(category){
+      $scope.category = category;
+    })
     // console.log(userSchool);
     // write Ctrl here
     $scope.submitPost = function(){
       var data = {
         title: $scope.title, 
-        content: $scope.content
+        content: $scope.content,
+        postCategory_id:$scope.cat_id
       }
       $http({method:"POST", url:"/issue/create", data:data}).success(function(post){
         console.log(post);
@@ -89,18 +171,21 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Topic', function ($scope, $state, $http, $route, $location) {
+  controller('Topic', function ($rootScope, $scope, $state, $http, $route, $location, $window) {
     // write Ctrl here
     $scope.myComment = "";
-    console.log($state.params.id)
+    // $scope.SubscribeThis = true;
+    // console.log($state.params.id)
     $http({method:"GET", url:'/issue/listById?issue_id='+$state.params.id}).success(function(result){
       $scope.post = result.post;
       $scope.comments = result.comments;
       $scope.likeThis = result.likeThis;
       $scope.like = result.like;
       $scope.isAuthor = result.isAuthor;
-      console.log(result);
+      $scope.SubscribeThis = result.isSubscribe;
+      $rootScope.user.notifications -= result.reads;
     })
+
     $scope.deleteIssue = function(){
       $http({method:"GET", url:'/issue/destroy?issue_id='+$state.params.id}).success(function(result){
         console.log(result);
@@ -125,6 +210,24 @@ angular.module('myApp.controllers', ['ngRoute']).
         }
       })
     }
+    $scope.subscribePost = function(){
+      if($window.isLogin == true){
+
+      $scope.SubscribeThis = true;
+      $http({method:"GET", url:'/notify/subscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+      }
+      else{
+        alert("Please login first!");
+      }
+    }
+    $scope.unsubscribePost = function(){
+      $scope.SubscribeThis = false;
+      $http({method:"GET", url:'/notify/unsubscribe/'+$state.params.id}).success(function(result){
+        console.log(result);
+      })
+    }    
     $scope.submitComment = function(){
       var data = {
         post_id : $state.params.id,
@@ -140,6 +243,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Login', function ($scope, $http, $location, $state) {
     // write Ctrl here
+
     $scope.account = "";
     $scope.password = "";
     $scope.Login = function(){
@@ -162,7 +266,6 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('Signup', function ($scope, $http, $location, $state) {
     // write Ctrl here
     $scope.photo = "";
-    console.log('h')
     $scope.upload = function(){
     
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
@@ -172,7 +275,15 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.$apply();
       // alert("success");
     });  
-  }
+  } 
+    $scope.name = userName;
+    $scope.school = userSchool;
+    $scope.gender = userGender;
+    $scope.department = userDepartment;
+    $scope.grade = userGrade;
+    $scope.photo = userPhoto;
+    $scope.account = userAccount;
+
     $scope.signup = function(){
       var data = {
         name: $scope.name,
@@ -182,18 +293,21 @@ angular.module('myApp.controllers', ['ngRoute']).
         grade: $scope.grade,
         photo: $scope.photo,
         account: $scope.account,
-        password: $scope.password
+        member_id: userId
+        // password: $scope.password
       }
       $http({method:"POST", url:'/api/signup', data:data}).success(function(result){
-        var data = {
-        account:$scope.account,
-        password:$scope.password
-        }
-        $http({method:"POST", url:"/api/login", data:data}).success(function(post){
-            console.log(post);
-            window.location.reload();
-            $location.path('/')
-        });
+        if(result.msg = "success")
+          alertify.success("更新成功");
+        // var data = {
+        // account:$scope.account,
+        // password:$scope.password
+        // }
+        // $http({method:"POST", url:"/api/login", data:data}).success(function(post){
+        //     console.log(post);
+        //     window.location.reload();
+        //     $location.path('/')
+        // });
       })
     }
 
@@ -203,29 +317,41 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.user = {};
     window.location.reload();
   }).
-  controller('Userlist', function($scope, $location, $state, $http){
-    $http({
-        method:"GET",
-        url:"/api/user/list"
-      }).success(function(data){
-        console.log(data);
-        $scope.members = data;
-      })
-    $scope.queryUser = function(member_id){
+  controller('Profile', function($scope, $location, $state,$http,$rootScope){
+    $scope.id = $state.params.id;
+    // $scope.myid = $rootScope.user.user_id
+    $scope.init = function(){
       $http({
         method:"GET",
-        url:"/api/user/"+member_id
-      }).success(function(data){
+        url:"/api/users/"+$scope.id
+      })
+      .success(function(data){
         console.log(data);
-        $scope.member = data;
-        $scope.member_contact = JSON.stringify(data.Contact, undefined, 2 )
-        $scope.member_experience = JSON.stringify(data.Experience, undefined, 2 )
-        $scope.member_eduction = JSON.stringify(data.Education, undefined, 2 )
+        $scope.user = data;
+      })
+      .error(function(){
+        console.log('fail');
       })
     }
-    // $rootScope.isLogin = false;
-    // $rootScope.user = {};
-    // window.location.reload();
+
+  }).
+  controller('UserList', function($scope, $location, $state, $http){
+    $scope.init = function(){
+      $http({
+        method:"GET",
+        url:"/api/users"
+      })
+      .success(function(data){
+        $scope.users = data;
+        console.log($scope.users);
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
+    $scope.select = function(userID){
+      $location.path('/users/'+userID);
+    }
   }).
   controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
@@ -233,10 +359,17 @@ angular.module('myApp.controllers', ['ngRoute']).
     $scope.init = function(){
       $http({
         method:"GET",
-        url:"/api/user"
+        url:"/api/user/me"
       })
       .success(function(data){
+        if(data.Education.startdate) data.Education.startdate = moment(data.Education.startdate).format('YYYY-MM')
+          if(data.Education.enddate) data.Education.enddate = moment(data.Education.enddate).format('YYYY-MM')
+        _.each(data.Experiences,function(item){
+          if(item.startdate) item.startdate = moment(item.startdate).format('YYYY-MM')
+          if(item.enddate) item.enddate = moment(item.enddate).format('YYYY-MM')
+        })
         $scope.user = data;
+        console.log($scope.user)
         $scope.editdata = angular.copy(data);
         expLen = data.Experiences.length;
         // console.log($scope.user)
@@ -247,6 +380,10 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.addnewExp = function(){
       $scope.editdata.Experiences.push({})
+    }
+    $scope.cancelsubmit = function(){
+      $scope.edit = false;
+      $scope.editdata = angular.copy($scope.user);
     }
     $scope.modifysubmit = function(){
       var modify = angular.copy($scope.editdata);
@@ -267,6 +404,7 @@ angular.module('myApp.controllers', ['ngRoute']).
         _.each(data,function(item){
             if( item!=true){ 
               alertify.error(item.value+' on '+item.source+' ' +item.path);
+
               errorMsg.push(item)
           }
         })

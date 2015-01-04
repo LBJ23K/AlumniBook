@@ -13,19 +13,27 @@
         <link rel="stylesheet" href="../js/alertify.js-0.3.11/themes/alertify.core.css" />
         <!-- include a theme, can be included into the core instead of 2 separate files -->
         <link rel="stylesheet" href="../js/alertify.js-0.3.11/themes/alertify.default.css" />
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script>
         var isLogin = <%- isLogin ? 'true' : 'false'%>;
 
         if(isLogin){
+            var userAccount = "<%- User.account %>";
             var userId = "<%- User.member_id %>";
             var userName = "<%- User.name %>";
             var userSchool = "<%- User.school %>";
             var userGrade = "<%- User.grade %>";
             var userDepartment = "<%- User.department %>";
             var userGender = "<%- User.gender %>";
-            var userPhoto = "<%- User.photo %>"
+            var userPhoto = "<%- User.photo %>";
+            var notifications = "<%- Notifications %>"
         }
+        console.log(notifications)
         console.log(isLogin)
+        $(document).ready(function(){
+            $('.dropdown').dropdown({ on: 'hover' });
+        });
         </script>
     </head>
     <body ng-controller="AppCtrl">
@@ -36,12 +44,40 @@
       </a>
 
       <div class="right menu">
-        <a ng-hide="{{$root.isLogin}}" href="/signup" class="item">
+
+        <div ng-show="{{$root.isLogin}}" class="ui simple dropdown item">
+          {{searchFieldText}} <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" ng-click="setSearchField(0)">文章標題</a>
+            <a class="item" ng-click="setSearchField(1)">文章作者</a>
+          </div>
+        </div>
+
+        <div ng-show="{{$root.isLogin}}" class="item">
+          <div class="ui icon input">
+            <input type="text" placeholder="Search..." ng-model="searchText">
+            <i class="search link icon" ng-click="search(searchText)"></i>
+          </div>
+        </div>
+
+       <!--  <a ng-show="{{$root.isLogin}}" href="/signup" class="item">
           <%= __('Signup') %>
-        </a>
+        </a> -->
+        <!-- <a ng-hide="{{$root.isLogin}}" href="http://{{$root.host}}/login/" target="_self" class="item">
+          <%= __('Login') %>
+        </a> -->
         <a ng-hide="{{$root.isLogin}}" href="/login" class="item">
           <%= __('Login') %>
         </a>
+        <div ng-mouseenter="get_notifications()" ng-show="{{$root.isLogin}}"   
+        class="ui pointing dropdown link item">
+            <span ng-bind="$root.user.notifications"></span>
+            <div class="menu transition hidden">
+                <div class="item" ng-repeat="post in notifications" ng-click="select(post.issue_id)">
+                    <%= __('Notification') %> <span ng-bind="post.issue_name" ></span>
+                </div>
+            </div>
+        </div>
         <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
           
         </a>
@@ -59,8 +95,7 @@
 
     <section ui-view></section>
     
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
     <script src="js/semantic.min.js"></script>
     <script src="../js/lib/underscore/underscore-min.js"></script>
