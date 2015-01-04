@@ -42,6 +42,26 @@ exports.unsubscribe = function(req, res){
 	});
 }
 
+exports.get_notifications = function(req, res){
+
+	Notification.findAll({
+		where: {
+			member_id: req.session.user.member_id,	
+			read: "unread"
+		},
+		include: [Issue]
+	}).success(function(result){
+		var temp = [];
+		_.map(result, function(issue){
+			temp.push({
+                issue_id: issue.issue_id,
+                issue_name: issue.Issue.title			
+			});
+		});
+		res.json(temp);
+	});
+}
+
 exports.notify = function(post, type){
 	
 	//send mail to all subscribers
@@ -68,28 +88,3 @@ exports.notify = function(post, type){
     });
 }
 
-// exports.notify = function(req, res){
-	
-// 	//send mail to all subscribers
-// 	Notify_issue.findAll({
-//         where: {
-//              issue_id: req.params.id
-//         },
-//     }).success(function(notify_issues) {
-//         // console.log(notify_issue);
-//         //find all user
-//         notify_issues.forEach(function(issue){
-//         	Notification.create({
-// 				issue_id: issue.issue_id, 
-// 				member_id: issue.member_id,
-// 				type: req.params.type,
-// 				read: "unread"
-// 			}).success(function(){
-// 				res.json({
-// 					msg:"notify success"
-// 				});
-// 				console.log("notify success");	
-// 			});
-//         });
-//     });
-// }

@@ -121,6 +121,7 @@ app.get('/api/dislike/:id', api.checkLogin, api.dislikePost);
 
 app.get('/notify/subscribe/:id', api.checkLogin, notify.subscribe);
 app.get('/notify/unsubscribe/:id', api.checkLogin, notify.unsubscribe);
+app.get('/notify/get_notifications', api.checkLogin, notify.get_notifications)
 app.get('/api/notify/:id/:type', api.checkLogin, notify.notify);
 
 app.post('/category/create', postCategory.create);

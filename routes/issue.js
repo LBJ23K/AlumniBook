@@ -136,16 +136,17 @@ exports.listById = function(req, res){
                       _.map(unread, function(unread){
                           unread.updateAttributes({
                               read: "read"
-                          }).success(function(){
-                              // console.log(unread);
-                              callback(null, true);
                           });
                       });
+                      callback(null, _.size(unread));
                   }
                   else{
-                      callback(null, true);
+                      callback(null, 0);
                   }
               });
+          }
+          else{
+            callback(null, 0);
           }
       }],function(err, result){
         // console.log(result)
@@ -161,6 +162,7 @@ exports.listById = function(req, res){
           like:result[1],
           comments:result[2], 
           isSubscribe: result[3],
+          reads: result[4],
           isAuthor:isAuthor
           
         });

@@ -58,7 +58,10 @@ Member.hasMany(Notify_issue, {foreignKey:'member_id'});
 Issue.hasMany(Notify_issue, {foreignKey:'issue_id'});
 
 Member.hasMany(Notification, {foreignKey:'member_id'});
+Notification.belongsTo(Member, {foreignKey:'member_id'});
+
 Issue.hasMany(Notification, {foreignKey:'issue_id'});
+Notification.belongsTo(Issue, {foreignKey:'issue_id'});
 
 exports.Member = Member;
 

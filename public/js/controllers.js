@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', ['ngRoute']).
-  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state) {
+  controller('AppCtrl', function ($rootScope, $window, $scope, $http, $state, $location) {
     $rootScope.isLogin = $window.isLogin;
     if (typeof(Storage) != "undefined") {
       var lang = localStorage.getItem("lang");
@@ -39,7 +39,17 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
       
     })
- 
+    $scope.get_notifications = function(){
+        $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+            $scope.notifications = result;         
+        });
+    }
+    $scope.select = function(id){
+      $location.path('/topic/'+id);
+      $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
+          $scope.notifications = result;         
+      });      
+    }
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
@@ -90,7 +100,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Topic', function ($scope, $state, $http, $route, $location, $window) {
+  controller('Topic', function ($rootScope, $scope, $state, $http, $route, $location, $window) {
     // write Ctrl here
     $scope.myComment = "";
     // $scope.SubscribeThis = true;
@@ -102,8 +112,9 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.like = result.like;
       $scope.isAuthor = result.isAuthor;
       $scope.SubscribeThis = result.isSubscribe;
-      console.log(result.post.issue_id);
+      $rootScope.user.notifications -= result.reads;
     })
+
     $scope.deleteIssue = function(){
       $http({method:"GET", url:'/issue/destroy?issue_id='+$state.params.id}).success(function(result){
         console.log(result);
