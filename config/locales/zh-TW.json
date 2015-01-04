@@ -34,5 +34,9 @@
 	"User List": "使用者列表",
 	"Notification": "有新留言在 ",
 	"Search_Field_Title": "搜尋標題",
-	"Search_Field_Author": "搜尋作者"
+	"Search_Field_Author": "搜尋作者",
+	"Delete_Post": "刪除文章",
+	"Follow": "追蹤",
+	"Unfollow": "取消追蹤",
+  "Submit": "送出"
 }
