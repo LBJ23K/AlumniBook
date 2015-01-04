@@ -26,9 +26,23 @@ exports.login = function(req, res){
     Member.find(query).success(function(member){
         console.log(JSON.stringify(member));
         if(member == null){
-            res.end("fail");
-            res.json({msg:"No user!"});
-            
+            // res.end("fail");
+            // res.json({msg:"No user!"});
+            var user = {}
+            Member.create({account:req.user.uid}).success(function(member){
+                Education.create({member_id:member.dataValues.member_id})
+                Experience.create({member_id:member.dataValues.member_id})
+                Contact.create({member_id:member.dataValues.member_id})
+                // res.json({msg:"success"});
+                var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+                req.session.user = user;
+                req.session.isLogin = true;
+                res.redirect('/');
+                
+        })
+        .error(function(err){
+            console.log(err);
+        })
         }
         else{
             var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
