@@ -59,9 +59,11 @@ exports.modifyaccount = function (req, res){
 	// .error(function(err){
 	// 	console.log(err);
 	// })
+	console.log(req.session.user.member_id)
 	Member.find({member_id:req.session.user.member_id}).success(function(member){
+		console.log(req.session.user.member_id, member.member_id)
 		if(member){
-			// console.log(member)
+			console.log(member)
 			member.updateAttributes({name:req.body.name, 
 									 gender:req.body.gender,
 									 school:req.body.school, 
