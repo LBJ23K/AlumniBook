@@ -25,8 +25,11 @@
             var userDepartment = "<%- User.department %>";
             var userGender = "<%- User.gender %>";
             var userPhoto = "<%- User.photo %>";
+            var notifications = "<%- Notifications %>";
         }
-        console.log(isLogin);
+        $(document).ready(function(){
+            $('.dropdown').dropdown({ on: 'hover' });
+        });
         </script>
     </head>
     <body ng-controller="AppCtrl">
@@ -61,6 +64,16 @@
 <!--         <a ng-hide="{{$root.isLogin}}" href="/login" class="item">
           <%= __('Login') %>
         </a> -->
+        <div ng-mouseenter="get_notifications()" ng-show="{{$root.isLogin}}"   
+        class="ui pointing dropdown link item">
+            <span ng-bind="$root.user.notifications"></span>
+            <div class="menu transition hidden">
+                <div class="item" ng-repeat="post in notifications" ng-click="select(post.issue_id)">
+                    <%= __('Notification') %> <span ng-bind="post.issue_name" ></span>
+                </div>
+            </div>
+        </div>
+
         <a ng-show="{{$root.isLogin &&$root.user.name.length}}" ng-bind="$root.user.name" href="/usersetting" class="item">
         </a>
         <a ng-show="!$root.user.name.length" class="item" href="/usersetting">使用者設定</a>
