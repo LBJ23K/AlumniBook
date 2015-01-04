@@ -223,7 +223,13 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('UserList', function($scope, $location, $state, $http){
+  controller('UserList', function($scope, $location, $state, $http,$filter){
+    // var category = $state.params.category;
+    // var search = $state.params.search;
+    // console.log(category);
+    // console.log(search);
+    // category = 'department';
+    // search = ''
     $scope.init = function(){
       $http({
         method:"GET",
@@ -237,6 +243,11 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log('fail');
       })
     }
+    // $scope.filteruser = function(users){
+    //   // return function(users) {
+    //     // return $filter('filter')(users.name,$scope.searchuser);
+    //   // }
+    // }
     $scope.select = function(userID){
       $location.path('/users/'+userID);
     }
