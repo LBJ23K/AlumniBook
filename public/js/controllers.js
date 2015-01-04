@@ -252,7 +252,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Signup', function ($scope, $http, $location, $state) {
+  controller('Account', function ($scope, $http, $location, $state) {
     $scope.init = function(){
       $http({method:"GET", url:'/api/getaccount'}).success(function(result){
         $scope.data = result;
@@ -271,7 +271,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     });  
   } 
     $scope.signup = function(){
-      $http({method:"POST", url:'/api/signup', data:$scope.data}).success(function(result){
+      $http({method:"POST", url:'/api/modifyaccount', data:$scope.data}).success(function(result){
         if(result.msg = "success")
           alertify.success("更新成功");
         // var data = {

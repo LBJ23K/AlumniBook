@@ -47,7 +47,7 @@ exports.dislikePost = function(req, res){
 	});
 		
 }
-exports.createMember = function (req, res){
+exports.modifyaccount = function (req, res){
 	// console.log(req.body);
 	// req.body.password = md5(req.body.password);
 	// Member.create(req.body).success(function(member){

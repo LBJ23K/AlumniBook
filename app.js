@@ -140,7 +140,7 @@ app.get('/api/getaccount', api.getaccount);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
-app.post('/api/signup', api.createMember);
+app.post('/api/modifyaccount', api.modifyaccount);
 
 app.post('/issue/create', api.checkLogin, issue.create);
 app.get('/issue/list', issue.list);

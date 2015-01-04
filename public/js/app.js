@@ -19,10 +19,10 @@ angular.module('myApp', [
       templateUrl: 'partial/home',
       controller: 'Home'
     }).
-    state('signup', {
-      url:'/signup',
-      templateUrl: 'partial/signup',
-      controller: 'Signup'
+    state('account', {
+      url:'/accountsetting',
+      templateUrl: 'partial/account',
+      controller: 'Account'
     }).
     state('login', {
       url:'/login',
