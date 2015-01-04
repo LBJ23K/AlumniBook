@@ -152,12 +152,17 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $scope.title = "";
     $scope.content = "";
+    $scope.cat_id = 1;
+    $http({method:"GET", url:'/category/list'}).success(function(category){
+      $scope.category = category;
+    })
     // console.log(userSchool);
     // write Ctrl here
     $scope.submitPost = function(){
       var data = {
         title: $scope.title, 
-        content: $scope.content
+        content: $scope.content,
+        postCategory_id:$scope.cat_id
       }
       $http({method:"POST", url:"/issue/create", data:data}).success(function(post){
         console.log(post);
