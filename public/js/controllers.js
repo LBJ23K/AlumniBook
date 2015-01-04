@@ -24,9 +24,9 @@ angular.module('myApp.controllers', ['ngRoute']).
       department: $window.userDepartment,
       grade: $window.userGrade,
       photo: $window.userPhoto
-    }
+    };
 
-    console.log($rootScope.lang)
+    console.log($rootScope.lang);
     $rootScope.$watch('lang',function(newValue, oldValue){   
 
       if(newValue!=oldValue){
@@ -34,12 +34,41 @@ angular.module('myApp.controllers', ['ngRoute']).
         $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
           // $state.transitionTo('index', null, {'reload':true});
           location.reload();
-      });
-
+        });
       }
+
       
     })
-  $rootScope.host = window.location.host;
+    $rootScope.host = window.location.host;
+
+    $scope.searchFieldText = "文章標題";
+    $scope.searchField = "title";
+    $scope.setSearchField = function(option) {
+      switch (option) {
+        case 0:
+          $scope.searchFieldText = "文章標題";
+          $scope.searchField = "title";
+          break;
+        case 1:
+          $scope.searchFieldText = "文章作者";
+          $scope.searchField = "author";
+          break;
+        default:
+      }
+    };
+
+    $scope.search = function(text) {
+      console.log(text);
+      var data = {
+        field: $scope.searchField,
+        searchText: text
+      };
+      $http.post('/issue/search', data).success(function(issues){
+        console.log(issues);
+        // TODO: NKT, display these issues PLZ!!!!!
+      });
+    };
+
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
@@ -48,10 +77,10 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
       console.log(posts);
-    })
+    });
     $scope.time = function (t) {
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
-    }
+    };
     $scope.newPost = function(){
       if(!$rootScope.isLogin){
         alertify.alert("Please login.", function (e) {

@@ -36,6 +36,22 @@
       </a>
 
       <div class="right menu">
+
+        <div ng-show="{{$root.isLogin}}" class="ui simple dropdown item">
+          {{searchFieldText}} <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" ng-click="setSearchField(0)">文章標題</a>
+            <a class="item" ng-click="setSearchField(1)">文章作者</a>
+          </div>
+        </div>
+
+        <div ng-show="{{$root.isLogin}}" class="item">
+          <div class="ui icon input">
+            <input type="text" placeholder="Search..." ng-model="searchText">
+            <i class="search link icon" ng-click="search(searchText)"></i>
+          </div>
+        </div>
+
         <a ng-show="{{$root.isLogin}}" href="/signup" class="item">
           <%= __('Signup') %>
         </a>
