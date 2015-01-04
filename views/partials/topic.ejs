@@ -1,10 +1,10 @@
-<div class="ui page grid">
+<div class="ui page grid stackable two column">
 	<div class="two wide column">
 		<div class="ui icon header">
-		  <div class="col-md-2" style="margin-top:20px">
+		  <div style="margin-top:20px">
 				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<a href="/users/{{post.Member.member_id}}">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image"></a>
+				<a href="/users/{{post.Member.member_id}}"><div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="ui medium circular profile-img bg-img">
+				</div></a>	
 			</div>
 		  <div class="content member-info">
 		    <a class="author" ng-bind="post.Member.name" href="/users/{{post.Member.member_id}}"></a>
@@ -49,7 +49,9 @@
 				  <div class="comment" ng-repeat="comment in comments">
 				    <a class="avatar" href="/users/{{post.Member.member_id}}">
 				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-							<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
+							<!-- <img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image"> -->
+							<div ng-show="comment.Member.photo" ng-style="{'background-image':'url('+comment.Member.photo+')'}" class="comment-profile-img bg-img">
+							</div>	
 				    </a>
 				    <div class="content">
 				      <a class="author" ng-bind="comment.Member.name" href="/users/{{post.Member.member_id}}"></a>
