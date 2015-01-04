@@ -18,6 +18,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $rootScope.user = {
       name: $window.userName,
+      user_id: $window.userId,
       gender: $window.gender,
       school: $window.userSchool,
       department: $window.userDepartment,
@@ -39,6 +40,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
       
     })
+  $rootScope.host = window.location.host;
     $scope.get_notifications = function(){
         $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
             $scope.notifications = result;         
@@ -172,6 +174,7 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Login', function ($scope, $http, $location, $state) {
     // write Ctrl here
+
     $scope.account = "";
     $scope.password = "";
     $scope.Login = function(){
@@ -235,29 +238,41 @@ angular.module('myApp.controllers', ['ngRoute']).
     // $rootScope.user = {};
     window.location.reload();
   }).
-  controller('Userlist', function($scope, $location, $state, $http){
-    $http({
-        method:"GET",
-        url:"/api/user/list"
-      }).success(function(data){
-        console.log(data);
-        $scope.members = data;
-      })
-    $scope.queryUser = function(member_id){
+  controller('Profile', function($scope, $location, $state,$http,$rootScope){
+    $scope.id = $state.params.id;
+    // $scope.myid = $rootScope.user.user_id
+    $scope.init = function(){
       $http({
         method:"GET",
-        url:"/api/user/"+member_id
-      }).success(function(data){
+        url:"/api/users/"+$scope.id
+      })
+      .success(function(data){
         console.log(data);
-        $scope.member = data;
-        $scope.member_contact = JSON.stringify(data.Contact, undefined, 2 )
-        $scope.member_experience = JSON.stringify(data.Experience, undefined, 2 )
-        $scope.member_eduction = JSON.stringify(data.Education, undefined, 2 )
+        $scope.user = data;
+      })
+      .error(function(){
+        console.log('fail');
       })
     }
-    // $rootScope.isLogin = false;
-    // $rootScope.user = {};
-    // window.location.reload();
+
+  }).
+  controller('UserList', function($scope, $location, $state, $http){
+    $scope.init = function(){
+      $http({
+        method:"GET",
+        url:"/api/users"
+      })
+      .success(function(data){
+        $scope.users = data;
+        console.log($scope.users);
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
+    $scope.select = function(userID){
+      $location.path('/users/'+userID);
+    }
   }).
   controller('Usersetting', function($scope, $location, $state,$http){
     $scope.edit = false;
@@ -265,10 +280,17 @@ angular.module('myApp.controllers', ['ngRoute']).
     $scope.init = function(){
       $http({
         method:"GET",
-        url:"/api/user"
+        url:"/api/user/me"
       })
       .success(function(data){
+        if(data.Education.startdate) data.Education.startdate = moment(data.Education.startdate).format('YYYY-MM')
+          if(data.Education.enddate) data.Education.enddate = moment(data.Education.enddate).format('YYYY-MM')
+        _.each(data.Experiences,function(item){
+          if(item.startdate) item.startdate = moment(item.startdate).format('YYYY-MM')
+          if(item.enddate) item.enddate = moment(item.enddate).format('YYYY-MM')
+        })
         $scope.user = data;
+        console.log($scope.user)
         $scope.editdata = angular.copy(data);
         expLen = data.Experiences.length;
         // console.log($scope.user)
@@ -279,6 +301,10 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.addnewExp = function(){
       $scope.editdata.Experiences.push({})
+    }
+    $scope.cancelsubmit = function(){
+      $scope.edit = false;
+      $scope.editdata = angular.copy($scope.user);
     }
     $scope.modifysubmit = function(){
       var modify = angular.copy($scope.editdata);
@@ -299,6 +325,7 @@ angular.module('myApp.controllers', ['ngRoute']).
         _.each(data,function(item){
             if( item!=true){ 
               alertify.error(item.value+' on '+item.source+' ' +item.path);
+
               errorMsg.push(item)
           }
         })

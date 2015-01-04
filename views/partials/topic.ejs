@@ -3,10 +3,11 @@
 		<div class="ui icon header">
 		  <div class="col-md-2" style="margin-top:20px">
 				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image">
+				<a href="/users/{{post.Member.member_id}}">
+				<img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image"></a>
 			</div>
 		  <div class="content member-info">
-		    <span ng-bind="post.Member.name"></span>
+		    <a class="author" ng-bind="post.Member.name" href="/users/{{post.Member.member_id}}"></a>
 		    <div class="sub header">
 		    	<span ng-bind="post.Member.school"></span>
 		    </div>
@@ -46,12 +47,12 @@
 				  <h4 class="ui dividing header">Comments</h4>
 
 				  <div class="comment" ng-repeat="comment in comments">
-				    <a class="avatar">
+				    <a class="avatar" href="/users/{{post.Member.member_id}}">
 				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
 							<img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image">
 				    </a>
 				    <div class="content">
-				      <a class="author" ng-bind="comment.Member.name"></a>
+				      <a class="author" ng-bind="comment.Member.name" href="/users/{{post.Member.member_id}}"></a>
 				      <div class="metadata">
 				        <span class="date" ng-bind="time(comment.createdAt)"></span>
 				      </div>
