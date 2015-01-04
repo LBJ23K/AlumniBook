@@ -35,7 +35,6 @@ exports.login = function(req, res){
             // console.log(user)
             req.session.user = user;
             req.session.isLogin = true;
-            //res.json({msg:"success"});
             res.redirect('/');
             
         }
