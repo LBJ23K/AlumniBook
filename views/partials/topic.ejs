@@ -37,8 +37,8 @@
 			
 			   	<button ng-show="isAuthor" class="ui button" ng-click="deleteIssue()">刪除文章</button>
 
-			   	<button ng-hide="SubscribeThis"class="ui teal labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span>追蹤</span></button>
-			   	<button ng-show="SubscribeThis" class="ui labeled icon button" ng-click="unsubscribePost()"><i class="remove icon"></i><span>取消追蹤</span></button>	
+			   	<button ng-hide="SubscribeThis"class="ui labeled icon button" ng-click="subscribePost()"><i class="star icon"></i><span>追蹤</span></button>
+			   	<button ng-show="SubscribeThis" class="ui teal labeled icon button" ng-click="unsubscribePost()"><i class="star icon"></i><span>取消追蹤</span></button>	
 		   	</div>
     	</div>
 
@@ -48,7 +48,7 @@
 
 				  <div class="comment" ng-repeat="comment in comments">
 				    <a class="avatar" href="/users/{{post.Member.member_id}}">
-				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+				      <img ng-hide="comment.Member.photo" src="img/user.png" class="img-responsive comment-profile-img" alt="Responsive image">
 							<!-- <img ng-show="comment.Member.photo" ng-src="{{comment.Member.photo}}" class="img-responsive" alt="Responsive image"> -->
 							<div ng-show="comment.Member.photo" ng-style="{'background-image':'url('+comment.Member.photo+')'}" class="comment-profile-img bg-img">
 							</div>	
