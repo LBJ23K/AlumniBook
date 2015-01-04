@@ -232,4 +232,98 @@ exports.modifyUser = function(req, res) {
         });
 }
 
+exports.searchUserAccount = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            account: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
 
+exports.searchUserName = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            name: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserSchool = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            school: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserDepartment = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            department: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGender = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            gender: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
+
+exports.searchUserGrade = function(req,res){
+    var value = req.param('value');
+    Member.findAll({
+        where: {
+            grade: {like: '%' + value + '%'}
+        },
+        include: [Education, Contact, Experience]
+    }).success(function(member) {
+        if (member == null) {
+            var noMember = [];
+            res.json(noMember);
+        }
+        res.json(member);
+    })
+}
