@@ -38,9 +38,7 @@ passport.use(new SamlStrategy(
     issuer: 'passport-saml-sso-2'
   },
   function(profile, done){
-    if (err) {
-        return done(err);
-    }
+  
     return done(null, profile);
   })
 );
