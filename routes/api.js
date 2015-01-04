@@ -95,19 +95,29 @@ exports.login = function (req, res){
 	}
 	Member.find(query).success(function(member){
 		// console.log(JSON.stringify(member));
+		// if(member == null){
+		// 	// res.end("fail");
+		// 	res.json({msg:"No user!"});
+		// }
+		// else if(md5(req.body.password) == member.dataValues.password){
+		// 	var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+		// 	console.log(user);
+		// 	req.session.user = user;
+		// 	req.session.isLogin = true;
+		// 	res.json({msg:"success"});
+		// }
+		// else{
+		// 	res.json({msg:"Wrong password"});
+		// }
 		if(member == null){
-			// res.end("fail");
+			res.end("fail");
 			res.json({msg:"No user!"});
 		}
-		else if(md5(req.body.password) == member.dataValues.password){
+		else{
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-			console.log(user);
 			req.session.user = user;
 			req.session.isLogin = true;
 			res.json({msg:"success"});
-		}
-		else{
-			res.json({msg:"Wrong password"});
 		}
 		
 	});

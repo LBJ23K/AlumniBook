@@ -61,8 +61,10 @@
 <!--         <a ng-hide="{{$root.isLogin}}" href="/login" class="item">
           <%= __('Login') %>
         </a> -->
-        <a ng-show="{{$root.isLogin}}" ng-bind="$root.user.name" href="/usersetting" class="item">
+        <a ng-show="{{$root.isLogin &&$root.user.name.length}}" ng-bind="$root.user.name" href="/usersetting" class="item">
         </a>
+        <a ng-show="!$root.user.name.length" class="item" href="/usersetting">使用者設定</a>
+
         <a href="/users/userlist" class="item">
             <%= __('User List') %>
         </a>
