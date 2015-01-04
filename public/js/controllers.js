@@ -36,54 +36,43 @@ angular.module('myApp.controllers', ['ngRoute']).
           location.reload();
         });
       }
-
-      
-    })
+    });
     $rootScope.host = window.location.host;
 
-    $scope.searchFieldText = "文章標題";
-    $scope.searchField = "title";
-    $scope.setSearchField = function(option) {
-      switch (option) {
-        case 0:
-          $scope.searchFieldText = "文章標題";
-          $scope.searchField = "title";
-          break;
-        case 1:
-          $scope.searchFieldText = "文章作者";
-          $scope.searchField = "author";
-          break;
-        default:
-      }
+    $scope.searchFields = [];
+    $http.get('/issue/searchFields').success(function(fields) {
+      $scope.searchFields = fields;
+      $scope.searchingField = fields[0];
+    });
+
+    $scope.setSearchField = function(field) {
+      $scope.searchingField = field;
     };
 
     $scope.search = function(text) {
-      console.log(text);
       if (!text || text == '') {
-        $rootScope.$broadcast('resetSearch');
+        $rootScope.searchResults = null;
+        $rootScope.$broadcast('searchDone');
         return;
       }
 
-      var data = {
-        field: $scope.searchField,
+      var query = {
+        field: $scope.searchingField.field,
         searchText: text
       };
-      $http.post('/issue/search', data).success(function(issues){
-        console.log(issues);
-        // TODO: NKT, display these issues PLZ!!!!!
+      $http.post('/issue/search', query).success(function(issues){
         $rootScope.searchResults = _.sortBy(issues, function(post) {
-          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
           return -(new Date(post.createdAt).getTime());
         });
+
+        var currentPath = $location.path();
+        if (currentPath != '/') {
+          $location.path('/');
+        }
         $rootScope.$broadcast('searchDone');
-
-
-//        $scope.posts = _.sortBy(issues, function(post) {
-//          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
-//          return -(new Date(post.createdAt).getTime());
-//        });
       });
     };
+
     $scope.get_notifications = function(){
         $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
             $scope.notifications = result;         
@@ -99,19 +88,20 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
+    $scope.posts = [];
     $http({method:"GET", url:'/issue/list'}).success(function(posts){
-      $scope.allPosts = $scope.posts = _.sortBy(posts, function(post){
+      $scope.allPosts = _.sortBy(posts, function(post){
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
       console.log(posts);
+
+      if ($rootScope.searchResults) $scope.posts = $rootScope.searchResults;
+      else $scope.posts = $scope.allPosts;
     });
 
     $scope.$on('searchDone', function() {
-      $scope.posts = $rootScope.searchResults;
-    });
-
-    $scope.$on('resetSearch', function() {
-      $scope.posts = $scope.allPosts;
+      if ($rootScope.searchResults) $scope.posts = $rootScope.searchResults;
+      else $scope.posts = $scope.allPosts;
     });
 
     $scope.time = function (t) {
@@ -266,6 +256,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     $scope.init = function(){
       $http({method:"GET", url:'/api/getaccount'}).success(function(result){
         $scope.data = result;
+        console.log(result)
       })
     }
     $scope.photo = "";
@@ -274,7 +265,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
     filepicker.pickAndStore({},{location:"S3",container:"dcard-guang"},function(InkBlob){
       console.log(InkBlob);
-      $scope.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
+      $scope.data.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
       $scope.$apply();
       // alert("success");
     });  

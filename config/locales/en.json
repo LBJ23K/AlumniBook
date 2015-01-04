@@ -32,5 +32,7 @@
 	"Photo": "Photo",
 	"Upload Photo": "Upload Photo",
 	"Notification": "New comment on ",
-	"User List": "User List"
+	"User List": "User List",
+  	"Search_Field_Title": "Search Title",
+  	"Search_Field_Author": "Search Author"
 }

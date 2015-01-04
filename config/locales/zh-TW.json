@@ -32,5 +32,7 @@
 	"Photo": "照片",
 	"Upload Photo": "上傳照片",
 	"User List": "使用者列表",
-	"Notification": "有新留言在 "
+	"Notification": "有新留言在 ",
+	"Search_Field_Title": "搜尋標題",
+	"Search_Field_Author": "搜尋作者"
 }
