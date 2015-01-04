@@ -60,7 +60,7 @@ exports.modifyaccount = function (req, res){
 	// 	console.log(err);
 	// })
 	console.log(req.session.user.member_id)
-	Member.find({member_id:req.session.user.member_id}).success(function(member){
+	Member.find({account:req.body.account}).success(function(member){
 		console.log(req.session.user.member_id, member.member_id)
 		if(member){
 			console.log(member)
