@@ -236,7 +236,6 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('Signup', function ($scope, $http, $location, $state) {
     // write Ctrl here
     $scope.photo = "";
-    console.log('h')
     $scope.upload = function(){
     
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
@@ -246,7 +245,15 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.$apply();
       // alert("success");
     });  
-  }
+  } 
+    $scope.name = userName;
+    $scope.school = userSchool;
+    $scope.gender = userGender;
+    $scope.department = userDepartment;
+    $scope.grade = userGrade;
+    $scope.photo = userPhoto;
+    $scope.account = userAccount;
+
     $scope.signup = function(){
       var data = {
         name: $scope.name,
@@ -256,18 +263,21 @@ angular.module('myApp.controllers', ['ngRoute']).
         grade: $scope.grade,
         photo: $scope.photo,
         account: $scope.account,
-        password: $scope.password
+        member_id: userId
+        // password: $scope.password
       }
       $http({method:"POST", url:'/api/signup', data:data}).success(function(result){
-        var data = {
-        account:$scope.account,
-        password:$scope.password
-        }
-        $http({method:"POST", url:"/api/login", data:data}).success(function(post){
-            console.log(post);
-            window.location.reload();
-            $location.path('/')
-        });
+        if(result.msg = "success")
+          alertify.success("更新成功");
+        // var data = {
+        // account:$scope.account,
+        // password:$scope.password
+        // }
+        // $http({method:"POST", url:"/api/login", data:data}).success(function(post){
+        //     console.log(post);
+        //     window.location.reload();
+        //     $location.path('/')
+        // });
       })
     }
 
