@@ -60,6 +60,11 @@ angular.module('myApp.controllers', ['ngRoute']).
 
     $scope.search = function(text) {
       console.log(text);
+      if (!text || text == '') {
+        $rootScope.$broadcast('resetSearch');
+        return;
+      }
+
       var data = {
         field: $scope.searchField,
         searchText: text
@@ -67,6 +72,17 @@ angular.module('myApp.controllers', ['ngRoute']).
       $http.post('/issue/search', data).success(function(issues){
         console.log(issues);
         // TODO: NKT, display these issues PLZ!!!!!
+        $rootScope.searchResults = _.sortBy(issues, function(post) {
+          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+          return -(new Date(post.createdAt).getTime());
+        });
+        $rootScope.$broadcast('searchDone');
+
+
+//        $scope.posts = _.sortBy(issues, function(post) {
+//          console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'));
+//          return -(new Date(post.createdAt).getTime());
+//        });
       });
     };
     $scope.get_notifications = function(){
@@ -85,11 +101,20 @@ angular.module('myApp.controllers', ['ngRoute']).
   controller('Home', function ($rootScope, $scope, $location, $http) {
     // write Ctrl here
     $http({method:"GET", url:'/issue/list'}).success(function(posts){
-      $scope.posts = _.sortBy(posts, function(post){
+      $scope.allPosts = $scope.posts = _.sortBy(posts, function(post){
         console.log(moment(post.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
         return -(new Date(post.createdAt).getTime())});
       console.log(posts);
     });
+
+    $scope.$on('searchDone', function() {
+      $scope.posts = $rootScope.searchResults;
+    });
+
+    $scope.$on('resetSearch', function() {
+      $scope.posts = $scope.allPosts;
+    });
+
     $scope.time = function (t) {
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
     };
