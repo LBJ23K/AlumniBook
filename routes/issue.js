@@ -7,6 +7,8 @@ var Comment = require('../models').Comment;
 var Like = require('../models').Like;
 var PostCategory = require('../models').PostCategory;
 var sanitizer = require('sanitizer');
+var Notify_issue = require("../models").Notify_issue;
+var Notification = require('../models').Notification;
 
 exports.create = function(req, res){
   console.log(req.body);
@@ -65,7 +67,7 @@ exports.listById = function(req, res){
   //       res.json(error);
   //     })
   Issue.find({ where: {issue_id:req.param('issue_id')}, include: [Member, PostCategory]}).success(function(post){
-    // console.log(post)
+    console.log(req.session.user)
     if(post.Member != null)
       post.Member.password = "";
     async.parallel([
@@ -101,6 +103,51 @@ exports.listById = function(req, res){
           callback(null, comments)
           
         })
+      },
+      function(callback){
+        if(req.session.user){
+            Notify_issue.findAll({
+              where:{
+                issue_id:req.param('issue_id'), 
+                member_id:req.session.user.member_id 
+              }
+            }).success(function(subscribe){
+              if(subscribe.length == 0){
+                callback(null, false)
+              }
+              else{
+                callback(null, true)
+              }
+            })
+        }
+        else{
+          callback(null, false)
+        }
+      },function(callback){
+          if(req.session.user){
+              Notification.findAll({
+                  where: {
+                      member_id: req.session.user.member_id,
+                      issue_id: req.param('issue_id'),
+                      read: "unread"
+                  }
+              }).success(function(unread){
+                  if(_.size(unread) != 0){
+                      _.map(unread, function(unread){
+                          unread.updateAttributes({
+                              read: "read"
+                          });
+                      });
+                      callback(null, _.size(unread));
+                  }
+                  else{
+                      callback(null, 0);
+                  }
+              });
+          }
+          else{
+            callback(null, 0);
+          }
       }],function(err, result){
         // console.log(result)
         var isAuthor
@@ -108,8 +155,17 @@ exports.listById = function(req, res){
           isAuthor = (req.session.user.member_id==post.member_id);
         else
           isAuthor = 0;
-
-        res.json({post:post, likeThis:result[0], like:result[1],comments:result[2], isAuthor:isAuthor});
+        console.log(result);
+        res.json({
+          post:post,
+          likeThis:result[0], 
+          like:result[1],
+          comments:result[2], 
+          isSubscribe: result[3],
+          reads: result[4],
+          isAuthor:isAuthor
+          
+        });
       })
     
   });

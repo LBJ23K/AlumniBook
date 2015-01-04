@@ -10,6 +10,7 @@ var Education = require('../models').Education;
 var Experience = require('../models').Experience;
 var Contact = require('../models').Contact;
 var Like = require('../models').Like;
+var Notify = require('./notify');
 var _ = require('underscore');
 var async = require('async');
 var local = require("../config/local");
@@ -170,7 +171,9 @@ exports.commentOn = function(req, res){
 	}
 	Comment.create(comment).success(function(theCommnet){
 		console.log(theCommnet.dataValues);
-		res.json({msg:"success"})
+		Notify.notify(comment, "comment");
+		res.json({msg:"success"});
+		//send mail to subscribers
 	})
 
 }
@@ -186,6 +189,7 @@ exports.checkLogin = function(req, res, next){
 		res.status(401).json({error:true,msg:"請登入"});
 	}
 }
+
 
 // exports.facebookAuth = function(req,res){
 // 	passport.use(new FacebookStrategy({
