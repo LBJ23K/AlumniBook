@@ -54,7 +54,7 @@
             <span ng-bind="$root.user.notifications"></span>
             <div class="menu transition hidden">
                 <div class="item" ng-repeat="post in notifications" ng-click="select(post.issue_id)">
-                    New comment on <span ng-bind="post.issue_name" ></span>
+                    <%= __('Notification') %> <span ng-bind="post.issue_name" ></span>
                 </div>
             </div>
         </div>
