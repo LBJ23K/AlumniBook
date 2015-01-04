@@ -62,11 +62,16 @@ exports.modifyaccount = function (req, res){
 	Member.find({member_id:req.session.user.member_id}).success(function(member){
 		if(member){
 			// console.log(member)
-			member.updateAttributes(req.body).success(function(change){
+			member.updateAttributes({name:req.body.name, 
+									 gender:req.body.gender,
+									 school:req.body.school, 
+									 department:req.body.department,
+									 grade:req.body.gender,
+									 photo:req.body.gender.photo}).success(function(change){
 				// console.log(change)
 				req.session.user = change.dataValues;
-				console.log(change.dataValues)
-				console.log(req.session.user)
+				// console.log(change.dataValues)
+				// console.log(req.session.user)
 				res.json({msg:"success"});
 			})
 			
