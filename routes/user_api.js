@@ -38,20 +38,19 @@ exports.getUserData = function(req,res){
         res.json(member);
     })
 }
+exports.getAlluser = function(req,res){
+    Member.findAll({include: [Education, Contact, Experience]})
+    .success(function(member) {
+        res.json(member);
+    })
+}
 exports.modifyUser = function(req, res) {
     var id = req.session.user.member_id;
-    // var educationdata = JSON.parse(req.body.education);
-    // var contactdata = JSON.parse(req.body.contact);
-    // var experiencedata = JSON.parse(req.body.experience);
     var educationdata = req.body.Education;
     var contactdata = req.body.Contact;
     var experiencedata = req.body.Experiences;
     var modifyLen = req.body.expLen;
     var i=0;
-    // console.log(educationdata)
-    // console.log(contactdata)
-    // console.log(experiencedata)
-    // return;
     
     async.series([
             function(callback) {
@@ -79,6 +78,7 @@ exports.modifyUser = function(req, res) {
                     contact.updateAttributes(contactdata).success(function(result) {
                         callback(null, true)
                     }).error(function(err){ 
+                        console.log(err)
                         Experror = _.pick(err.errors[0],'type','path','value');
                         Experror.source = 'Contact';
                         callback(null,Experror)

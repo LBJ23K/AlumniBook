@@ -23,7 +23,14 @@ exports.Education = function(Sequelize, sequelize){
     stuid:{
       type:Sequelize.STRING,
       allowNull: true,
-      defaultValue:null
+      defaultValue:null,
+      validate:{
+        stuid: function(value) {
+          var re = /[a-zA-Z][0-9]{8}/
+        if(!re.test(value)) 
+          throw ('stuid format error')
+        }
+      }
     },
     startdate:{
       type:Sequelize.DATE,

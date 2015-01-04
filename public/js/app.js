@@ -8,7 +8,7 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'ui.router'
+  'ui.router',
 
 ])
 .config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
@@ -52,6 +52,11 @@ angular.module('myApp', [
       url:'/users/:id',
       templateUrl: 'partial/usersetting',
       controller: 'Profile'
+    }).
+   state('userList', {
+      url:'/users',
+      templateUrl: 'partial/userList',
+      controller: 'UserList'
     }).
     state('otherwise',{
       url: "/"

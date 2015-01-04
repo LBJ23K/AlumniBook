@@ -222,15 +222,37 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
 
   }).
-  controller('Usersetting', function($scope, $location, $state,$http){
+  controller('UserList', function($scope, $location, $state, $http){
+    $scope.init = function(){
+      $http({
+        method:"GET",
+        url:"/api/users"
+      })
+      .success(function(data){
+        $scope.users = data;
+        console.log($scope.users);
+      })
+      .error(function(){
+        console.log('fail');
+      })
+    }
+    $scope.select = function(userID){
+      $location.path('/users/'+userID);
+    }
+  }).
+  controller('Usersetting', function($scope, $location, $state, $http){
     $scope.edit = false;
     var expLen;
     $scope.init = function(){
       $http({
         method:"GET",
-        url:"/api/user"
+        url:"/api/user/me"
       })
       .success(function(data){
+        data.Education.startdate = moment(data.Education.startdate).format('YYYY-MM')
+        _.each(data.Experiences,function(item){
+          if(item.startdate) item.startdate = moment(item.startdate).format('YYYY-MM')
+        })
         $scope.user = data;
         console.log($scope.user)
         $scope.editdata = angular.copy(data);

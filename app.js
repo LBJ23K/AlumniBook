@@ -69,12 +69,12 @@ if (app.get('env') === 'production') {
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
-// app.get('/auth/facebook', api.facebookAuth);
 
 
-app.get('/api/user', api.checkLogin,user_api.getUser);
+app.get('/api/user/me', api.checkLogin,user_api.getUser);//mysetting
 app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
-app.get('/api/users/:id',user_api.getUserData);
+app.get('/api/users/:id',user_api.getUserData);//particular user
+app.get('/api/users',user_api.getAlluser);//alluserList
 
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
