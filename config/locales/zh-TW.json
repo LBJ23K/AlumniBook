@@ -12,7 +12,7 @@
 	"Password": "密碼",
 	"Title": "標題",
 	"Content": "內容",
-	"Submit": "發表",
+	"Submit": "送出",
 	"Name": "姓名",
 	"Gender": "性別",
 	"Male": "男",
@@ -31,5 +31,6 @@
 	"Upload": "上傳",
 	"Photo": "照片",
 	"Upload Photo": "上傳照片",
-	"User List": "User List"
+	"User List": "使用者列表",
+	"Notification": "有新留言在 "
 }

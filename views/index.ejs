@@ -18,14 +18,15 @@
 
         if(isLogin){
             var userId = "<%- User.member_id %>";
+            var userAccount = "<%- User.account %>"
             var userName = "<%- User.name %>";
             var userSchool = "<%- User.school %>";
             var userGrade = "<%- User.grade %>";
             var userDepartment = "<%- User.department %>";
             var userGender = "<%- User.gender %>";
-            var userPhoto = "<%- User.photo %>"
+            var userPhoto = "<%- User.photo %>";
         }
-        console.log(isLogin)
+        console.log(isLogin);
         </script>
     </head>
     <body ng-controller="AppCtrl">
@@ -36,9 +37,6 @@
       </a>
 
       <div class="right menu">
-        <a ng-show="{{$root.isLogin}}" href="/signup" class="item">
-          <%= __('Signup') %>
-        </a>
         <!-- <a ng-hide="{{$root.isLogin}}" href="http://{{$root.host}}/login/" target="_self" class="item">
           <%= __('Login') %>
         </a> -->

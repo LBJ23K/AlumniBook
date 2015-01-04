@@ -10,6 +10,7 @@ var Education = require('../models').Education;
 var Experience = require('../models').Experience;
 var Contact = require('../models').Contact;
 var Like = require('../models').Like;
+var Notify = require('./notify');
 var _ = require('underscore');
 var async = require('async');
 var local = require("../config/local");
@@ -48,18 +49,43 @@ exports.dislikePost = function(req, res){
 }
 exports.createMember = function (req, res){
 	// console.log(req.body);
-	req.body.password = md5(req.body.password);
-	Member.create(req.body).success(function(member){
-		Education.create({member_id:member.dataValues.member_id})
-		Experience.create({member_id:member.dataValues.member_id})
-		Contact.create({member_id:member.dataValues.member_id})
-		res.json({msg:"success"});
+	// req.body.password = md5(req.body.password);
+	// Member.create(req.body).success(function(member){
+	// 	Education.create({member_id:member.dataValues.member_id})
+	// 	Experience.create({member_id:member.dataValues.member_id})
+	// 	Contact.create({member_id:member.dataValues.member_id})
+	// 	res.json({msg:"success"});
+	// })
+	// .error(function(err){
+	// 	console.log(err);
+	// })
+	Member.find({account:req.body.account}).success(function(member){
+		if(member){
+			// console.log(member)
+			member.updateAttributes(req.body).success(function(change){
+				// console.log(change)
+				req.session.user = change.dataValues;
+				console.log(change.dataValues)
+				console.log(req.session.user)
+				res.json({msg:"success"});
+			})
+			
+		}
 	})
-	.error(function(err){
-		console.log(err);
-	})
-}
 
+}
+exports.getaccount = function(req,res){
+	var id = req.session.user.member_id;
+	console.log(req.session.user);
+    Member.find({
+        where: {
+            member_id: id
+        }
+    }).success(function(member) {
+    	var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+        res.json(user);
+    })
+}
 exports.login = function (req, res){
 	// var account = req.body.account.replace(/(<([^>]+)>)/ig,"");
 	var query = {
@@ -68,14 +94,14 @@ exports.login = function (req, res){
 		}
 	}
 	Member.find(query).success(function(member){
-		console.log(JSON.stringify(member));
+		// console.log(JSON.stringify(member));
 		if(member == null){
 			// res.end("fail");
 			res.json({msg:"No user!"});
 		}
 		else if(md5(req.body.password) == member.dataValues.password){
 			var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-			// console.log(user)
+			console.log(user);
 			req.session.user = user;
 			req.session.isLogin = true;
 			res.json({msg:"success"});
@@ -170,7 +196,9 @@ exports.commentOn = function(req, res){
 	}
 	Comment.create(comment).success(function(theCommnet){
 		console.log(theCommnet.dataValues);
-		res.json({msg:"success"})
+		Notify.notify(comment, "comment");
+		res.json({msg:"success"});
+		//send mail to subscribers
 	})
 
 }
@@ -186,6 +214,7 @@ exports.checkLogin = function(req, res, next){
 		res.status(401).json({error:true,msg:"請登入"});
 	}
 }
+
 
 // exports.facebookAuth = function(req,res){
 // 	passport.use(new FacebookStrategy({

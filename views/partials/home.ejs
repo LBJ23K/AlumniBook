@@ -9,7 +9,7 @@
 			<div class="ui relaxed divided items post-item">
 			  <div class="item" ng-repeat = "post in posts" ng-click="select(post.issue_id)">
 					<div class="ui small image">
-					  <img src="img/category-0{{$index%6+1}}.png">
+					  <img src="img/category-0{{post.postCategory_id}}.png">
 					</div>
 					<div class="content">
 					  <p class="header" id="title" ng-bind="post.title"></p>

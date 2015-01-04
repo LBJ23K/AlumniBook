@@ -12,6 +12,7 @@ var express = require('express'),
   path = require('path'),
   issue = require('./routes/issue'),
   comment = require('./routes/comment'),
+  notify = require('./routes/notify'),
   postCategory = require('./routes/postCategory');
   var _ = require('underscore');
 
@@ -22,26 +23,25 @@ var i18nController = require('./routes/i18nController');
 var passport = require('passport');
 var SamlStrategy = require('passport-saml').Strategy
 
-// passport.serializeUser(function(user, done) {
-//   // console.log(user);
-//   done(null, user);
-//   });
+passport.serializeUser(function(user, done) {
+  // console.log(user);
+  done(null, user);
+  });
 
-// passport.deserializeUser(function(user, done) {
-//   done(null, user);
-// });
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
-// passport.use(new SamlStrategy(
-//   {
-//     path: '/login/callback',
-//     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
-//     issuer: 'passport-saml-sso-2'
-//   },
-//   function(profile, done){
-  
-//     return done(null, profile);
-//   })
-// );
+passport.use(new SamlStrategy(
+  {
+    path: '/login/callback',
+    entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
+    issuer: 'passport-saml-sso-2'
+  },
+  function(profile, done){
+    return done(null, profile);
+  })
+);
 
 i18n.configure({
   locales:['en', 'zh-TW'],
@@ -136,6 +136,7 @@ app.get('/api/posts', api.showPosts);
 app.get('/api/post/:id', api.showPost);
 
 app.post('/api/login', api.login);
+app.get('/api/getaccount', api.getaccount);
 // app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
@@ -154,6 +155,11 @@ app.get('/comment/destroy', api.checkLogin, comment.destroy);
 app.get('/api/like/:id', api.checkLogin, api.likePost);
 app.get('/api/dislike/:id', api.checkLogin, api.dislikePost);
 
+app.get('/notify/subscribe/:id', api.checkLogin, notify.subscribe);
+app.get('/notify/unsubscribe/:id', api.checkLogin, notify.unsubscribe);
+app.get('/notify/get_notifications', api.checkLogin, notify.get_notifications)
+app.get('/api/notify/:id/:type', api.checkLogin, notify.notify);
+
 app.post('/category/create', postCategory.create);
 app.get('/category/list', postCategory.list);
 app.post('/category/update', postCategory.update);
@@ -166,20 +172,20 @@ app.get('/logout', function(req, res){
   });
 });
 // //saml
-// app.post('/login/callback',
-//   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-//   user_api.login
-//   // function(req, res) {
-//   //   console.log(req.user);
-//   //   res.redirect('/');
-//   // }
-// );
-// app.get('/login',
-//   passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
-//   function(req, res) {
-//     res.redirect('/login');
-//   }
-// );
+app.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  user_api.login
+  // function(req, res) {
+  //   console.log(req.user);
+  //   res.redirect('/');
+  // }
+);
+app.get('/login',
+  passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/login');
+  }
+);
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);
