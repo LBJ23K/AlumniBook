@@ -1,0 +1,166 @@
+*   commit 5e9b38baf0d7d527541fca2213591d47bf7eb298
+|\  Merge: c60e4ca 3c8f2ac
+| | Author: georgeyoung1231 <georgeyoung1231@gmail.com>
+| | Date:   Sat Nov 22 21:42:32 2014 +0800
+| | 
+| |     Merge pull request #7 from georgeyoung1231/feature/user
+| |     
+| |     Feature/user
+| |   
+| * commit 3c8f2acdc5c24542050d118584eba61aea62c282
+| | Author: LBJ23K <lbj23k1@gmail.com>
+| | Date:   Sat Nov 22 17:18:50 2014 +0800
+| | 
+| |     feature/user
+| |     
+| *   commit 0419546652b10fb787a44cdef3d4d7264693e5f6
+| |\  Merge: 5c6890a 2b1388b
+| | | Author: LBJ23K <lbj23k1@gmail.com>
+| | | Date:   Sat Nov 22 17:07:56 2014 +0800
+| | | 
+| | |     Merge branch 'develop' of https://github.com/georgeyoung1231/alumniBook
+| | |      
+| | *   commit 2b1388bd24f9301453094df3041f411b0412febb
+| | |\  Merge: 3fe922b 62ed97f
+| | | | Author: tommy60703 <tommy60703@gmail.com>
+| | | | Date:   Sat Nov 22 17:03:50 2014 +0800
+| | | | 
+| | | |     Merge branch 'feature/i18n' into develop
+| | | |     
+| | | |     * feature/i18n:
+| | | |       Do some translation.
+| | | |     
+| | | * commit 62ed97f2f05b55a8c397aaa5e2dea6d6a0184969
+| | | | Author: tommy60703 <tommy60703@gmail.com>
+| | | | Date:   Sat Nov 22 17:02:37 2014 +0800
+| | | | 
+| | | |     Do some translation.
+| | | |       
+| * | |   commit 5c6890aacca009ae89263542741214e68f475d75
+| |\ \ \  Merge: 2923a35 3fe922b
+| | |/ /  Author: LBJ23K <lbj23k1@gmail.com>
+| | | |   Date:   Sat Nov 22 17:07:43 2014 +0800
+| | | |   
+| | | |       user
+| | | |     
+| | * | commit 3fe922b91c1376f75272847f287751cd104e53de
+| | |/  Author: georgeyoung <georgeyoung1231@gmail.com>
+| | |   Date:   Sat Nov 22 16:50:30 2014 +0800
+| | |   
+| | |       merge issue
+| | |      
+| | *   commit d1c533262a36baa7aa123f74a889c8496194524b
+| | |\  Merge: 1effc7c 6d1480c
+| | | | Author: tommy60703 <tommy60703@gmail.com>
+| | | | Date:   Sat Nov 22 16:04:12 2014 +0800
+| | | | 
+| | | |     Merge branch 'feature/i18n' into develop
+| | | |     
+| | | |     * feature/i18n:
+| | | |       i18n ready.
+| | | |     
+| | | * commit 6d1480cc613a6fe01680ce2d59eea497bd7e40cf
+| |_|/  Author: tommy60703 <tommy60703@gmail.com>
+|/| |   Date:   Sat Nov 22 16:03:30 2014 +0800
+| | |   
+| | |       i18n ready.
+| | |      
+| | *   commit 1effc7c5de5bbb1a40c02ce3e023bc6215df4d7c
+| | |\  Merge: 9138303 60ee8e3
+| | | | Author: georgeyoung1231 <georgeyoung1231@gmail.com>
+| | | | Date:   Sat Nov 22 16:02:13 2014 +0800
+| | | | 
+| | | |     Merge pull request #6 from georgeyoung1231/feature/issue
+| | | |     
+| | | |     Feature/issue
+| | | |       
+| | | *   commit 60ee8e3e1d4bd118419ff2b6df0eec6220d7012b
+| | | |\  Merge: 4a8b2a4 9138303
+| | | |/  Author: iultimatez <appledynasty@gmail.com>
+| | |/|   Date:   Sat Nov 22 16:00:06 2014 +0800
+| | | |   
+| | | |       merge develop
+| | | |       
+| | * |   commit 9138303fd307f9d675736a3133c133a79c8c898d
+| | |\ \  Merge: c60e4ca 4f061c9
+| |/ / /  Author: georgeyoung1231 <georgeyoung1231@gmail.com>
+|/| | |   Date:   Sat Nov 22 15:03:30 2014 +0800
+| | | |   
+| | | |       Merge pull request #3 from georgeyoung1231/feature/likePost
+| | | |       
+| | | |       like post
+| | | |     
+| | * | commit 4f061c9c8aa70f21dd9045180a3827b953b0889f
+| |/ /  Author: georgeyoung <georgeyoung1231@gmail.com>
+|/| |   Date:   Sat Nov 22 14:08:06 2014 +0800
+| | |   
+| | |       like post
+| | |    
+| | * commit 4a8b2a4a3de35b10d3354431d181fdbbb80a1ae3
+| | | Author: iultimatez <appledynasty@gmail.com>
+| | | Date:   Sat Nov 22 15:48:14 2014 +0800
+| | | 
+| | |     Issue joins member
+| | |    
+| | * commit ea8fc820c765cf8a640c1f05993a9c0b0f9d0f9c
+| | | Author: iultimatez <appledynasty@gmail.com>
+| | | Date:   Sat Nov 22 14:13:15 2014 +0800
+| | | 
+| | |     issue CRUD
+| | |    
+| | * commit c78590cf989bf622ddafe3bc43a943cfc021494d
+| |/  Author: iultimatez <appledynasty@gmail.com>
+|/|   Date:   Sat Nov 22 13:37:34 2014 +0800
+| |   
+| |       Add issue
+| |   
+| * commit 2923a35c490a58c36e122929c2dcb43213547eb5
+|/  Author: LBJ23K <lbj23k1@gmail.com>
+|   Date:   Sat Nov 22 16:57:41 2014 +0800
+|   
+|       feature/user
+|  
+* commit c60e4ca598387f189a744ca05160d8ad4c5abf0a
+| Author: georgeyoung <georgeyoung1231@gmail.com>
+| Date:   Sat Nov 22 12:43:43 2014 +0800
+| 
+|     template
+|  
+* commit 6b31d0a972369b7bb9968977662da05ee9b0603e
+| Author: georgeyoung <georgeyoung1231@gmail.com>
+| Date:   Sat Nov 22 12:41:54 2014 +0800
+| 
+|     master re init
+|  
+* commit 0f29eafc672ef0afdb5e98c34e6d49c383d7ee5e
+| Author: georgeyoung <georgeyoung1231@gmail.com>
+| Date:   Sat Nov 22 11:27:08 2014 +0800
+| 
+|     remove facebook auth
+|    
+*   commit f0b5a0adc1f701db700aed8889e851d45e02f8cb
+|\  Merge: 4d6ed27 800fc15
+| | Author: georgeyoung1231 <georgeyoung1231@gmail.com>
+| | Date:   Sat Nov 22 11:23:08 2014 +0800
+| | 
+| |     Merge pull request #1 from georgeyoung1231/develop
+| |     
+| |     Develop
+| |   
+| * commit 800fc158dfef13f1cb43c1362437bb8f1ba7caba
+| | Author: LBJ23K <lbj23k1@gmail.com>
+| | Date:   Sat Nov 22 11:18:47 2014 +0800
+| | 
+| |     gulp set
+| |   
+| * commit 94e417370e1999ab8c771ce6fef2da172ac941fc
+|/  Author: LBJ23K <lbj23k1@gmail.com>
+|   Date:   Sat Nov 22 11:17:54 2014 +0800
+|   
+|       gulp set
+|  
+* commit 4d6ed277b66be86a3f6f89b3c32cbc24f2f18082
+  Author: georgeyoung <georgeyoung1231@gmail.com>
+  Date:   Wed Nov 19 18:52:31 2014 +0800
+  
+      init
