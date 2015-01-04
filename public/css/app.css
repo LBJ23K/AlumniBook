@@ -54,6 +54,13 @@
 	border-radius: 18px;
 }
 
+.author-profile-img {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	display: inline-block;
+	margin-bottom: -8px!important;
+}
 
 .column {
 	/*border: red 1px solid;*/
