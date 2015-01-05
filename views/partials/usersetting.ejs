@@ -27,7 +27,7 @@
 		    
 		  </div>
 		</div>
-		<a href="/accountsetting" ng-hide="id!=$root.user_id"><button class="ui primary button" style="min-width:100px">帳號資料</button></a>
+		<a href="/accountsetting" ng-hide="id!=$root.user_id"><button class="ui teal button" style="min-width:100px">帳號資料</button></a>
 	</div>
 
   <div class="fourteen wide column">
@@ -38,8 +38,8 @@
     		<pre class="segment" ng-bind="post.content"></pre>
 				
 				<div class="ui basic right aligned segment">
-	    		<button class="ui primary button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id" >修改資料</button>
-                    <button class="ui primary button" ng-click="modifysubmit()" ng-show="edit">送出</button>
+	    		<button class="ui teal button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id" >修改資料</button>
+                    <button class="ui teal button" ng-click="modifysubmit()" ng-show="edit">送出</button>
                     <button class="ui button" ng-click="cancelsubmit()" ng-show="edit">取消</button>	
 		   	</div>
     	</div>
@@ -276,226 +276,218 @@
 </div>
 </div>
 
+					<div ng-show="edit" >
+					<div class="ui stackable two column grid">
 
-
-
-<div ng-show="edit" >
-<div class="ui stackable four column grid">
-    <div class="column">
-	<div class="ui list">
-				 <div class="item">
-			
-			<div class="content">
-			  <div class="header">學歷</div>
-			  <div class="list">
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Department</div>
-					<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Education.dept">
-					</div>
-				  </div>
-				</div>
-				
-				
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Degree</div>
-					<div class="description">
-					<input type="text" class="form-control"  ng-model="editdata.Education.degree" placeholder="1">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Stuid</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.stuid" placeholder="b00705031">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Institute</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.institute">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Start Date</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.startdate" placeholder="yyyy-mm">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">End Date</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="editdata.Education.enddate" placeholder="yyyy-mm">
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </div>
-	</div>
-	</div>
-	 <button class="ui blue button" ng-click="addnewExp()">增加經歷</button>
-    <div class="column" ng-repeat="item in editdata.Experiences">
-	<div class="ui list">
-			<div class="item">
-		
-			<div class="content">
-			  <div class="header">經歷</div>
-			  <div class="list">
-
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Organization</div>
-					<div class="description">
-						<input type="text" class="form-control" ng-model="item.org">
-					</div>
-				  </div>
-				</div>
-				
-				
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Department</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="item.dept">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Position</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="item.position">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Description</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="item.description">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">Start Date</div>
-					<div class="description">
-					<input type="text" class="form-control" ng-model="item.startdate" placeholder="yyyy-mm">
-					</div>
-				  </div>
-				</div>
-				<div class="item">
-				  <i class="top aligned right triangle icon"></i>
-				  <div class="content">
-					<div class="header">End Date</div>
-					<div class="description">
-					<!-- <input type="text"  date-time  ng-model="item.enddate" min-view="date"> -->
-					<input type="text" class="form-control" ng-model="item.enddate" placeholder="yyyy-mm">
-					</div>
-				  </div>
-				</div>
-			  </div>
-			</div>
-		  </div>			
-	</div>
-	</div>
-    <div class="column">
-	<div class="ui list">
-				<div class="item">
-		
-				<div class="content">
-				  <div class="header">聯絡方式</div>
-				  <div class="list">
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">Email</div>
-						<div class="description">
-							<input type="text" class="form-control" ng-model="editdata.Contact.email" placeholder="im@im.com">
+						<div class="column">
+							<div class="ui list">
+								<div class="item">
+							
+									<div class="content">
+									  <div class="header">聯絡方式</div>
+									  <div class="list">
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Email</div>
+											<div class="description">
+												<input type="text" class="form-control" ng-model="editdata.Contact.email" placeholder="im@im.com">
+											</div>
+										  </div>
+										</div>
+										
+										
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Address</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Contact.address">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Phone number(Home)</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Contact.phone_home" placeholder="(02)0000-0000">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Phone number(Mobile)</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile" placeholder="0911-000-000">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Phone number(Work)</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Contact.phone_work" placeholder="(02)0000-0000">
+											</div>
+										  </div>
+										</div>
+									  </div>
+									</div>
+							  </div>
+							</div>
 						</div>
-					  </div>
-					</div>
-					
-					
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">Address</div>
-						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.address">
+
+					  <div class="column">
+							<div class="ui list">
+								<div class="item">
+									
+									<div class="content">
+									  <div class="header">學歷</div>
+									  <div class="list">
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Department</div>
+											<div class="description">
+												<input type="text" class="form-control" ng-model="editdata.Education.dept">
+											</div>
+										  </div>
+										</div>
+										
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Degree</div>
+											<div class="description">
+											<input type="text" class="form-control"  ng-model="editdata.Education.degree" placeholder="1">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Stuid</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Education.stuid" placeholder="b00705031">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Institute</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Education.institute">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Start Date</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Education.startdate" placeholder="yyyy-mm">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">End Date</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="editdata.Education.enddate" placeholder="yyyy-mm">
+											</div>
+										  </div>
+										</div>
+									  </div>
+									</div>
+							  </div>
+							</div>
 						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">Phone number(Home)</div>
-						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_home" placeholder="(02)0000-0000">
+						
+						<div class="column" ng-repeat="item in editdata.Experiences">
+							<div class="ui list">
+								<div class="item">
+									<div class="content">
+									  <div class="header">經歷</div>
+									  <div class="list">
+
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Organization</div>
+											<div class="description">
+												<input type="text" class="form-control" ng-model="item.org">
+											</div>
+										  </div>
+										</div>
+										
+										
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Department</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="item.dept">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Position</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="item.position">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Description</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="item.description">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">Start Date</div>
+											<div class="description">
+											<input type="text" class="form-control" ng-model="item.startdate" placeholder="yyyy-mm">
+											</div>
+										  </div>
+										</div>
+										<div class="item">
+										  <i class="top aligned right triangle icon"></i>
+										  <div class="content">
+											<div class="header">End Date</div>
+											<div class="description">
+											<!-- <input type="text"  date-time  ng-model="item.enddate" min-view="date"> -->
+											<input type="text" class="form-control" ng-model="item.enddate" placeholder="yyyy-mm">
+											</div>
+										  </div>
+										</div>
+									  </div>
+									</div>
+							  </div>			
+							</div>
 						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">Phone number(Mobile)</div>
-						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile" placeholder="0911-000-000">
+
+						<div class="column">
+							<button class="ui teal button" ng-click="addnewExp()">增加經歷</button>
 						</div>
-					  </div>
+					  
 					</div>
-					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
-					  <div class="content">
-						<div class="header">Phone number(Work)</div>
-						<div class="description">
-						<input type="text" class="form-control" ng-model="editdata.Contact.phone_work" placeholder="(02)0000-0000">
-						</div>
-					  </div>
 					</div>
-				  </div>
+
 				</div>
-			  </div>
-	</div>
-	</div>
-  
-  </div>
-
-</div>
-</div>
-
-				  
-
-				 
 				 
 			</div>
-			</div>
-
-
-
-
-		
+			</div>		
     </div>
   </div>
 </div>
