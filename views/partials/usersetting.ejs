@@ -23,7 +23,7 @@
 		    <div class="sub header">
 		    	<span ng-bind="user.gender"></span>
 		    </div>
-		    <div class="ui divider"></div>
+		    <!-- <div class="ui divider"></div> -->
 		    
 		  </div>
 		</div>
@@ -45,19 +45,17 @@
     	</div>
 
 			<div class="ui grid">
-	  		<div class="right floated ui fourteen wide column comments">
 				  
 
 				  <div ng-hide="edit" >
-					<div class="ui stackable four column grid">
+					<div class="ui stackable two column grid">
 						<div class="column">
 							<div class="ui list">
 							<div class="item">		
-							<div class="content">
-							<div class="header">學歷</div>
+							<div class="ui segment">
+							<h3 class="ui header">學歷</h3>
 								<div class="list">
 								<div class="item">
-									<i class="top aligned right triangle icon"></i>
 								<div class="content">
 									<div class="header">Department</div>
 									<div class="description">
@@ -68,7 +66,6 @@
 								</div>
 
 								<div class="item">
-									<i class="top aligned right triangle icon"></i>
 								<div class="content">
 									<div class="header">Degree</div>
 									<div class="description">
@@ -79,7 +76,6 @@
 								</div>
 								
 								<div class="item">
-									<i class="top aligned right triangle icon"></i>
 								<div class="content">
 									<div class="header">Stuid</div>
 									<div class="description">
@@ -90,7 +86,6 @@
 								</div>
 								
 								<div class="item">
-									<i class="top aligned right triangle icon"></i>
 								<div class="content">
 									<div class="header">Institute</div>
 									<div class="description">
@@ -101,7 +96,6 @@
 								</div>
 								
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">Start Date</div>
 									<div class="description">
@@ -112,7 +106,6 @@
 								</div>
 								
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">End Date</div>
 									<div class="description">
@@ -131,12 +124,11 @@
 						<div class="ui list">
 								<div class="item">
 								
-								<div class="content">
-								  <div class="header">經歷</div>
+								<div class="ui segment">
+								  <h3 class="ui header">經歷</h3>
 								  <div class="list">
 
 									<div class="item">
-									  <i class="top aligned right triangle icon"></i>
 									  <div class="content">
 										<div class="header">Organization</div>
 										<div class="description">
@@ -148,7 +140,6 @@
 				
 				
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">Department</div>
 									<div class="description">
@@ -159,7 +150,6 @@
 								</div>
 												
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">Position</div>
 									<div class="description">
@@ -170,7 +160,6 @@
 								</div>
 								
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">Description</div>
 									<div class="description">
@@ -181,7 +170,6 @@
 								</div>
 								
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">Start Date</div>
 									<div class="description">
@@ -192,7 +180,6 @@
 								</div>
 								
 								<div class="item">
-								  <i class="top aligned right triangle icon"></i>
 								  <div class="content">
 									<div class="header">End Date</div>
 									<div class="description">
@@ -207,14 +194,13 @@
 	</div>
 	</div>
     <div class="column">
-	<div class="ui list">
+		<div class="ui list">
 				<div class="item">
 				
-				<div class="content">
-				  <div class="header">聯絡方式</div>
+				<div class="ui segment">
+				  <h3 class="ui header">聯絡方式</h3>
 				  <div class="list">
 					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
 					  <div class="content">
 						<div class="header">Email</div>
 						<div class="description">
@@ -223,10 +209,8 @@
 						</div>
 					  </div>
 					</div>
-					
-					
+							
 					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
 					  <div class="content">
 						<div class="header">Address</div>
 						<div class="description">
@@ -236,7 +220,6 @@
 					  </div>
 					</div>
 					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
 					  <div class="content">
 						<div class="header">Phone number(Home)</div>
 						<div class="description">
@@ -246,7 +229,6 @@
 					  </div>
 					</div>
 					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
 					  <div class="content">
 						<div class="header">Phone number(Mobile)</div>
 						<div class="description">
@@ -256,7 +238,6 @@
 					  </div>
 					</div>
 					<div class="item">
-					  <i class="top aligned right triangle icon"></i>
 					  <div class="content">
 						<div class="header">Phone number(Work)</div>
 						<div class="description">
@@ -274,20 +255,19 @@
   </div>
 
 </div>
-</div>
+
 
 					<div ng-show="edit" >
 					<div class="ui stackable two column grid">
 
 						<div class="column">
-							<div class="ui list">
+							<div class="ui segment">
 								<div class="item">
 							
-									<div class="content">
-									  <div class="header">聯絡方式</div>
+									<div class="ui form">
+									  <h3 class="ui header">聯絡方式</h3>
 									  <div class="list">
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Email</div>
 											<div class="description">
@@ -298,7 +278,6 @@
 										
 										
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Address</div>
 											<div class="description">
@@ -307,7 +286,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Phone number(Home)</div>
 											<div class="description">
@@ -316,7 +294,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Phone number(Mobile)</div>
 											<div class="description">
@@ -325,7 +302,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Phone number(Work)</div>
 											<div class="description">
@@ -340,14 +316,13 @@
 						</div>
 
 					  <div class="column">
-							<div class="ui list">
+							<div class="ui segment">
 								<div class="item">
 									
-									<div class="content">
-									  <div class="header">學歷</div>
+									<div class="ui form">
+									  <h3 class="ui header">學歷</h3>
 									  <div class="list">
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Department</div>
 											<div class="description">
@@ -357,7 +332,6 @@
 										</div>
 										
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Degree</div>
 											<div class="description">
@@ -366,7 +340,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Stuid</div>
 											<div class="description">
@@ -375,7 +348,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Institute</div>
 											<div class="description">
@@ -384,7 +356,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Start Date</div>
 											<div class="description">
@@ -393,7 +364,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">End Date</div>
 											<div class="description">
@@ -408,14 +378,13 @@
 						</div>
 						
 						<div class="column" ng-repeat="item in editdata.Experiences">
-							<div class="ui list">
+							<div class="ui segment">
 								<div class="item">
-									<div class="content">
-									  <div class="header">經歷</div>
+									<div class="ui form">
+									  <h3 class="ui header">經歷</h3>
 									  <div class="list">
 
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Organization</div>
 											<div class="description">
@@ -426,7 +395,6 @@
 										
 										
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Department</div>
 											<div class="description">
@@ -435,7 +403,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Position</div>
 											<div class="description">
@@ -444,7 +411,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Description</div>
 											<div class="description">
@@ -453,7 +419,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">Start Date</div>
 											<div class="description">
@@ -462,7 +427,6 @@
 										  </div>
 										</div>
 										<div class="item">
-										  <i class="top aligned right triangle icon"></i>
 										  <div class="content">
 											<div class="header">End Date</div>
 											<div class="description">
