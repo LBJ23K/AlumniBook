@@ -524,13 +524,15 @@ angular.module('myApp.controllers', ['ngRoute']).
     $scope.seeOrganization = function(){
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
-          var single = $scope.members[i].Experiences.org;
+        for(var k = 0; k < $scope.members[i].Experiences.length; k++){
+          var single = $scope.members[i].Experiences[k].org;
           if(single === null)single='null'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
             obj[single] = obj[single] + 1;
           }
+        }
       }
       var xAxis = Object.keys(obj);
       var yAxis = xAxis.map(function(i){return obj[i];});
