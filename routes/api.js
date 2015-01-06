@@ -31,7 +31,43 @@ exports.name = function (req, res) {
   });
 };
 
+exports.search = function(req, res){
+	var category = req.body.category;
+	var field = req.body.field;
+	var searchtext = "%"+req.body.searchtext+"%";
+	var query = {where:{}};
+	query.where[field] = {};
+	query.where[field].like = searchtext;
+	console.log(query);
+	console.log(req.body);
 
+	if(category=='issue')
+	{
+		query.include=[Member,Comment]
+		console.log('issue');
+		Issue.findAll(query).success(function(results) {
+        if (results==null) res.json([]);
+        res.json(results);
+
+      }).error(function(error) {
+      	console.log(error);
+        res.status(500).json(error);
+      });
+	}
+	else
+	{
+		console.log('issue');
+		Member.findAll(query).success(function(results) {
+        if (results==null) res.json([]);
+        res.json(results);
+
+      }).error(function(error) {
+      	console.log(error);
+        res.status(500).json(error);
+      });
+  	}
+	
+}
 exports.local_Login = function(req, res){
 	var account = req.params.account;
 	// Member.findOne({where:{account:account}}).success(function(member){

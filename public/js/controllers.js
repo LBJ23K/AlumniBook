@@ -37,41 +37,33 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
     });
     $rootScope.host = window.location.host;
-
-    $scope.searchFields = [];
+    var allField;
     $http.get('/issue/searchFields').success(function(fields) {
-      $scope.searchFields = fields;
-      $scope.searchingField = fields[0];
+      allField = fields;
+      console.log(allField)
+      $scope.searchFields = fields.searchFields;
+      $scope.searchingField = fields.searchFields[0];
+      $scope.searchCategory = fields.searchCategory;
+      $scope.searchingCategory = fields.searchCategory[0];
     });
 
     $scope.setSearchField = function(field) {
       $scope.searchingField = field;
     };
-
+    $scope.setSearchCategory  = function(category){
+      if(category.type=='topic') $scope.searchFields = allField.searchFields;
+      else $scope.searchFields = allField.searchFields2;
+      $scope.searchingField = $scope.searchFields[0];
+      $scope.searchingCategory = category;
+    }
     $scope.search = function(text) {
-      if (!text || text == '') {
-        $rootScope.searchResults = null;
-        $rootScope.$broadcast('searchDone');
-        return;
-      }
-
-      var query = {
-        field: $scope.searchingField.field,
-        searchText: text
-      };
-      $http.post('/issue/search', query).success(function(issues){
-        $rootScope.searchResults = _.sortBy(issues, function(post) {
-          return -(new Date(post.createdAt).getTime());
-        });
-
-        var currentPath = $location.path();
-        if (currentPath != '/') {
-          $location.path('/');
-        }
-        $rootScope.$broadcast('searchDone');
-      });
+      location.href="/search/"+$scope.searchingCategory.type+'/'+$scope.searchingField.field+'/'+text;
     };
-
+    $scope.searchgo = function(keyEvent){
+      if (keyEvent.which === 13){
+        location.href="/search/"+$scope.searchingCategory.type+'/'+$scope.searchingField.field+'/'+$scope.searchText;
+      }
+    }
     $scope.get_notifications = function(){
         $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
             $scope.notifications = result;         
@@ -179,6 +171,18 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log(result);
         $location.path('/')
       })
+    }
+    $scope.gouser = function(id){
+      $location.path('/users/'+id);
+    }
+    $scope.searchSchool = function(searchtext){
+      $location.path('/search/member/school/'+searchtext);
+    }
+    $scope.searchDep = function(searchtext){
+      $location.path('/search/member/department/'+searchtext);
+    }
+    $scope.searchGrade = function(searchtext){
+      $location.path('/search/member/grade/'+searchtext);
     }
     $scope.likePost = function(){
       $http({method:"GET", url:'/api/like/'+$state.params.id}).success(function(result){
@@ -423,6 +427,27 @@ angular.module('myApp.controllers', ['ngRoute']).
       .error(function(){
         console.log('fail');
       })
+    }
+  }).
+  controller('Search', function ($scope, $http, $location,$state) {
+    $scope.init = function(){
+      $http({method:"POST", url:"/search",data:$state.params}).success(function(result){
+        $scope.results = result;
+        console.log(result)
+        $scope.type = $state.params.category;
+        $scope.field = $state.params.field;
+        $scope.searchtext = $state.params.searchtext;
+      })
+    }
+    
+    $scope.time = function (t) {
+      return moment(t).format('MMMM Do YYYY, h:mm:ss a')
+    };
+    $scope.gotopic = function(id){
+      $location.path('/topic/'+id);
+    }
+    $scope.gouser = function(id){
+      $location.path('/users/'+id);
     }
   }).
   controller('Chart', function ($scope, $location, $state, $http){

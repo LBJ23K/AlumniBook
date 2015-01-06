@@ -42,17 +42,22 @@
       </a>
 
       <div class="right menu">
-
+        <div ng-show="{{$root.isLogin}}" class="ui simple dropdown item">
+          {{searchingCategory.displayName}} <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item" ng-repeat="category in searchCategory" ng-click="setSearchCategory(category)"> {{category.displayName}}</a>
+          </div>
+        </div>
         <div ng-show="{{$root.isLogin}}" class="ui simple dropdown item">
           {{searchingField.displayName}} <i class="dropdown icon"></i>
           <div class="menu">
-            <a class="item" ng-repeat="field in searchFields" ng-click="setSearchField(field)">{{field.displayName}}</a>
+            <a class="item" ng-repeat="field in searchFields" ng-click="setSearchField(field)"> {{field.displayName}}</a>
           </div>
         </div>
 
         <div ng-show="{{$root.isLogin}}" class="item">
           <div class="ui icon input">
-            <input type="text" placeholder="Search..." ng-model="searchText">
+            <input type="text" placeholder="Search..." ng-model="searchText" ng-keypress="searchgo($event)">
             <i class="search link icon" ng-click="search(searchText)"></i>
           </div>
         </div>

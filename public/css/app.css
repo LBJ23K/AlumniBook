@@ -65,3 +65,6 @@
 .column {
 	/*border: red 1px solid;*/
 }
+.pointer{
+	cursor: pointer;
+}
