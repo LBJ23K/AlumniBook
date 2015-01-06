@@ -46,215 +46,213 @@
 
 			<div class="ui grid">
 				  
-
 				  <div ng-hide="edit" >
-					<div class="ui stackable two column grid">
-						<div class="column">
-							<div class="ui list">
-							<div class="item">		
-							<div class="ui segment">
-							<h3 class="ui header">學歷</h3>
-								<div class="list">
-								<div class="item">
-								<div class="content">
-									<div class="header">Department</div>
-									<div class="description">
-										<span ng-show="!user.Education.dept">尚未填寫</span>
-										<span ng-show="user.Education.dept">{{user.Education.dept}}</span>
-									</div>
-								</div>
-								</div>
+						<div class="ui stackable two column grid">
 
-								<div class="item">
-								<div class="content">
-									<div class="header">Degree</div>
-									<div class="description">
-										<span ng-show="!user.Education.degree">尚未填寫</span>
-										<span ng-show="user.Education.degree">{{user.Education.degree}}</span>
-									</div>
-								</div>
-								</div>
-								
-								<div class="item">
-								<div class="content">
-									<div class="header">Stuid</div>
-									<div class="description">
-										<span ng-show="!user.Education.stuid">尚未填寫</span>
-										<span ng-show="user.Education.stuid">{{user.Education.stuid}}</span>
-									</div>
-								</div>
-								</div>
-								
-								<div class="item">
-								<div class="content">
-									<div class="header">Institute</div>
-									<div class="description">
-										<span ng-show="!user.Education.institute">尚未填寫</span>
-										<span ng-show="user.Education.institute">{{user.Education.institute}}</span>
-									</div>
-								</div>
-								</div>
-								
-								<div class="item">
-								  <div class="content">
-									<div class="header">Start Date</div>
-									<div class="description">
-									<span ng-show="!user.Education.startdate">尚未填寫</span>
-									<span ng-show="user.Education.startdate">{{user.Education.startdate}}</span>
-									</div>
-								</div>
-								</div>
-								
-								<div class="item">
-								  <div class="content">
-									<div class="header">End Date</div>
-									<div class="description">
-									<span ng-show="!user.Education.enddate">尚未填寫</span>
-									<span ng-show="user.Education.enddate">{{user.Education.enddate}}</span>
-									</div>
-								</div>
-								</div>
-					</div>
-					</div>
-					</div>
-					</div>
-					</div>
-	
-						<div class="column" ng-repeat="item in user.Experiences">
-						<div class="ui list">
-								<div class="item">
-								
-								<div class="ui segment">
-								  <h3 class="ui header">經歷</h3>
-								  <div class="list">
-
+					    <div class="column">
+								<div class="ui list">
 									<div class="item">
-									  <div class="content">
-										<div class="header">Organization</div>
-										<div class="description">
-											<span ng-show="!item.org">尚未填寫</span>
-											<span ng-show="item.org">{{item.org}}</span>
+									
+										<div class="ui segment">
+										  <h3 class="ui header">聯絡方式</h3>
+										  <div class="list">
+												<div class="item">
+												  <div class="content">
+													<div class="header">Email</div>
+													<div class="description">
+														<span ng-show="!user.Contact.email">尚未填寫</span>
+														<span ng-show="user.Contact.email">{{user.Contact.email}}</span>
+													</div>
+												  </div>
+												</div>
+														
+												<div class="item">
+												  <div class="content">
+													<div class="header">Address</div>
+													<div class="description">
+													<span ng-show="!user.Contact.address">尚未填寫</span>
+													<span ng-show="user.Contact.address">{{user.Contact.address}}</span>
+													</div>
+												  </div>
+												</div>
+												<div class="item">
+												  <div class="content">
+													<div class="header">Phone number(Home)</div>
+													<div class="description">
+													<span ng-show="!user.Contact.phone_home">尚未填寫</span>
+													<span ng-show="user.Contact.phone_home">{{user.Contact.phone_home}}</span>
+													</div>
+												  </div>
+												</div>
+												<div class="item">
+												  <div class="content">
+													<div class="header">Phone number(Mobile)</div>
+													<div class="description">
+													<span ng-show="!user.Contact.phone_mobile">尚未填寫</span>
+													<span ng-show="user.Contact.phone_mobile">{{user.Contact.phone_mobile}}</span>
+													</div>
+												  </div>
+												</div>
+												<div class="item">
+												  <div class="content">
+													<div class="header">Phone number(Work)</div>
+													<div class="description">
+													<span ng-show="!user.Contact.phone_work">尚未填寫</span>
+													<span ng-show="user.Contact.phone_work">{{user.Contact.phone_work}}</span>
+													</div>
+												  </div>
+												</div>
+										  </div>
 										</div>
-									  </div>
-									</div>
-				
-				
-								<div class="item">
-								  <div class="content">
-									<div class="header">Department</div>
-									<div class="description">
-									<span ng-show="!item.dept">尚未填寫</span>
-									<span ng-show="item.dept">{{item.dept}}</span>
-									</div>
 								  </div>
 								</div>
-												
-								<div class="item">
-								  <div class="content">
-									<div class="header">Position</div>
-									<div class="description">
-									<span ng-show="!item.position">尚未填寫</span>
-									<span ng-show="item.position">{{item.position}}</span>
-									</div>
-								  </div>
-								</div>
-								
-								<div class="item">
-								  <div class="content">
-									<div class="header">Description</div>
-									<div class="description">
-									<span ng-show="!item.description">尚未填寫</span>
-									<span ng-show="item.description">{{item.description}}</span>
-									</div>
-								  </div>
-								</div>
-								
-								<div class="item">
-								  <div class="content">
-									<div class="header">Start Date</div>
-									<div class="description">
-									<span ng-show="!item.startdate">尚未填寫</span>
-									<span ng-show="item.startdate">{{item.startdate}}</span>
-									</div>
-								  </div>
-								</div>
-								
-								<div class="item">
-								  <div class="content">
-									<div class="header">End Date</div>
-									<div class="description">
-									<span ng-show="!item.enddate">尚未填寫</span>
-									<span ng-show="item.enddate">{{item.enddate}}</span>
-									</div>
-								  </div>
-								</div>
-			  </div>
-			</div>
-		  </div>			
-	</div>
-	</div>
-    <div class="column">
-		<div class="ui list">
-				<div class="item">
-				
-				<div class="ui segment">
-				  <h3 class="ui header">聯絡方式</h3>
-				  <div class="list">
-					<div class="item">
-					  <div class="content">
-						<div class="header">Email</div>
-						<div class="description">
-							<span ng-show="!user.Contact.email">尚未填寫</span>
-							<span ng-show="user.Contact.email">{{user.Contact.email}}</span>
-						</div>
-					  </div>
-					</div>
+							</div>
 							
-					<div class="item">
-					  <div class="content">
-						<div class="header">Address</div>
-						<div class="description">
-						<span ng-show="!user.Contact.address">尚未填寫</span>
-						<span ng-show="user.Contact.address">{{user.Contact.address}}</span>
-						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <div class="content">
-						<div class="header">Phone number(Home)</div>
-						<div class="description">
-						<span ng-show="!user.Contact.phone_home">尚未填寫</span>
-						<span ng-show="user.Contact.phone_home">{{user.Contact.phone_home}}</span>
-						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <div class="content">
-						<div class="header">Phone number(Mobile)</div>
-						<div class="description">
-						<span ng-show="!user.Contact.phone_mobile">尚未填寫</span>
-						<span ng-show="user.Contact.phone_mobile">{{user.Contact.phone_mobile}}</span>
-						</div>
-					  </div>
-					</div>
-					<div class="item">
-					  <div class="content">
-						<div class="header">Phone number(Work)</div>
-						<div class="description">
-						<span ng-show="!user.Contact.phone_work">尚未填寫</span>
-						<span ng-show="user.Contact.phone_work">{{user.Contact.phone_work}}</span>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-			  </div>
-	</div>
-	</div>
-  
-  </div>
+							<div class="column">
+								<div class="ui list">
+									<div class="item">		
+										<div class="ui segment">
+											<h3 class="ui header">學歷</h3>
+											<div class="list">
+												<div class="item">
+													<div class="content">
+														<div class="header">Department</div>
+														<div class="description">
+															<span ng-show="!user.Education.dept">尚未填寫</span>
+															<span ng-show="user.Education.dept">{{user.Education.dept}}</span>
+														</div>
+													</div>
+												</div>
 
-</div>
+												<div class="item">
+													<div class="content">
+														<div class="header">Degree</div>
+														<div class="description">
+															<span ng-show="!user.Education.degree">尚未填寫</span>
+															<span ng-show="user.Education.degree">{{user.Education.degree}}</span>
+														</div>
+													</div>
+												</div>
+							
+												<div class="item">
+													<div class="content">
+														<div class="header">Stuid</div>
+														<div class="description">
+															<span ng-show="!user.Education.stuid">尚未填寫</span>
+															<span ng-show="user.Education.stuid">{{user.Education.stuid}}</span>
+														</div>
+													</div>
+												</div>
+							
+												<div class="item">
+													<div class="content">
+														<div class="header">Institute</div>
+														<div class="description">
+															<span ng-show="!user.Education.institute">尚未填寫</span>
+															<span ng-show="user.Education.institute">{{user.Education.institute}}</span>
+														</div>
+													</div>
+												</div>
+							
+												<div class="item">
+												  <div class="content">
+														<div class="header">Start Date</div>
+														<div class="description">
+														<span ng-show="!user.Education.startdate">尚未填寫</span>
+														<span ng-show="user.Education.startdate">{{user.Education.startdate}}</span>
+														</div>
+													</div>
+												</div>
+												
+												<div class="item">
+												  <div class="content">
+														<div class="header">End Date</div>
+														<div class="description">
+														<span ng-show="!user.Education.enddate">尚未填寫</span>
+														<span ng-show="user.Education.enddate">{{user.Education.enddate}}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div class="column" ng-repeat="item in user.Experiences">
+								<div class="ui list">
+									<div class="item">	
+										<div class="ui segment">
+								  		<h3 class="ui header">經歷</h3>
+								  		<div class="list">
+
+												<div class="item">
+									  			<div class="content">
+														<div class="header">Organization</div>
+														<div class="description">
+															<span ng-show="!item.org">尚未填寫</span>
+															<span ng-show="item.org">{{item.org}}</span>
+														</div>
+									  			</div>
+												</div>
+				
+												<div class="item">
+												  <div class="content">
+														<div class="header">Department</div>
+														<div class="description">
+															<span ng-show="!item.dept">尚未填寫</span>
+															<span ng-show="item.dept">{{item.dept}}</span>
+														</div>
+												  </div>
+												</div>
+																
+												<div class="item">
+												  <div class="content">
+														<div class="header">Position</div>
+														<div class="description">
+															<span ng-show="!item.position">尚未填寫</span>
+															<span ng-show="item.position">{{item.position}}</span>
+														</div>
+												  </div>
+												</div>
+												
+												<div class="item">
+												  <div class="content">
+														<div class="header">Description</div>
+														<div class="description">
+															<span ng-show="!item.description">尚未填寫</span>
+															<span ng-show="item.description">{{item.description}}</span>
+														</div>
+												  </div>
+												</div>
+												
+												<div class="item">
+												  <div class="content">
+														<div class="header">Start Date</div>
+														<div class="description">
+															<span ng-show="!item.startdate">尚未填寫</span>
+															<span ng-show="item.startdate">{{item.startdate}}</span>
+														</div>
+												  </div>
+												</div>
+												
+												<div class="item">
+												  <div class="content">
+														<div class="header">End Date</div>
+														<div class="description">
+															<span ng-show="!item.enddate">尚未填寫</span>
+															<span ng-show="item.enddate">{{item.enddate}}</span>
+														</div>
+												  </div>
+												</div>
+							  			</div>
+										</div>
+						  		</div>			
+								</div>
+							</div>
+
+					  </div>
+					</div>
 
 
 					<div ng-show="edit" >
