@@ -109,6 +109,8 @@ if (app.get('env') === 'production') {
  * Routes
  */
 
+app.get('/local_Login/:account',api.local_Login);
+
 // serve index
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);

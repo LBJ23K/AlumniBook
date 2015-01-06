@@ -31,6 +31,18 @@ exports.name = function (req, res) {
   });
 };
 
+
+exports.local_Login = function(req, res){
+	var account = req.params.account;
+	Member.findOne({where:{account:account}}).success(function(member){
+		var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+			req.session.user = user;
+			req.session.isLogin = true;
+			res.redirect('/' );
+		
+	});
+	
+}
 exports.likePost = function(req, res){
 	Like.create({issue_id:req.params.id, member_id:req.session.user.member_id})
 	.success(function(like){
