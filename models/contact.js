@@ -15,7 +15,8 @@ exports.Contact = function(Sequelize, sequelize){
     },
     email:{
       type:Sequelize.STRING,
-      allowNull:false,
+      allowNull:true,
+      defaultValue:null,
       validate:  {
         isEmail: true
       }

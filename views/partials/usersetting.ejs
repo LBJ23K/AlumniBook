@@ -48,10 +48,10 @@
 
                 <div class="ui grid">
 
-
                     <div ng-hide="edit">
                         <div class="ui stackable two column grid">
-                        	<div class="column">
+
+                            <div class="column">
                                 <div class="ui list">
                                     <div class="item">
 
@@ -109,6 +109,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="column">
                                 <div class="ui list">
                                     <div class="item">
@@ -183,7 +184,6 @@
                             <div class="column" ng-repeat="item in user.Experiences">
                                 <div class="ui list">
                                     <div class="item">
-
                                         <div class="ui segment">
                                             <h3 class="ui header">經歷</h3>
                                             <div class="list">
@@ -197,7 +197,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="item">
                                                     <div class="content">
@@ -248,16 +247,43 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="item">
+                                                    <div class="content">
+                                                        <div class="header">Description</div>
+                                                        <div class="description">
+                                                            <span ng-show="!item.description">尚未填寫</span>
+                                                            <span ng-show="item.description">{{item.description}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item">
+                                                    <div class="content">
+                                                        <div class="header">Start Date</div>
+                                                        <div class="description">
+                                                            <span ng-show="!item.startdate">尚未填寫</span>
+                                                            <span ng-show="item.startdate">{{item.startdate}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="item">
+                                                    <div class="content">
+                                                        <div class="header">End Date</div>
+                                                        <div class="description">
+                                                            <span ng-show="!item.enddate">尚未填寫</span>
+                                                            <span ng-show="item.enddate">{{item.enddate}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-
                     </div>
-
-
                     <div ng-show="edit">
                         <div class="ui stackable two column grid">
 
@@ -436,6 +462,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="item" ng-show="$index>0">
+                                                	<div class="content">
+                                                		<button class="ui red button" ng-click="removeExp($index)">移除經歷</button>
+                                                	</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -450,10 +481,7 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>

@@ -208,7 +208,19 @@ exports.modifyUser = function(req, res) {
             res.json(results)
         });
 }
+exports.removeExp = function(req, res) {
+    var id = req.body.exp_id;
 
+    Experience.destroy({
+        where: {
+            experience_id: id
+        }
+    }).success(function(member) {
+        res.send(true);
+    }).error(function(err){
+        res.send(false);
+    })
+}
 exports.searchUserAccount = function(req,res){
     var value = req.param('value');
     Member.findAll({
