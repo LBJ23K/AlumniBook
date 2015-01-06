@@ -91,4 +91,13 @@ pre.segment{
 	word-wrap: break-word; 
 	word-break: normal;
 }
+pre.description{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word; 
+	word-break: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: 15;
+	-webkit-box-orient: vertical;
+}
 

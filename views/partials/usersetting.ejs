@@ -29,10 +29,11 @@
             </div>
             <a href="/accountsetting" ng-hide="id!=$root.user_id">
                 <button class="ui teal button" style="min-width:100px">帳號資料</button>
+
             </a>
         </div>
 
-        <div class="fourteen wide column">
+        <div id ="test" class="fourteen wide column">
             <div class="ui teal segment">
 
                 <div class="ui basic segment">
@@ -218,35 +219,6 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="item">
-                                                    <div class="content">
-                                                        <div class="header">Description</div>
-                                                        <div class="description">
-                                                            <span ng-show="!item.description">尚未填寫</span>
-                                                            <span ng-show="item.description">{{item.description}}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item">
-                                                    <div class="content">
-                                                        <div class="header">Start Date</div>
-                                                        <div class="description">
-                                                            <span ng-show="!item.startdate">尚未填寫</span>
-                                                            <span ng-show="item.startdate">{{item.startdate}}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="item">
-                                                    <div class="content">
-                                                        <div class="header">End Date</div>
-                                                        <div class="description">
-                                                            <span ng-show="!item.enddate">尚未填寫</span>
-                                                            <span ng-show="item.enddate">{{item.enddate}}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="item">
                                                     <div class="content">
                                                         <div class="header">Description</div>
