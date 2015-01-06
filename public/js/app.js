@@ -9,7 +9,7 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'highcharts-ng',
-  'ui.router'
+  'ui.router',
 ])
 .config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
   

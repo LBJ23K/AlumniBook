@@ -41,5 +41,13 @@
 	"User List": "會員列表",
 	"Search Topic": "搜尋文章",
 	"Search User": "搜尋會員",
-	"Search User's Name": "搜尋會員名字"
+	"Search User's Name": "搜尋會員名字",
+	"Search User's School": "搜尋會員學校",
+	"Search User's Department": "搜尋會員系所",
+	"Search User's Grade": "搜尋會員年級",
+	"member": "成員",
+	"school": "學校",
+	"issue": "文章",
+	"title": "標題",
+	"AlumniBook": "AlumniBook"
 }

@@ -4,8 +4,8 @@
 
 
             <div class="ui relaxed divided items post-item" ng-if="type=='issue'">
-                <h3 class="ui header">文章 {{field}} 內含有 "{{searchtext}}" 搜尋結果，共有{{results.length}}項</h3>
-                <div class="item" ng-show="!results.length">無資料</div>
+                <h3 class="ui header">{{type_t}} {{field}} 內含有 "{{searchtext}}" 搜尋結果，共有{{results.length}}項</h3>
+                <div ng-show="!results.length">無資料</div>
                 <div class="item" ng-repeat="post in results" ng-click="gotopic(post.issue_id)">
                     <div class="ui small image">
                         <img src="img/category-0{{post.postCategory_id}}.png">
@@ -27,8 +27,8 @@
                 </div>
             </div>
             <div class="ui relaxed divided items post-item" ng-if="type=='member'">
-                <h3 class="ui header">成員 {{field}} 內含有 "{{searchtext}}" 搜尋結果，共有{{results.length}}項</h3>
-                <div class="item" ng-show="!results.length">無資料</div>
+                <h3 class="ui header">{{type_t}} "{{field}}" 內含有 "{{searchtext}}" 搜尋結果，共有{{results.length}}項</h3>
+                <div ng-show="!results.length">無資料</div>
                 <div class="item" ng-repeat="user in results" ng-click="gouser(user.member_id)">
                     <div class="ui small image">
                         <img src="{{user.photo}}">
