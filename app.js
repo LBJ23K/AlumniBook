@@ -130,6 +130,8 @@ app.get('/user/search/gender', api.checkLogin, user_api.searchUserGender);
 app.get('/user/search/department', api.checkLogin, user_api.searchUserDepartment);
 app.get('/user/search/grade', api.checkLogin, user_api.searchUserGrade);
 
+app.post('/search', api.checkLogin, api.search);
+
 app.get('/api/locales', i18nController.locales);
 app.post('/api/setLocale', i18nController.setLocale);
 

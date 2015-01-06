@@ -225,16 +225,37 @@ exports.update = function(req, res){
 };
 
 exports.supportedSearchFields = function(req, res) {
-  var fields = [
-    {
-      field: 'title',
-      displayName: req.__('Search_Field_Title')
-    },
-    {
-      field: 'author',
-      displayName: req.__('Search_Field_Author')
-    }
-  ];
+  var fields = {
+    searchFields:
+    [
+      {
+        field: 'title',
+        displayName: req.__('Search_Field_Title')
+      },
+      {
+        field: 'author',
+        displayName: req.__('Search_Field_Author')
+      }
+    ],
+    searchFields2:
+    [
+      {
+        field: 'name',
+        displayName: req.__("Search User's Name")
+      }
+    ],
+    searchCategory:
+    [
+      {
+        type:'issue',
+        displayName:req.__('Search Topic')
+      },
+      {
+        type:'member',
+        displayName:req.__('Search User')
+      }
+    ]
+  }
   res.json(fields);
 };
 

@@ -63,6 +63,11 @@ angular.module('myApp', [
       templateUrl: 'partial/chart',
       controller: 'Chart'
      }).
+    state('search',{
+      url:'/search/:category/:field/:searchtext',
+      templateUrl: 'partial/searchresult',
+      controller: 'Search'
+     }).
     state('otherwise',{
       url: "/"
     })
