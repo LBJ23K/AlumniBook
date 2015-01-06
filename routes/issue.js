@@ -242,6 +242,18 @@ exports.supportedSearchFields = function(req, res) {
       {
         field: 'name',
         displayName: req.__("Search User's Name")
+      },
+      {
+        field: 'school',
+        displayName: req.__("Search User's School")
+      },
+      {
+        field: 'department',
+        displayName: req.__("Search User's Department")
+      },
+      {
+        field: 'grade',
+        displayName: req.__("Search User's Grade")
       }
     ],
     searchCategory:

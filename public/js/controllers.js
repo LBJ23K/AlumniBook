@@ -27,11 +27,9 @@ angular.module('myApp.controllers', ['ngRoute']).
       notifications: $window.notifications
     };
     $rootScope.$watch('lang',function(newValue, oldValue){   
-
       if(newValue!=oldValue){
         localStorage.setItem("lang", newValue);
         $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
-          // $state.transitionTo('index', null, {'reload':true});
           location.reload();
         });
       }
@@ -51,7 +49,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       $scope.searchingField = field;
     };
     $scope.setSearchCategory  = function(category){
-      if(category.type=='topic') $scope.searchFields = allField.searchFields;
+      console.log(category);
+      if(category.type=='issue') $scope.searchFields = allField.searchFields;
       else $scope.searchFields = allField.searchFields2;
       $scope.searchingField = $scope.searchFields[0];
       $scope.searchingCategory = category;
@@ -99,29 +98,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
     };
     $scope.newPost = function(){
-      if(!$rootScope.isLogin){
-        // alertify.alert("Please login.", function (e) {
-        //     if (e) {
-        //         // user clicked "ok"
-        //         $location.path('/login');
-        //         $scope.$apply();
-                
-        //     }
-        // });
-
-        $('.ui.login.modal')
-        .modal({
-          closable  : true,
-          onApprove : function() {
-            $location.path('/login');
-            $scope.$apply();
-          }
-        })
-        .modal('show');
-        
-      }else{
         $location.path('/post')
-      }
       
     }
     $scope.select = function(id){
@@ -173,16 +150,40 @@ angular.module('myApp.controllers', ['ngRoute']).
       })
     }
     $scope.gouser = function(id){
-      $location.path('/users/'+id);
+      if($rootScope.isLogin)
+        $location.path('/users/'+id);
+      else{
+        alertify.confirm("請先登入再觀看成員資料", function (e) {
+          if (e) location.href="/login"
+        });
+      }
     }
     $scope.searchSchool = function(searchtext){
-      $location.path('/search/member/school/'+searchtext);
+      if($rootScope.isLogin)
+        $location.path('/search/member/school/'+searchtext);
+      else{
+        alertify.confirm("請先登入再查詢成員資料", function (e) {
+          if (e) location.href="/login"
+        });
+      }
     }
     $scope.searchDep = function(searchtext){
-      $location.path('/search/member/department/'+searchtext);
+      if($rootScope.isLogin)
+        $location.path('/search/member/department/'+searchtext);
+      else{
+        alertify.confirm("請先登入再查詢成員資料", function (e) {
+          if (e) location.href="/login"
+        });
+      }
     }
     $scope.searchGrade = function(searchtext){
-      $location.path('/search/member/grade/'+searchtext);
+      if($rootScope.isLogin)
+        $location.path('/search/member/grade/'+searchtext);
+      else{
+        alertify.confirm("請先登入再查詢成員資料", function (e) {
+          if (e) location.href="/login"
+        });
+      }
     }
     $scope.likePost = function(){
       $http({method:"GET", url:'/api/like/'+$state.params.id}).success(function(result){
@@ -433,9 +434,18 @@ angular.module('myApp.controllers', ['ngRoute']).
     $scope.init = function(){
       $http({method:"POST", url:"/search",data:$state.params}).success(function(result){
         $scope.results = result;
-        console.log(result)
         $scope.type = $state.params.category;
-        $scope.field = $state.params.field;
+        $http.get("/translate/"+$state.params.category)
+          .success(function(response) {
+            var temp  = response.charAt(0).toUpperCase() + response.substring(1);
+            $scope.type_t = temp;
+
+          });
+        $http.get("/translate/"+$state.params.field)
+          .success(function(response) {
+            var temp  = response.charAt(0).toUpperCase() + response.substring(1);
+            $scope.field = temp;
+          });
         $scope.searchtext = $state.params.searchtext;
       })
     }

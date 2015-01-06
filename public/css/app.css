@@ -68,3 +68,27 @@
 .pointer{
 	cursor: pointer;
 }
+
+.tooltip { 
+	border-bottom: 1px dotted #333;
+	position: relative;
+	cursor: pointer; 
+}
+.tooltip:hover:after { 
+	content: attr(data-tooltip);; 
+	position: absolute; 
+	white-space: nowrap; 
+	background: rgba(0, 0, 0, 0.85); 
+	padding: 3px 7px; 
+	color: #FFF; 
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	margin-left: 7px; 
+	margin-top: -3px; 
+}
+pre.segment{
+	word-wrap: break-word; 
+	word-break: normal;
+}
+

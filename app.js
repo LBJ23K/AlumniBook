@@ -114,7 +114,7 @@ if (app.get('env') === 'production') {
 // serve index
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
-
+app.get('/translate/:text',api.translate);
 app.get('/local_login/:account',api.local_Login);
 
 app.get('/api/user/me', api.checkLogin,user_api.getUser);//mysetting

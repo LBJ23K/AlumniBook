@@ -3,8 +3,8 @@
 		<div class="ui icon header">
 		  <div style="margin-top:20px">
 				<img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
-				<a href="/users/{{post.Member.member_id}}"><div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="ui medium circular profile-img bg-img">
-				</div></a>	
+					<div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="ui medium circular profile-img bg-img pointer" ng-click="gouser(post.Member.member_id)">
+					</div>
 			</div>
 		  <div class="content member-info">
 		    <span class="pointer" ng-bind="post.Member.name" ng-click="gouser(post.Member.member_id)"></span>
@@ -54,7 +54,7 @@
 							</div>	
 				    </a>
 				    <div class="content">
-				      <a class="author" ng-bind="comment.Member.name" href="/users/{{comment.Member.member_id}}"></a>
+				      <a class="author" ng-bind="comment.Member.name" ng-click="gouser(comment.Member.member_id)"></a>
 				      <div class="metadata">
 				        <span class="date" ng-bind="time(comment.createdAt)"></span>
 				      </div>
@@ -66,7 +66,7 @@
 				    <div class="field">
 				      <textarea name="" id="" rows="10" ng-model="myComment"></textarea>
 				    </div>
-						<span ng-hide="$root.isLogin">請先<a href="/login" class="ui button">登入</a>再進行留言</span>
+						<span ng-hide="$root.isLogin">請先<a href="http://{{$root.host}}/login/" target="_self"  class="ui button">登入</a>再進行留言</span>
 						<button ng-show="$root.isLogin" class="ui teal labeled submit icon button" ng-click="submitComment()"><i class="icon edit"></i><%= __('Submit') %></button>
 				  </form>
 				</div>

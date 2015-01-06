@@ -39,5 +39,12 @@
 	"Delete_Post": "Delete Post",
 	"Follow": "Follow",
 	"Unfollow": "Unfollow",
-  	"Submit": "Submit"
+	"Search User's Name": "Search User's Name",
+	"Search User's School": "Search User's School",
+	"Search User's Department": "Search User's Department",
+	"Search User's Grade": "Search User's Grade",
+	"Search Topic": "Search Topic",
+	"Search User": "Search User",
+	"issue": "issue",
+	"title": "title"
 }

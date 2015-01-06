@@ -25,10 +25,8 @@ var sequelize = new Sequelize(
 // var FacebookStrategy = require('passport-facebook').Strategy;
 // var facebookAuth = require("../config/facebook_auth");
 
-exports.name = function (req, res) {
-  res.json({
-  	name: 'Bob'
-  });
+exports.translate = function (req, res) {
+  res.send(req.__(req.params.text))
 };
 
 exports.search = function(req, res){
