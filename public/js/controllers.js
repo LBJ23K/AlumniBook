@@ -363,6 +363,24 @@ angular.module('myApp.controllers', ['ngRoute']).
         console.log('fail');
       })
     }
+    $scope.removeExp = function(index){
+      console.log(index);
+      var exp_id = $scope.editdata.Experiences[index].experience_id;
+      $scope.editdata.Experiences.splice(index,1);
+      if(index<expLen){
+        $http({
+          method:"POST",
+          url:"/api/user/removeExp",
+          data:{exp_id:exp_id}
+        })
+        .success(function(data){
+          alertify.success('刪除經歷成功');
+        })
+        .error(function(){
+          console.log('fail');
+        })
+      }
+    }
     $scope.addnewExp = function(){
       $scope.editdata.Experiences.push({})
     }

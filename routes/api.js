@@ -31,6 +31,49 @@ exports.name = function (req, res) {
   });
 };
 
+
+exports.local_Login = function(req, res){
+	var account = req.params.account;
+	// Member.findOne({where:{account:account}}).success(function(member){
+	// 	var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+	// 		req.session.user = user;
+	// 		req.session.isLogin = true;
+	// 		res.redirect('/' );
+		
+	// });
+	var query = {
+        where:{
+            account: account
+        }
+    }
+    Member.find(query).success(function(member){
+        if(member == null){
+            var user = {}
+            Member.create({account:account}).success(function(member){
+                Education.create({member_id:member.dataValues.member_id})
+                Experience.create({member_id:member.dataValues.member_id})
+                Contact.create({member_id:member.dataValues.member_id})
+                var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+                req.session.user = user;
+                req.session.isLogin = true;
+                res.redirect('/');
+                
+        })
+        .error(function(err){
+            console.log(err);
+        })
+        }
+        else{
+            var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+            req.session.user = user;
+            req.session.isLogin = true;
+            res.redirect('/');
+            
+        }
+
+    });   
+	
+}
 exports.likePost = function(req, res){
 	Like.create({issue_id:req.params.id, member_id:req.session.user.member_id})
 	.success(function(like){

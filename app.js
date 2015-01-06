@@ -109,15 +109,17 @@ if (app.get('env') === 'production') {
  * Routes
  */
 
+
+
 // serve index
 app.get('/', routes.index);
 app.get('/partial/:name', routes.partial);
 
-
+app.get('/local_login/:account',api.local_Login);
 
 app.get('/api/user/me', api.checkLogin,user_api.getUser);//mysetting
 app.post('/api/user/modify', api.checkLogin,user_api.modifyUser);
-
+app.post('/api/user/removeExp',user_api.removeExp);
 app.get('/api/users/:id',user_api.getUserData);//particular user
 app.get('/api/users',user_api.getAlluser);//alluserList
 
