@@ -49,5 +49,9 @@
 	"school": "學校",
 	"issue": "文章",
 	"title": "標題",
-	"AlumniBook": "AlumniBook"
+	"AlumniBook": "AlumniBook",
+	"No_result": "無資料",
+	"Contains": "內含有",
+	"search_results_are": "搜尋結果，共有",
+  "items": "項"
 }
