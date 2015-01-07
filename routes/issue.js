@@ -233,7 +233,7 @@ exports.supportedSearchFields = function(req, res) {
         displayName: req.__('Search_Field_Title')
       },
       {
-        field: 'author',
+        field: 'name',
         displayName: req.__('Search_Field_Author')
       }
     ],

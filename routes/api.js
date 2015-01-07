@@ -36,21 +36,53 @@ exports.search = function(req, res){
 	var query = {where:{}};
 	query.where[field] = {};
 	query.where[field].like = searchtext;
-	console.log(query);
-	console.log(req.body);
+	// console.log(query);
 
 	if(category=='issue')
 	{
-		query.include=[Member,Comment]
-		console.log('issue');
-		Issue.findAll(query).success(function(results) {
-        if (results==null) res.json([]);
-        res.json(results);
+		if(field=='title'){
+			query.include=[Member,Comment]
+				Issue.findAll(query).success(function(results) {
+		        if (results==null) res.json([]);
+		        res.json(results);
 
-      }).error(function(error) {
-      	console.log(error);
-        res.status(500).json(error);
-      });
+		      }).error(function(error) {
+		      	console.log(error);
+		        res.status(500).json(error);
+		      });
+		}
+		else{
+			Member.findAll(query).success(function(result){
+			if(result == []) res.json([]);
+			else
+			{
+				async.map(result,function(item,callback){
+					Issue.findAll({
+				        where: {
+				            member_id: item.dataValues.member_id
+				        },
+				        include: [Member,Comment]
+				    }).success(function(issue){
+						if(issue.length!=0){
+						 	callback(null,issue);
+						}
+						else callback(null,[])
+					})
+				},
+					function(err,results){
+						var Issues = []
+						_.each(results,function(item){
+							_.each(item,function(item2){
+								Issues.push(item2.dataValues);
+							})
+						})
+						res.json(Issues);
+				
+				})
+			}
+		})
+		}
+		
 	}
 	else
 	{
