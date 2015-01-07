@@ -25,7 +25,7 @@
 
 .post-item .item:hover {
   cursor: pointer;
-  background-color: #EFEFEF;
+  background-color: rgba(239, 239, 239, 1)
 }
 
 .ui.divided.items > .item:first-child {
@@ -99,5 +99,25 @@ pre.description{
 	display: -webkit-box;
 	-webkit-line-clamp: 15;
 	-webkit-box-orient: vertical;
+}
+
+.ui.items>.item>.content>.description {
+	max-height: 100px;
+	overflow: hidden;
+	margin-top: -20px;
+}
+
+.ui.items>.item>.content>.description:before {
+	content: ' ';
+	display: block;
+	width: 100%;
+	height: 30px;
+	background: linear-gradient(to top, rgba(255, 255, 255, 1),  rgba(255, 255, 255, 0));
+	position: relative;
+	top: 70px;
+}
+
+.post-item .item:hover >.content>.description:before {
+	background: linear-gradient(to top, rgba(239, 239, 239, 1),  rgba(255, 255, 255, 0));
 }
 

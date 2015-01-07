@@ -3,7 +3,7 @@
     <div class="ui teal segment">
       
 			<div class="ui basic right aligned segment">
-				<span ng-hide="$root.isLogin">請先<a href="http://{{$root.host}}/login/" target="_self"  class="ui button">登入</a>再發表文章</span>
+				<span ng-hide="$root.isLogin">請先 <a href="http://{{$root.host}}/login/" target="_self" class="ui button">登入</a>再發表文章</span>
 				<button ng-show="$root.isLogin" class="ui teal labeled icon button" ng-click="newPost()"><i class="icon edit"></i><%= __('Post_issue') %></button>
 			</div>
 

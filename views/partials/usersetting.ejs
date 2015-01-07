@@ -12,7 +12,7 @@
 <div class="container" ng-init="init()">
     <div class="ui page grid stackable two column">
         <div class="two wide column">
-            <div class="ui icon header">
+         <div class="ui icon header">
                 <div class="col-md-2" style="margin-top:20px">
                     <img class="ui medium circular image" ng-hide="user.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
                     <div ng-show="user.photo" ng-style="{'background-image':'url('+user.photo+')'}" class="ui medium circular profile-img bg-img">
@@ -28,8 +28,8 @@
                 </div>
             </div>
             <a href="/accountsetting" ng-hide="id!=$root.user_id">
-                <button class="ui teal button" style="min-width:100px">帳號資料</button>
 
+                <button class="ui teal button" style="min-width:100px"><%= __('account_settings') %></button>
             </a>
         </div>
 
@@ -37,13 +37,13 @@
             <div class="ui teal segment">
 
                 <div class="ui basic segment">
-                    <h3 class="ui dividing header">Profile</h3>
+                    <h3 class="ui dividing header"><%= __('profile') %></h3>
                     <pre class="segment" ng-bind="post.content"></pre>
 
                     <div class="ui basic right aligned segment">
-                        <button class="ui teal button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id">修改資料</button>
-                        <button class="ui teal button" ng-click="modifysubmit()" ng-show="edit">送出</button>
-                        <button class="ui button" ng-click="cancelsubmit()" ng-show="edit">取消</button>
+                        <button class="ui teal button" ng-click="edit=true" ng-hide="edit||id!=$root.user_id"><%= __('modify') %></button>
+                        <button class="ui teal button" ng-click="modifysubmit()" ng-show="edit"><%= __('Submit') %></button>
+                        <button class="ui button" ng-click="cancelsubmit()" ng-show="edit"><%= __('Cancel') %></button>
                     </div>
                 </div>
 
@@ -57,13 +57,13 @@
                                     <div class="item">
 
                                         <div class="ui segment">
-                                            <h3 class="ui header">聯絡方式</h3>
+                                            <h3 class="ui header"><%= __('Contact') %></h3>
                                             <div class="list">
                                                 <div class="item">
                                                     <div class="content">
                                                         <div class="header">Email</div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Contact.email">尚未填寫</span>
+                                                            <span ng-show="!user.Contact.email"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Contact.email">{{user.Contact.email}}</span>
                                                         </div>
                                                     </div>
@@ -71,36 +71,36 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Address</div>
+                                                        <div class="header"><%= __('Address') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Contact.address">尚未填寫</span>
+                                                            <span ng-show="!user.Contact.address"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Contact.address">{{user.Contact.address}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Home)</div>
+                                                        <div class="header"><%= __('phone_home') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Contact.phone_home">尚未填寫</span>
+                                                            <span ng-show="!user.Contact.phone_home"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Contact.phone_home">{{user.Contact.phone_home}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Mobile)</div>
+                                                        <div class="header"><%= __('phone_mobile') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Contact.phone_mobile">尚未填寫</span>
+                                                            <span ng-show="!user.Contact.phone_mobile"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Contact.phone_mobile">{{user.Contact.phone_mobile}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Work)</div>
+                                                        <div class="header"><%= __('phone_work') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Contact.phone_work">尚未填寫</span>
+                                                            <span ng-show="!user.Contact.phone_work"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Contact.phone_work">{{user.Contact.phone_work}}</span>
                                                         </div>
                                                     </div>
@@ -115,13 +115,13 @@
                                 <div class="ui list">
                                     <div class="item">
                                         <div class="ui segment">
-                                            <h3 class="ui header">學歷</h3>
+                                            <h3 class="ui header"><%= __('Education') %></h3>
                                             <div class="list">
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Department</div>
+                                                        <div class="header"><%= __('Department_e') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.dept">尚未填寫</span>
+                                                            <span ng-show="!user.Education.dept"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.dept">{{user.Education.dept}}</span>
                                                         </div>
                                                     </div>
@@ -129,9 +129,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Degree</div>
+                                                        <div class="header"><%= __('Degree') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.degree">尚未填寫</span>
+                                                            <span ng-show="!user.Education.degree"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.degree">{{user.Education.degree}}</span>
                                                         </div>
                                                     </div>
@@ -139,9 +139,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Stuid</div>
+                                                        <div class="header"><%= __('stuid') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.stuid">尚未填寫</span>
+                                                            <span ng-show="!user.Education.stuid"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.stuid">{{user.Education.stuid}}</span>
                                                         </div>
                                                     </div>
@@ -149,9 +149,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Institute</div>
+                                                        <div class="header"><%= __('Institute') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.institute">尚未填寫</span>
+                                                            <span ng-show="!user.Education.institute"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.institute">{{user.Education.institute}}</span>
                                                         </div>
                                                     </div>
@@ -159,9 +159,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Start Date</div>
+                                                        <div class="header"><%= __('startdate') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.startdate">尚未填寫</span>
+                                                            <span ng-show="!user.Education.startdate"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.startdate">{{user.Education.startdate}}</span>
                                                         </div>
                                                     </div>
@@ -169,9 +169,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">End Date</div>
+                                                        <div class="header"><%= __('enddate') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!user.Education.enddate">尚未填寫</span>
+                                                            <span ng-show="!user.Education.enddate"><%= __('Unfill') %></span>
                                                             <span ng-show="user.Education.enddate">{{user.Education.enddate}}</span>
                                                         </div>
                                                     </div>
@@ -186,14 +186,14 @@
                                 <div class="ui list">
                                     <div class="item">
                                         <div class="ui segment">
-                                            <h3 class="ui header">經歷</h3>
+                                            <h3 class="ui header"><%= __('Experiences') %></h3>
                                             <div class="list">
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Organization</div>
+                                                        <div class="header"><%= __('org') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.org">尚未填寫</span>
+                                                            <span ng-show="!item.org"><%= __('Unfill') %></span>
                                                             <span ng-show="item.org">{{item.org}}</span>
                                                         </div>
                                                     </div>
@@ -201,9 +201,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Department</div>
+                                                        <div class="header"><%= __('Department') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.dept">尚未填寫</span>
+                                                            <span ng-show="!item.dept"><%= __('Unfill') %></span>
                                                             <span ng-show="item.dept">{{item.dept}}</span>
                                                         </div>
                                                     </div>
@@ -211,9 +211,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Position</div>
+                                                        <div class="header"><%= __('position') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.position">尚未填寫</span>
+                                                            <span ng-show="!item.position"><%= __('Unfill') %></span>
                                                             <span ng-show="item.position">{{item.position}}</span>
                                                         </div>
                                                     </div>
@@ -221,9 +221,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Description</div>
+                                                        <div class="header"><%= __('description') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.description">尚未填寫</span>
+                                                            <span ng-show="!item.description"><%= __('Unfill') %></span>
                                                             <span ng-show="item.description">{{item.description}}</span>
                                                         </div>
                                                     </div>
@@ -231,9 +231,9 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Start Date</div>
+                                                        <div class="header"><%= __('startdate') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.startdate">尚未填寫</span>
+                                                            <span ng-show="!item.startdate"><%= __('Unfill') %></span>
                                                             <span ng-show="item.startdate">{{item.startdate}}</span>
                                                         </div>
                                                     </div>
@@ -241,9 +241,10 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">End Date</div>
+                                                        <div class="header"><%= __('enddate') %></div>
                                                         <div class="description">
-                                                            <span ng-show="!item.enddate">尚未填寫</span>
+
+                                                            <span ng-show="!item.enddate"><%= __('Unfill') %></span>
                                                             <span ng-show="item.enddate">{{item.enddate}}</span>
                                                         </div>
                                                     </div>
@@ -264,7 +265,7 @@
                                     <div class="item">
 
                                         <div class="ui form">
-                                            <h3 class="ui header">聯絡方式</h3>
+                                            <h3 class="ui header"><%= __('Contact') %></h3>
                                             <div class="list">
                                                 <div class="item">
                                                     <div class="content">
@@ -278,7 +279,7 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Address</div>
+                                                        <div class="header"><%= __('Address') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Contact.address">
                                                         </div>
@@ -286,7 +287,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Home)</div>
+                                                        <div class="header"><%= __('phone_home') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Contact.phone_home" placeholder="(02)0000-0000">
                                                         </div>
@@ -294,7 +295,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Mobile)</div>
+                                                        <div class="header"><%= __('phone_mobile') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Contact.phone_mobile" placeholder="0911-000-000">
                                                         </div>
@@ -302,7 +303,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Phone number(Work)</div>
+                                                        <div class="header"><%= __('phone_work') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Contact.phone_work" placeholder="(02)0000-0000">
                                                         </div>
@@ -319,11 +320,11 @@
                                     <div class="item">
 
                                         <div class="ui form">
-                                            <h3 class="ui header">學歷</h3>
+                                            <h3 class="ui header"><%= __('Education') %></h3>
                                             <div class="list">
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Department</div>
+                                                        <div class="header"><%= __('Department_e') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.dept">
                                                         </div>
@@ -332,7 +333,7 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Degree</div>
+                                                        <div class="header"><%= __('Degree') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.degree" placeholder="1">
                                                         </div>
@@ -340,7 +341,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Stuid</div>
+                                                        <div class="header"><%= __('stuid') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.stuid" placeholder="b00705031">
                                                         </div>
@@ -348,7 +349,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Institute</div>
+                                                        <div class="header"><%= __('Institute') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.institute">
                                                         </div>
@@ -356,7 +357,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Start Date</div>
+                                                        <div class="header"><%= __('startdate') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.startdate" placeholder="yyyy-mm">
                                                         </div>
@@ -364,7 +365,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">End Date</div>
+                                                        <div class="header"><%= __('enddate') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="editdata.Education.enddate" placeholder="yyyy-mm">
                                                         </div>
@@ -380,12 +381,12 @@
                                 <div class="ui segment">
                                     <div class="item">
                                         <div class="ui form">
-                                            <h3 class="ui header">經歷</h3>
+                                            <h3 class="ui header"><%= __('Experiences') %></h3>
                                             <div class="list">
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Organization</div>
+                                                        <div class="header"><%= __('org') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="item.org">
                                                         </div>
@@ -395,7 +396,7 @@
 
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Department</div>
+                                                        <div class="header"><%= __('Department') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="item.dept">
                                                         </div>
@@ -403,7 +404,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Position</div>
+                                                        <div class="header"><%= __('position') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="item.position">
                                                         </div>
@@ -411,7 +412,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Description</div>
+                                                        <div class="header"><%= __('description') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="item.description">
                                                         </div>
@@ -419,7 +420,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">Start Date</div>
+                                                        <div class="header"><%= __('startdate') %></div>
                                                         <div class="description">
                                                             <input type="text" class="form-control" ng-model="item.startdate" placeholder="yyyy-mm">
                                                         </div>
@@ -427,7 +428,7 @@
                                                 </div>
                                                 <div class="item">
                                                     <div class="content">
-                                                        <div class="header">End Date</div>
+                                                        <div class="header"><%= __('enddate') %></div>
                                                         <div class="description">
                                                             <!-- <input type="text"  date-time  ng-model="item.enddate" min-view="date"> -->
                                                             <input type="text" class="form-control" ng-model="item.enddate" placeholder="yyyy-mm">
@@ -436,7 +437,7 @@
                                                 </div>
                                                 <div class="item" ng-show="$index>0">
                                                 	<div class="content">
-                                                		<button class="ui red button" ng-click="removeExp($index)">移除經歷</button>
+                                                		<button class="ui red button" ng-click="removeExp($index)"><%= __('Remove Experience') %></button>
                                                 	</div>
                                                 </div>
                                             </div>
@@ -446,7 +447,7 @@
                             </div>
 
                             <div class="column">
-                                <button class="ui teal button" ng-click="addnewExp()">增加經歷</button>
+                                <button class="ui teal button" ng-click="addnewExp()"><%= __('Add Experience') %></button>
                             </div>
 
                         </div>
