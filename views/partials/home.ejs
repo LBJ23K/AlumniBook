@@ -1,9 +1,9 @@
 <div class="ui page grid">
   <div class="column">
     <div class="ui teal segment">
-      
+
 			<div class="ui basic right aligned segment">
-				<span ng-hide="$root.isLogin">請先 <a href="http://{{$root.host}}/login/" target="_self" class="ui button">登入</a>再發表文章</span>
+				<span ng-hide="$root.isLogin">請先 <a href="http://{{$root.host}}/login" target="_self" class="ui button">登入</a>再發表文章</span>
 				<button ng-show="$root.isLogin" class="ui teal labeled icon button" ng-click="newPost()"><i class="icon edit"></i><%= __('Post_issue') %></button>
 			</div>
 
@@ -22,7 +22,7 @@
 					    <img class="ui medium circular image" ng-hide="post.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
 							<!-- <img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image"> -->
 							<div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="author-profile-img bg-img">
-							</div>	
+							</div>
 					    <span id="author" ng-bind="post.Member.name"></span>｜<span id="createdAt" ng-bind="time(post.createdAt)"></span>｜<i class="comment icon"></i><span id="comment" ng-bind="post.Comments.length"></span>
 					  </div>
 					</div>

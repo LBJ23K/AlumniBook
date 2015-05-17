@@ -11,8 +11,8 @@ angular.module('myApp.controllers', ['ngRoute']).
       if( lang!=null) $rootScope.lang = lang;
       else{
         $rootScope.lang = "zh-TW";
-      } 
-    } 
+      }
+    }
     else {
       alert("Sorry, your browser does not support Web Storage...");
     }
@@ -26,7 +26,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       photo: $window.userPhoto,
       notifications: $window.notifications
     };
-    $rootScope.$watch('lang',function(newValue, oldValue){   
+    $rootScope.$watch('lang',function(newValue, oldValue){
       if(newValue!=oldValue){
         localStorage.setItem("lang", newValue);
         $http({method:"POST", url:'/api/setLocale', data:{locale:newValue}}).success(function(result){
@@ -65,14 +65,14 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.get_notifications = function(){
         $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
-            $scope.notifications = result;         
+            $scope.notifications = result;
         });
     };
     $scope.select = function(id){
       $location.path('/topic/'+id);
       $http({method: "GET", url: "/notify/get_notifications"}).success(function(result){
-          $scope.notifications = result;         
-      });      
+          $scope.notifications = result;
+      });
     };
 
   }).
@@ -99,7 +99,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     };
     $scope.newPost = function(){
         $location.path('/post')
-      
+
     }
     $scope.select = function(id){
       $location.path('/topic/'+id);
@@ -117,7 +117,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     // write Ctrl here
     $scope.submitPost = function(){
       var data = {
-        title: $scope.title, 
+        title: $scope.title,
         content: $scope.content,
         postCategory_id:$scope.cat_id
       }
@@ -220,13 +220,13 @@ angular.module('myApp.controllers', ['ngRoute']).
       $http({method:"GET", url:'/notify/unsubscribe/'+$state.params.id}).success(function(result){
         console.log(result);
       })
-    }    
+    }
     $scope.submitComment = function(){
       var data = {
         post_id : $state.params.id,
-        content : $scope.myComment 
+        content : $scope.myComment
       }
-      $http({method:"POST", url:'/api/comment/', data:data}).success(function(result){
+      $http({method:"POST", url:'/api/comment', data:data}).success(function(result){
         $state.go($state.$current, null, { reload: true });
       });
     }
@@ -236,7 +236,6 @@ angular.module('myApp.controllers', ['ngRoute']).
   }).
   controller('Login', function ($scope, $http, $location, $state) {
     // write Ctrl here
-
     $scope.account = "";
     $scope.password = "";
     $scope.Login = function(){
@@ -246,7 +245,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       }
       $http({method:"POST", url:"/api/login", data:data}).success(function(post){
           console.log(post);
-          if(post.msg!="success"){ 
+          if(post.msg!="success"){
             alert(post.msg);
           }
           // console.log("success");
@@ -265,15 +264,15 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
     $scope.photo = "";
     $scope.upload = function(){
-    
+
     filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
     filepicker.pickAndStore({},{location:"S3",container:"dcard-guang"},function(InkBlob){
       console.log(InkBlob);
       $scope.data.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
       $scope.$apply();
       // alert("success");
-    });  
-  } 
+    });
+  }
     $scope.signup = function(){
       $http({method:"POST", url:'/api/modifyaccount', data:$scope.data}).success(function(result){
         if(result.msg = "success")
@@ -287,6 +286,28 @@ angular.module('myApp.controllers', ['ngRoute']).
         //     window.location.reload();
         //     $location.path('/')
         // });
+      })
+    }
+
+  }).
+
+  controller('Register', function ($scope, $http, $location, $state) {
+    $scope.data = {};
+    $scope.upload = function(){
+
+    filepicker.setKey('AFCDnLjVTqKLe4YmXaifgz');
+    filepicker.pickAndStore({},{location:"S3",container:"dcard-guang"},function(InkBlob){
+      $scope.data.photo = "https://dcard-guang.s3.amazonaws.com/" + InkBlob[0].key;;
+      $scope.$apply();
+      // alert("success");
+    });
+  }
+    $scope.signup = function(){
+      $http({method:"POST", url:'/api/createMember', data:$scope.data}).success(function(result){
+          if(result.status) {
+            window.location.assign('/');
+          }
+          else alertify.error(result.msg);
       })
     }
 
@@ -398,7 +419,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var errorMsg = []
       // modify.Education = JSON.stringify(modify.Education);
       // modify.Experience = JSON.stringify(modify.Experience);
-      // modify.Contact = JSON.stringify(modify.Contact); 
+      // modify.Contact = JSON.stringify(modify.Contact);
       modify.expLen = expLen;
       console.log(modify)
       // return
@@ -410,7 +431,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       .success(function(data){
         console.log(data);
         _.each(data,function(item){
-            if( item!=true){ 
+            if( item!=true){
               alertify.error(item.value+' on '+item.source+' ' +item.path);
 
               errorMsg.push(item)
@@ -449,7 +470,7 @@ angular.module('myApp.controllers', ['ngRoute']).
         $scope.searchtext = $state.params.searchtext;
       })
     }
-    
+
     $scope.time = function (t) {
       return moment(t).format('MMMM Do YYYY, h:mm:ss a')
     };
@@ -461,7 +482,7 @@ angular.module('myApp.controllers', ['ngRoute']).
     }
   }).
   controller('Chart', function ($scope, $location, $state, $http){
-    
+
 
     $scope.addPoints = function () {
         var seriesArray = $scope.chartConfig.series
@@ -492,9 +513,9 @@ angular.module('myApp.controllers', ['ngRoute']).
             this.chartConfig.options.chart.type = 'line'
             this.chartConfig.options.chart.zoomType = 'x'
         } else if (this.chartConfig.options.chart.type === 'line'){
-            this.chartConfig.options.chart.type = 'column' 
+            this.chartConfig.options.chart.type = 'column'
         } else {
-            this.chartConfig.options.chart.type = 'column' 
+            this.chartConfig.options.chart.type = 'column'
         }
     }
 
@@ -506,7 +527,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
           var single = $scope.members[i].grade;
-          if(single === null)single='null'
+          if(single === null) single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
@@ -524,7 +545,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
           var single = $scope.members[i].gender;
-          if(single === null)single='null'
+          if(single === null)single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
@@ -542,7 +563,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
           var single = $scope.members[i].department;
-          if(single === null)single='null'
+          if(single === null)single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
@@ -560,7 +581,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
           var single = $scope.members[i].school;
-          if(single === null)single='null'
+          if(single === null)single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
@@ -579,7 +600,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       for(var i = 0; i < $scope.members.length; i++){
         for(var k = 0; k < $scope.members[i].Experiences.length; k++){
           var single = $scope.members[i].Experiences[k].org;
-          if(single === null)single='null'
+          if(single === null)single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{
@@ -598,7 +619,7 @@ angular.module('myApp.controllers', ['ngRoute']).
       var obj = {};
       for(var i = 0; i < $scope.members.length; i++){
           var single = $scope.members[i].Education.enddate;
-          if(single === null)single='null'
+          if(single === null)single='尚未填寫'
           if(obj[single] === undefined ){
             obj[single] = 1;
           }else{

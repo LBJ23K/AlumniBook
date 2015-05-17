@@ -77,12 +77,12 @@ exports.search = function(req, res){
 							})
 						})
 						res.json(Issues);
-				
+
 				})
 			}
 		})
 		}
-		
+
 	}
 	else
 	{
@@ -96,17 +96,10 @@ exports.search = function(req, res){
         res.status(500).json(error);
       });
   	}
-	
+
 }
 exports.local_Login = function(req, res){
 	var account = req.params.account;
-	// Member.findOne({where:{account:account}}).success(function(member){
-	// 	var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
-	// 		req.session.user = user;
-	// 		req.session.isLogin = true;
-	// 		res.redirect('/' );
-		
-	// });
 	var query = {
         where:{
             account: account
@@ -123,7 +116,7 @@ exports.local_Login = function(req, res){
                 req.session.user = user;
                 req.session.isLogin = true;
                 res.redirect('/');
-                
+
         })
         .error(function(err){
             console.log(err);
@@ -134,18 +127,56 @@ exports.local_Login = function(req, res){
             req.session.user = user;
             req.session.isLogin = true;
             res.redirect('/');
-            
+
         }
 
-    });   
-	
+    });
+
+}
+
+exports.createMember = function (req, res){
+    var temp = {};
+	var query = {
+        where:{
+            account: req.body.account
+        }
+    }
+    Member.find(query).success(function(member){
+        if(member == null){
+            var user = {}
+            req.body.password = md5(req.body.password);
+            Member.create(req.body).success(function(member){
+                Education.create({member_id:member.dataValues.member_id})
+                Experience.create({member_id:member.dataValues.member_id})
+                Contact.create({member_id:member.dataValues.member_id})
+                var user = _.omit(member.dataValues, 'password', 'createdAt', 'updatedAt');
+                req.session.user = user;
+                req.session.isLogin = true;
+                temp.status = true;
+                temp.msg = "success";
+                res.json(temp);
+                // res.redirect('/');
+
+        })
+        .error(function(err){
+            console.log(err);
+        })
+        }
+        else{
+        	temp.status = false;
+        	temp.msg = "帳號已有人使用";
+        	res.json(temp);
+
+        }
+
+    });
 }
 exports.likePost = function(req, res){
 	Like.create({issue_id:req.params.id, member_id:req.session.user.member_id})
 	.success(function(like){
-		res.json({msg:"success"});	
+		res.json({msg:"success"});
 	})
-	
+
 }
 exports.dislikePost = function(req, res){
 	Like.findAll({where:{issue_id:req.params.id, member_id:req.session.user.member_id}})
@@ -154,7 +185,7 @@ exports.dislikePost = function(req, res){
 		like[0].destroy();
 		res.json({msg:"success"})
 	});
-		
+
 }
 exports.modifyaccount = function (req, res){
 	// console.log(req.body);
@@ -173,9 +204,9 @@ exports.modifyaccount = function (req, res){
 		console.log(req.session.user.member_id, member.member_id)
 		if(member){
 			console.log(member)
-			member.updateAttributes({name:req.body.name, 
+			member.updateAttributes({name:req.body.name,
 									 gender:req.body.gender,
-									 school:req.body.school, 
+									 school:req.body.school,
 									 department:req.body.department,
 									 grade:req.body.grade,
 									 photo:req.body.photo}).success(function(change){
@@ -185,7 +216,7 @@ exports.modifyaccount = function (req, res){
 				// console.log(req.session.user)
 				res.json({msg:"success"});
 			})
-			
+
 		}
 	})
 
@@ -235,7 +266,7 @@ exports.login = function (req, res){
 			req.session.isLogin = true;
 			res.json({msg:"success"});
 		}
-		
+
 	});
 }
 exports.showPosts = function(req, res){
@@ -256,7 +287,7 @@ exports.showPosts = function(req, res){
 
 
 
-	
+
 }
 exports.showPost = function(req, res){
 	console.log(req.params);
@@ -290,13 +321,13 @@ exports.showPost = function(req, res){
 					});
 					console.log(comments)
 					callback(null, comments)
-					
+
 				})
 			}],function(err, result){
 				// console.log(result)
 				res.json({post:post, likeThis:result[0], like:result[1],comments:result[2]});
 			})
-		
+
 	});
 }
 exports.submitPost = function(req, res){

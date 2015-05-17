@@ -12,7 +12,7 @@ angular.module('myApp', [
   'ui.router',
 ])
 .config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
-  
+
   $stateProvider.
     state('index', {
       url:'/',
@@ -23,6 +23,11 @@ angular.module('myApp', [
       url:'/accountsetting',
       templateUrl: 'partial/account',
       controller: 'Account'
+    }).
+    state('register', {
+      url:'/register',
+      templateUrl: 'partial/register',
+      controller: 'Register'
     }).
     state('login', {
       url:'/login',

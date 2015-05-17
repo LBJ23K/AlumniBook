@@ -20,28 +20,28 @@ var session = require('express-session');
 var local = require('./config/local');
 var i18n = require('i18n');
 var i18nController = require('./routes/i18nController');
-var passport = require('passport');
-var SamlStrategy = require('passport-saml').Strategy
+// var passport = require('passport');
+// var SamlStrategy = require('passport-saml').Strategy
 
-passport.serializeUser(function(user, done) {
-  // console.log(user);
-  done(null, user);
-  });
+// passport.serializeUser(function(user, done) {
+//   // console.log(user);
+//   done(null, user);
+//   });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+// passport.deserializeUser(function(user, done) {
+//   done(null, user);
+// });
 
-passport.use(new SamlStrategy(
-  {
-    path: '/login/callback',
-    entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
-    issuer: 'passport-saml-sso-2'
-  },
-  function(profile, done){
-    return done(null, profile);
-  })
-);
+// passport.use(new SamlStrategy(
+//   {
+//     path: '/login/callback',
+//     entryPoint: 'http://sdm.im.ntu.edu.tw/simplesamlauth/saml2/idp/SSOService.php',
+//     issuer: 'passport-saml-sso-2'
+//   },
+//   function(profile, done){
+//     return done(null, profile);
+//   })
+// );
 
 i18n.configure({
   locales:['en', 'zh-TW'],
@@ -88,8 +88,8 @@ app.use(allowCrossDomain);
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(app.router);
 
 
@@ -140,7 +140,7 @@ app.get('/api/post/:id', api.showPost);
 
 app.post('/api/login', api.login);
 app.get('/api/getaccount', api.getaccount);
-// app.post('/api/createMember', api.createMember);
+app.post('/api/createMember', api.createMember);
 app.post('/api/submitPost', api.checkLogin, api.submitPost);
 app.post('/api/comment', api.checkLogin, api.commentOn);
 app.post('/api/modifyaccount', api.modifyaccount);
@@ -170,26 +170,26 @@ app.post('/category/update', postCategory.update);
 app.get('/category/destroy', postCategory.destroy);
 
 app.get('/logout', function(req, res){
-  req.logout();
+  // req.logout();
   req.session.destroy(function() {
     res.redirect("/");
   });
 });
 // //saml
-app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-  user_api.login
-  // function(req, res) {
-  //   console.log(req.user);
-  //   res.redirect('/');
-  // }
-);
-app.get('/login',
-  passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
-    res.redirect('/login');
-  }
-);
+// app.post('/login/callback',
+//   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+//   user_api.login
+//   // function(req, res) {
+//   //   console.log(req.user);
+//   //   res.redirect('/');
+//   // }
+// );
+// app.get('/login',
+//   passport.authenticate('saml', { failureRedirect: '/login', failureFlash: true }),
+//   function(req, res) {
+//     res.redirect('/login');
+//   }
+// );
 
 // redirect all others to the index (HTML5 history)
 app.get('*', routes.index);

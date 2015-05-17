@@ -1,0 +1,60 @@
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
+
+    <form action="" class="ui form">
+      <div class="field">
+        <label><%= __('Username') %></label>
+        <input type="text" ng-model="data.account">
+      </div>
+      <div class="field">
+        <label><%= __('Password') %></label>
+        <input type="password" ng-model="data.password">
+      </div>
+
+      <!--<div class="field">
+        <label><%= __('Name') %></label>
+        <input type="text" ng-model="data.name">
+      </div>
+
+      <div class="field">
+        <label><%= __('Gender') %></label>
+        <select ng-model="data.gender">
+          <option value="男"><%= __('Male') %></option>
+          <option value="女"><%= __('Female') %></option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label><%= __('School') %></label>
+        <input type="text" ng-model="data.school">
+      </div>
+
+      <div class="field">
+        <label><%= __('Department') %></label>
+        <input type="text" ng-model="data.department">
+      </div>
+
+      <div class="field">
+        <label><%= __('Grade') %></label>
+        <select ng-model="data.grade">
+          <option value="大一"><%= __('Freshman') %></option>
+          <option value="大二"><%= __('Sophomore') %></option>
+          <option value="大三"><%= __('Junior') %></option>
+          <option value="大四"><%= __('Senior') %></option>
+          <option value="碩一"><%= __('1st-master') %></option>
+          <option value="碩二"><%= __('2nd-master') %></option>
+          <option value="博班"><%= __('PhD') %></option>
+          <option value="畢業"><%= __('Graduated') %></option>
+        </select>
+      </div>
+
+      <button class="ui button" ng-click="upload()" ><%=__('Upload Photo')%></button>
+        <img ng-show="data.photo" ng-src="{{data.photo}}" class="img-responsive" alt="Responsive image">
+--!>
+      <button class="ui button" ng-click="signup()"><%= __('Submit') %></button>
+    </form>
+
+    </div>
+  </div>
+</div>

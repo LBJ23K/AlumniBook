@@ -24,9 +24,6 @@ var PostCategory = require("./postCategory").PostCategory(Sequelize,sequelize);
 Member.hasOne(Education, {foreignKey: 'member_id'})
 Education.belongsTo(Member, {foreignKey: 'member_id'})
 
-// Alumni.hasOne(Member, {foreignKey: 'alumni_id'})
-// Member.belongsTo(Alumni, {foreignKey: 'alumni_id'})
-
 Member.hasOne(Contact, {foreignKey: 'member_id'})
 Contact.belongsTo(Member, {foreignKey: 'member_id'})
 

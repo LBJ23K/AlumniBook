@@ -77,5 +77,7 @@
 	"Department_e": "系所",
 	"Add Experience": "增加經歷",
 	"Remove Experience": "移除經歷",
-	"name": "name"
+	"name": "name",
+	"Register": "註冊",
+	"phone_work": "phone_work"
 }
