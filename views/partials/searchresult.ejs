@@ -1,0 +1,45 @@
+<div class="ui page grid" ng-init="init()">
+    <div class="column">
+        <div class="ui teal segment">
+
+
+            <div class="ui relaxed divided items post-item" ng-if="type=='issue'">
+                <h3 class="ui header">{{type_t}} {{field}} <%= __("Contains") %> "{{searchtext}}" <%= __("search_results_are") %>{{results.length}}<%= __('items') %></h3>
+                <div ng-show="!results.length"><%= __('No_result')%></div>
+                <div class="item" ng-repeat="post in results" ng-click="gotopic(post.issue_id)">
+                    <div class="ui small image">
+                        <img src="img/category-0{{post.postCategory_id}}.png">
+                    </div>
+                    <div class="content">
+                        <p class="header" id="title" ng-bind="post.title"></p>
+                        <div class="meta">
+                        </div>
+                        <div class="description" ng-bind="post.content">
+                        </div>
+                        <div class="extra">
+                            <img class="ui medium circular image" ng-hide="results.Member.photo" src="img/user.png" class="img-responsive" alt="Responsive image">
+                            <!-- <img ng-show="post.Member.photo" ng-src="{{post.Member.photo}}" class="ui medium circular image" class="img-responsive" alt="Responsive image"> -->
+                            <div ng-show="post.Member.photo" ng-style="{'background-image':'url('+post.Member.photo+')'}" class="author-profile-img bg-img">
+                            </div>
+                            <span id="author" ng-bind="post.Member.name"></span>｜<span id="createdAt" ng-bind="time(post.createdAt)"></span>｜<i class="comment icon"></i><span id="comment" ng-bind="post.Comments.length"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui relaxed divided items post-item" ng-if="type=='member'">
+                <h3 class="ui header">{{type_t}} "{{field}}" <%= __("Contains") %> "{{searchtext}}" <%= __("search_results_are") %>{{results.length}}<%= __('items') %></h3>
+                <div ng-show="!results.length"><%= __('No_result')%></div>
+                <div class="item" ng-repeat="user in results" ng-click="gouser(user.member_id)">
+                    <div class="ui small image">
+                        <img src="{{user.photo}}">
+                    </div>
+                    <div class="content">
+                        <p class="header" id="title" ng-bind="user.account"></p>
+                        <div class="description" ng-bind="user.name"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

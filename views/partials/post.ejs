@@ -1,10 +1,23 @@
-<div class="container">
-    <form action="">
-    <h4>標題</h4><input class="form-control" type="text" ng-model="title">
-    <br>
-    <h4>內容</h4><textarea class="form-control" type="text"  ng-model="content" rows="10"></textarea>
-    <br>
-    <button class="btn btn-success pull-right" ng-click="submitPost()">發表</button>
+<div class="ui page grid">
+  <div class="column">
+    <div class="ui teal segment">
+
+    <form action="" class="ui form">
+    <div class="field">
+    	<label><%= __('Title') %></label>
+    	<input type="text" ng-model="title">
+    </div>
+    
+    <div class="field">
+    	<label><%= __('Content') %></label>
+    	<textarea type="text" ng-model="content" rows="10"></textarea>
+    </div>
+    <div class="field">
+    <select name="" id="" ng-model="cat_id"><option value="{{cat.postCategory_id}}" ng-repeat="cat in category">{{cat.category_name}}</option></select>
+    </div>
+    <button class="ui teal button" ng-click="submitPost()"><%= __('Submit') %></button>
     </form>
 
+    </div>
+  </div>
 </div>

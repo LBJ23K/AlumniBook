@@ -8,21 +8,26 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'ui.router'
-
+  'highcharts-ng',
+  'ui.router',
 ])
 .config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
-  
+
   $stateProvider.
     state('index', {
       url:'/',
       templateUrl: 'partial/home',
       controller: 'Home'
     }).
-    state('signup', {
-      url:'/signup',
-      templateUrl: 'partial/signup',
-      controller: 'Signup'
+    state('account', {
+      url:'/accountsetting',
+      templateUrl: 'partial/account',
+      controller: 'Account'
+    }).
+    state('register', {
+      url:'/register',
+      templateUrl: 'partial/register',
+      controller: 'Register'
     }).
     state('login', {
       url:'/login',
@@ -42,9 +47,38 @@ angular.module('myApp', [
       url:'/topic/:id',
       templateUrl: 'partial/topic',
       controller: 'Topic'
-    }).state('otherwise',{
+    }).
+    state('usersetting', {
+      url:'/usersetting',
+      templateUrl: 'partial/usersetting',
+      controller: 'Usersetting'
+    }).
+    state('userList', {
+      url:'/users/userlist',
+      templateUrl: 'partial/userList',
+      controller: 'UserList'
+    }).
+    state('userprofile', {
+      url:'/users/:id',
+      templateUrl: 'partial/usersetting',
+      controller: 'Profile'
+    }).
+    state('chart',{
+      url:'/chart',
+      templateUrl: 'partial/chart',
+      controller: 'Chart'
+     }).
+    state('search',{
+      url:'/search/:category/:field/:searchtext',
+      templateUrl: 'partial/searchresult',
+      controller: 'Search'
+     }).
+    state('otherwise',{
       url: "/"
     })
+
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
 }]);
+
+

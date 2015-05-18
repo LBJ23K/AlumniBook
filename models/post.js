@@ -5,7 +5,7 @@ exports.Post = function(Sequelize, sequelize){
     member_id: { type: Sequelize.STRING},
     title: { type: Sequelize.STRING },
     content: Sequelize.STRING,
-
+    
   },{
     tableName: 'post'
   });

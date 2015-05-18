@@ -8,9 +8,28 @@ var sequelize = new Sequelize(
 	);
 
 var Member = require('./models').Member;
-var Post = require('./models').Post;
 var Comment = require('./models').Comment;
+var Education = require('./models').Education;
+var Experience = require('./models').Experience;
+var Contact = require('./models').Contact;
+var Like = require('./models').Like;
+var Issue = require('./models').Issue;
+var Post = require('./models').Post;
+var Notify_issue = require('./models').Notify_issue;
+var Notification = require('./models').Notification;
+var PostCategory = require('./models').PostCategory;
 
 Member.sync({force:true});
 Post.sync({force:true});
 Comment.sync({force:true});
+Education.sync({force:true});
+Experience.sync({force:true});
+Contact.sync({force:true});
+
+Member.sync({force:true});
+Comment.sync({force:true});
+Like.sync({force:true});
+Issue.sync({force:true});
+Notify_issue.sync({force:true});
+Notification.sync({force:true});
+PostCategory.sync({force:true});

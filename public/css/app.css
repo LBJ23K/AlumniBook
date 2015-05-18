@@ -1,30 +1,123 @@
-/* app css stylesheet */
+/* COMMENTS
+------------------------------*/
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.ui.comments {
+  max-width: 100%;
 }
 
-.menu:before {
-  content: "[";
+.ui.comments .comment {
+  min-height: 50px;
 }
 
-.menu:after {
-  content: "]";
+/* MEMBER INFO
+------------------------------*/
+
+.ui.header .member-info {
+  margin-top: 20px;
 }
 
-.menu > li {
-  display: inline;
+.ui.header .member-info .sub.header {
+  font-size: 0.5em;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+/* STYLE FIX
+------------------------------*/
+
+.post-item .item:hover {
+  cursor: pointer;
+  background-color: rgba(239, 239, 239, 1)
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+.ui.divided.items > .item:first-child {
+  margin: 0!important;
+  padding: 1em 0!important;
 }
+
+.two.wide.column {
+	text-align: center!important;
+}
+
+.bg-img {
+	background-size: cover;
+}
+
+.profile-img {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	margin: 0 auto;
+}
+
+.comment-profile-img {
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+}
+
+.author-profile-img {
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	display: inline-block;
+	margin-bottom: -8px!important;
+}
+
+.column {
+	/*border: red 1px solid;*/
+}
+.pointer{
+	cursor: pointer;
+}
+
+.tooltip { 
+	border-bottom: 1px dotted #333;
+	position: relative;
+	cursor: pointer; 
+}
+.tooltip:hover:after { 
+	content: attr(data-tooltip);; 
+	position: absolute; 
+	white-space: nowrap; 
+	background: rgba(0, 0, 0, 0.85); 
+	padding: 3px 7px; 
+	color: #FFF; 
+	border-radius: 3px; 
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px; 
+	margin-left: 7px; 
+	margin-top: -3px; 
+}
+pre.segment{
+	word-wrap: break-word; 
+	word-break: normal;
+}
+pre.description{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word; 
+	word-break: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: 15;
+	-webkit-box-orient: vertical;
+}
+
+.ui.items>.item>.content>.description {
+	max-height: 100px;
+	overflow: hidden;
+	margin-top: -20px;
+}
+
+.ui.items>.item>.content>.description:before {
+	content: ' ';
+	display: block;
+	width: 100%;
+	height: 30px;
+	background: linear-gradient(to top, rgba(255, 255, 255, 1),  rgba(255, 255, 255, 0));
+	position: relative;
+	top: 70px;
+}
+
+.post-item .item:hover >.content>.description:before {
+	background: linear-gradient(to top, rgba(239, 239, 239, 1),  rgba(255, 255, 255, 0));
+}
+
